@@ -19,6 +19,6 @@
 **Notas:**
 - Los `.nc` existentes en outputs/ son de versiones anteriores sin y_rep — deben regenerarse
 - 04_diagnosticos_estudio usa pymc3 (no disponible en el entorno); las secciones 2E6-2E7 sí funcionan
-- El nombre del folder `poisson-reg-example` es demasiado estrecho para el scope actual — pendiente de renombrar
+- Proyecto renombrado a `bayesian-glm-count-data` (2026-04-04)
 
 ---

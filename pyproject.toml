@@ -1,7 +1,7 @@
 [project]
-name = "poisson-reg-example"
+name = "bayesian-glm-count-data"
 version = "0.1.0"
-description = "Add your description here"
+description = "Bayesian workflow incremental para regresiones de datos de conteo (GLMs y extensiones)"
 requires-python = ">=3.11.14"
 dependencies = [
     "arviz>=0.23.4",

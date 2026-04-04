@@ -15,7 +15,7 @@ Construir una base de referencia progresiva que cubra cada etapa del workflow ba
 ## Estructura
 
 ```
-poisson-reg-example/
+bayesian-glm-count-data/
 ├── data/                  # Datasets
 ├── models/                # Modelos Stan (.stan)
 ├── notebooks/             # Análisis documentados (numerados por etapa)
@@ -45,10 +45,8 @@ Clásico ejemplo de datos de conteo con sobredispersión.
 
 ```bash
 # Activar entorno
-source .venv/bin/activate
-
-# Ejecutar notebooks en orden
-jupyter notebook notebooks/
+uv sync
+uv run jupyter notebook notebooks/
 ```
 
 > Los modelos Stan en `models/` requieren compilación la primera vez (automática via cmdstanpy).
