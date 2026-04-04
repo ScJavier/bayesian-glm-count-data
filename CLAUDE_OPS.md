@@ -71,6 +71,10 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 - README.md, BITACORA.md, CLAUDE_OPS.md creados
 - Skeleton de 05_ppc_sobredispersion.ipynb creado
 
+### 2026-04-04 (sesión 3)
+- Sección `## Referencias` agregada al README.md con 6 citas verificadas
+- Referencias: Gelman et al. 2020, Gabry et al. 2019, Schad et al. 2021, Gelman & Shalizi 2013, BDA3, Martin et al. 2021
+
 ### 2026-04-04 (sesión 2)
 - Migración de `.venv` roto (symlink a pyenv inexistente) a uv
 - Kernel Jupyter registrado: `bayesian-glm-count-data`
