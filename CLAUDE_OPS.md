@@ -26,8 +26,9 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 
 ## Estado actual
 - **Git:** ✅ inicializado (rama: master)
-- **Entorno:** `.venv` legacy (Python 3.11.14) — no migrar sin indicación explícita
-- **Python:** 3.11.14
+- **Entorno:** uv ✅ (`pyproject.toml` + `uv.lock`)
+- **Python:** 3.11.15
+- **Kernel Jupyter:** `poisson-reg-example` registrado
 - **README:** ✅
 - **BITACORA:** ✅
 - **Backlog:** CLAUDE_OPS.md (este archivo)
@@ -54,11 +55,10 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 - [ ] Ejecutar `03_inferencia_bayesiana.ipynb` para regenerar `.nc` con y_rep y log_lik
 - [ ] Completar `05_ppc_sobredispersion.ipynb` con métricas de sobredispersión
 - [ ] Considerar renombrar carpeta del proyecto a `bayesian-glm-count-data` (más descriptivo)
-- [ ] Migrar entorno de `.venv` a `uv` cuando sea conveniente
 
 ## Historial de acciones de Claude
 
-### 2026-04-04
+### 2026-04-04 (sesión 1)
 - Identificado contenido y estructura existente
 - Restructura completa: data/, models/, notebooks/, scripts/, outputs/
 - Notebooks renombrados con prefijo numérico (01-04)
@@ -69,3 +69,8 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 - git init + primer commit
 - README.md, BITACORA.md, CLAUDE_OPS.md creados
 - Skeleton de 05_ppc_sobredispersion.ipynb creado
+
+### 2026-04-04 (sesión 2)
+- Migración de `.venv` roto (symlink a pyenv inexistente) a uv
+- Kernel Jupyter registrado: `poisson-reg-example`
+- requirements.txt eliminado (pyproject.toml + uv.lock son la fuente de verdad)

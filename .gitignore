@@ -9,9 +9,10 @@ __pycache__/
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
 
-# Stan — ejecutables compilados (ELF binaries, mismo nombre que .stan sin extensión)
+# Stan — ejecutables compilados y headers generados
 models/poisson_model
 models/negative_binomial_model
+models/*.hpp
 
 # Outputs MCMC y archivos generados (reproducibles via 03_inferencia_bayesiana.ipynb)
 outputs/*.nc
