@@ -28,7 +28,8 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 - **Git:** ✅ inicializado (rama: master)
 - **Entorno:** uv ✅ (`pyproject.toml` + `uv.lock`)
 - **Python:** 3.11.15
-- **Kernel Jupyter:** `poisson-reg-example` registrado
+- **Kernel Jupyter:** `bayesian-glm-count-data` registrado
+- **GitHub:** ✅ github.com/ScJavier/bayesian-glm-count-data (privado)
 - **README:** ✅
 - **BITACORA:** ✅
 - **Backlog:** CLAUDE_OPS.md (este archivo)
@@ -52,9 +53,9 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 
 ## Backlog
 
-- [ ] Ejecutar `03_inferencia_bayesiana.ipynb` para regenerar `.nc` con y_rep y log_lik
+- [x] ~~Ejecutar `03_inferencia_bayesiana.ipynb`~~ — `.nc` regenerados con y_rep + log_lik (2026-04-04)
+- [x] ~~Renombrar proyecto a `bayesian-glm-count-data`~~ (2026-04-04)
 - [ ] Completar `05_ppc_sobredispersion.ipynb` con métricas de sobredispersión
-- [ ] Considerar renombrar carpeta del proyecto a `bayesian-glm-count-data` (más descriptivo)
 
 ## Historial de acciones de Claude
 
@@ -72,5 +73,9 @@ correr en 03 (o nuevo notebook) → guardar idata → analizar PPCs en 05
 
 ### 2026-04-04 (sesión 2)
 - Migración de `.venv` roto (symlink a pyenv inexistente) a uv
-- Kernel Jupyter registrado: `poisson-reg-example`
+- Kernel Jupyter registrado: `bayesian-glm-count-data`
 - requirements.txt eliminado (pyproject.toml + uv.lock son la fuente de verdad)
+- Proyecto renombrado a `bayesian-glm-count-data`
+- nbstripout instalado — outputs se limpian automáticamente en cada commit
+- Repo GitHub creado y pusheado: github.com/ScJavier/bayesian-glm-count-data (privado)
+- 03_inferencia_bayesiana ejecutado — .nc regenerados con y_rep + log_lik
