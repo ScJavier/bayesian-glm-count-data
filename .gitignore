@@ -1,0 +1,21 @@
+# Entorno virtual
+.venv/
+
+# Python
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Stan — ejecutables compilados (ELF binaries, mismo nombre que .stan sin extensión)
+models/poisson_model
+models/negative_binomial_model
+
+# Outputs MCMC y archivos generados (reproducibles via 03_inferencia_bayesiana.ipynb)
+outputs/*.nc
+outputs/poisson_simple_output/
+
+# Directorio de compilación de cmdstanpy
+**/.cmdstan/
