@@ -17,3 +17,8 @@ dependencies = [
     "statsmodels>=0.14.6",
     "xarray>=2026.2.0",
 ]
+
+[dependency-groups]
+dev = [
+    "nbstripout>=0.9.1",
+]
