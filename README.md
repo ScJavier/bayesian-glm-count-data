@@ -1,16 +1,17 @@
-# Bayesian Workflow para Datos de Conteo
+# GLMs para Datos de Conteo — Enfoque Bayesiano
 
-Exploración incremental del workflow bayesiano (Gelman et al. 2020) aplicado a regresiones para datos de conteo: GLMs Poisson, Binomial Negativa y sus extensiones.
+Exploración de regresiones para datos de conteo con Stan: modelos Poisson, Binomial Negativa y sus extensiones. Aplicado al dataset Horseshoe Crab Satellites.
+
+> Para exploración del workflow bayesiano con toy examples, ver [bayesian-workflow-examples](../bayesian-workflow-examples).
 
 ## Objetivo
 
-Construir una base de referencia progresiva que cubra cada etapa del workflow bayesiano para modelos de conteo:
-- EDA y línea base frecuentista
-- Prior predictive checks
-- Inferencia bayesiana (Grid → MCMC manual → Stan/HMC)
-- Diagnósticos numéricos (R-hat, ESS, divergencias)
+Construir una base de referencia para el análisis bayesiano de datos de conteo:
+- EDA y línea base frecuentista (Poisson/NegBin con statsmodels)
+- Inferencia bayesiana con Stan (Grid → MCMC manual → HMC)
+- Diagnósticos MCMC (R-hat, ESS, divergencias)
 - Posterior Predictive Checks (PPCs) y evaluación de sobredispersión
-- Comparación y expansión de modelos
+- Comparación Poisson vs NegBin via LOO
 
 ## Estructura
 
@@ -23,7 +24,7 @@ bayesian-glm-count-data/
 │   ├── 02_simulacion_distribucion.ipynb  — Simulación y visualización Poisson
 │   ├── 03_inferencia_bayesiana.ipynb     — Grid → MH → Stan (Poisson + NegBin)
 │   ├── 04_diagnosticos_estudio.ipynb     — Ejercicios BAP book (diagnósticos MCMC)
-│   └── 05_ppc_sobredispersion.ipynb      — PPCs y métricas de sobredispersión
+│   └── 05_ppc_sobredispersion.ipynb      — PPCs y comparación Poisson vs NegBin
 ├── scripts/               # Scripts de apoyo / prototipos
 └── outputs/               # Archivos generados (gitignored: .nc, plots)
 ```
