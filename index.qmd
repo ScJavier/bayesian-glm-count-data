@@ -1,0 +1,29 @@
+---
+title: "Prefacio"
+---
+
+Este recorrido nació de un problema aplicado: predecir ventas en un entorno de
+inventario disperso, donde la regresión Poisson resultó insuficiente. La sobredispersión
+llevó a explorar Binomial Negativa, el exceso de ceros a modelos Zero-Inflated, y la
+necesidad de cuantificar incertidumbre al paradigma bayesiano.
+
+El dataset **Horseshoe Crab Satellites** (Agresti 2002) es el vehículo: n=173
+observaciones con sobredispersión D≈3.38 y ~33% de ceros, suficiente para que los
+problemas sean reales y verificables pero pequeño para que el comportamiento de cada
+modelo sea transparente.
+
+El recorrido documenta el proceso tal como ocurrió — incluyendo los callejones sin
+salida y las preguntas que abrió cada modelo — no como un tutorial diseñado con el
+resultado final en mente.
+
+---
+
+**Estructura:**
+
+- *Exploración de datos*: EDA básico y extendido, selección de variables frecuentista
+- *Teoría — MLE*: GLM Poisson desde cero (log-verosimilitud, gradiente, IRLS)
+- *Inferencia Bayesiana*: Grid → Metropolis-Hastings → Stan
+- *Diagnóstico*: Posterior Predictive Checks para Poisson y NegBin
+- *Expansión*: modelos ZIP y ZINB, LOO-CV de los cuatro modelos
+
+Código disponible en [GitHub](https://github.com/ScJavier/bayesian-glm-count-data).

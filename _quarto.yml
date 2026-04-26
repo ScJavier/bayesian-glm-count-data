@@ -1,0 +1,43 @@
+project:
+  type: book
+  output-dir: _site
+
+book:
+  title: "Modelos para Datos de Conteo"
+  subtitle: "Un recorrido bayesiano"
+  author: "Javier Santibanez"
+  date: "2026-04-26"
+  repo-url: https://github.com/ScJavier/bayesian-glm-count-data
+  repo-actions: [issue]
+  chapters:
+    - index.qmd
+    - part: "Exploración de datos"
+      chapters:
+        - notebooks/00_introduccion.ipynb
+        - notebooks/01_eda_frecuentista.ipynb
+        - notebooks/01b_eda_general.ipynb
+    - part: "Teoría: MLE desde cero"
+      chapters:
+        - notebooks/02_mle_datos_simulados.ipynb
+    - part: "Inferencia Bayesiana"
+      chapters:
+        - notebooks/03_inferencia_bayesiana.ipynb
+    - part: "Diagnóstico y expansión de modelos"
+      chapters:
+        - notebooks/04_predictive_checks_base_models.ipynb
+        - notebooks/05_extended_models.ipynb
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: true
+    highlight-style: github
+    fig-align: center
+
+# Para re-ejecutar notebooks localmente:
+# QUARTO_PYTHON=.venv/bin/python quarto render --execute
+execute:
+  freeze: auto
