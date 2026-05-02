@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-290b1a9ea04e41c7ae7ffe087f35970f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -284,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>Wt</code>: weight, kg.</li>
 <li><code>Sa</code>: number of satellites.</li>
 </ul>
-<div id="1" class="cell">
+<div id="1" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -298,199 +301,573 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2" class="cell">
+<div id="2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../data/agresti_crab_satellites_dataset.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>display(df.head())</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th">W</th>
+<th data-quarto-table-cell-role="th">Wt</th>
+<th data-quarto-table-cell-role="th">Sa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2</td>
+<td>3</td>
+<td>28.3</td>
+<td>3.05</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>3</td>
+<td>3</td>
+<td>26.0</td>
+<td>2.60</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3</td>
+<td>3</td>
+<td>25.6</td>
+<td>2.15</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>4</td>
+<td>2</td>
+<td>21.0</td>
+<td>1.85</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2</td>
+<td>3</td>
+<td>29.0</td>
+<td>3.00</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="3" class="cell">
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(173, 5)</code></pre>
+</div>
+</div>
+<div id="3" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th">W</th>
+<th data-quarto-table-cell-role="th">Wt</th>
+<th data-quarto-table-cell-role="th">Sa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>173.000000</td>
+<td>173.000000</td>
+<td>173.000000</td>
+<td>173.000000</td>
+<td>173.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>2.439306</td>
+<td>2.485549</td>
+<td>26.298844</td>
+<td>2.437225</td>
+<td>2.919075</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>0.801933</td>
+<td>0.825516</td>
+<td>2.109061</td>
+<td>0.577255</td>
+<td>3.148336</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>21.000000</td>
+<td>1.200000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>2.000000</td>
+<td>2.000000</td>
+<td>24.900000</td>
+<td>2.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>2.000000</td>
+<td>3.000000</td>
+<td>26.100000</td>
+<td>2.350000</td>
+<td>2.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>3.000000</td>
+<td>3.000000</td>
+<td>27.700000</td>
+<td>2.850000</td>
+<td>5.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>4.000000</td>
+<td>3.000000</td>
+<td>33.500000</td>
+<td>5.200000</td>
+<td>15.000000</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="4" class="cell">
+</div>
+</div>
+<div id="4" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hb <span class="op">=</span> plt.hexbin(df[<span class="st">'W'</span>], df[<span class="st">'Sa'</span>], gridsize<span class="op">=</span><span class="dv">15</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(hb, label<span class="op">=</span><span class="st">'Cantidad de puntos'</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Number of satellites by width of female crab'</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Width (cm)'</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of satellites'</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hb <span class="op">=</span> plt.hexbin(df[<span class="st">'W'</span>], df[<span class="st">'Sa'</span>], gridsize<span class="op">=</span><span class="dv">15</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(hb, label<span class="op">=</span><span class="st">'Cantidad de puntos'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Number of satellites by width of female crab'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Width (cm)'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of satellites'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_eda_frecuentista_files/figure-html/cell-5-output-1.png" width="570" height="449" class="figure-img"></p>
+</figure>
 </div>
-<div id="5" class="cell">
+</div>
+</div>
+<div id="5" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_cat'</span>] <span class="op">=</span> pd.cut(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'W'</span>],</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    bins <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="fl">23.25</span>, <span class="fl">24.25</span>, <span class="fl">25.25</span>, <span class="fl">26.25</span>, <span class="fl">27.25</span>, <span class="fl">28.25</span>, <span class="fl">29.25</span>, np.inf],</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> [<span class="st">'23.25&gt;'</span>,<span class="st">'23.25-24.25'</span>,<span class="st">'24.25-25.25'</span>,<span class="st">'25.25-26.25'</span>,<span class="st">'26.25-27.25'</span>,<span class="st">'27.25-28.25'</span>,<span class="st">'28.25-29.25'</span>,<span class="st">'29.25&lt;'</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>cat_summary <span class="op">=</span> df.groupby(<span class="st">'W_cat'</span>).agg(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    n_obs <span class="op">=</span> (<span class="st">'W_cat'</span>,<span class="st">'count'</span>),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    sum_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'sum'</span>),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    mean_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'mean'</span>),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    var_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'var'</span>),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    mean_w <span class="op">=</span> (<span class="st">'W'</span>,<span class="st">'mean'</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>cat_summary <span class="op">=</span> cat_summary.reset_index()</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>display(cat_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_cat'</span>] <span class="op">=</span> pd.cut(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'W'</span>],</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    bins <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="fl">23.25</span>, <span class="fl">24.25</span>, <span class="fl">25.25</span>, <span class="fl">26.25</span>, <span class="fl">27.25</span>, <span class="fl">28.25</span>, <span class="fl">29.25</span>, np.inf],</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> [<span class="st">'23.25&gt;'</span>,<span class="st">'23.25-24.25'</span>,<span class="st">'24.25-25.25'</span>,<span class="st">'25.25-26.25'</span>,<span class="st">'26.25-27.25'</span>,<span class="st">'27.25-28.25'</span>,<span class="st">'28.25-29.25'</span>,<span class="st">'29.25&lt;'</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>cat_summary <span class="op">=</span> df.groupby(<span class="st">'W_cat'</span>).agg(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    n_obs <span class="op">=</span> (<span class="st">'W_cat'</span>,<span class="st">'count'</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    sum_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'sum'</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    mean_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'mean'</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    var_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'var'</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    mean_w <span class="op">=</span> (<span class="st">'W'</span>,<span class="st">'mean'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>cat_summary <span class="op">=</span> cat_summary.reset_index()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>display(cat_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">W_cat</th>
+<th data-quarto-table-cell-role="th">n_obs</th>
+<th data-quarto-table-cell-role="th">sum_satellites</th>
+<th data-quarto-table-cell-role="th">mean_satellites</th>
+<th data-quarto-table-cell-role="th">var_satellites</th>
+<th data-quarto-table-cell-role="th">mean_w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>23.25&gt;</td>
+<td>14</td>
+<td>14</td>
+<td>1.00</td>
+<td>2.77</td>
+<td>22.69</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>23.25-24.25</td>
+<td>14</td>
+<td>20</td>
+<td>1.43</td>
+<td>8.88</td>
+<td>23.84</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>24.25-25.25</td>
+<td>28</td>
+<td>67</td>
+<td>2.39</td>
+<td>6.54</td>
+<td>24.78</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>25.25-26.25</td>
+<td>39</td>
+<td>105</td>
+<td>2.69</td>
+<td>11.38</td>
+<td>25.84</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>26.25-27.25</td>
+<td>22</td>
+<td>63</td>
+<td>2.86</td>
+<td>6.89</td>
+<td>26.79</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>27.25-28.25</td>
+<td>24</td>
+<td>93</td>
+<td>3.88</td>
+<td>8.81</td>
+<td>27.74</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>28.25-29.25</td>
+<td>18</td>
+<td>71</td>
+<td>3.94</td>
+<td>16.88</td>
+<td>28.67</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>29.25&lt;</td>
+<td>14</td>
+<td>72</td>
+<td>5.14</td>
+<td>8.29</td>
+<td>30.41</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="6" class="cell">
+</div>
+</div>
+<div id="6" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="op">=</span> cat_summary[[<span class="st">'W_cat'</span>, <span class="st">'mean_satellites'</span>, <span class="st">'var_satellites'</span>]].melt(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span><span class="st">'W_cat'</span>, var_name<span class="op">=</span><span class="st">'Estadístico'</span>, value_name<span class="op">=</span><span class="st">'valor'</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plot_df[<span class="st">'Estadístico'</span>] <span class="op">=</span> plot_df[<span class="st">'Estadístico'</span>].<span class="bu">map</span>({</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mean_satellites'</span>: <span class="st">'Media'</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'var_satellites'</span>: <span class="st">'Varianza'</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'W_cat'</span>, y<span class="op">=</span><span class="st">'valor'</span>, hue<span class="op">=</span><span class="st">'Estadístico'</span>, data<span class="op">=</span>plot_df,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span>[<span class="st">'steelblue'</span>, <span class="st">'tomato'</span>], ax<span class="op">=</span>ax</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Bin de ancho (cm)'</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Satélites'</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Media vs Varianza de satélites por bin de ancho'</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="op">=</span> cat_summary[[<span class="st">'W_cat'</span>, <span class="st">'mean_satellites'</span>, <span class="st">'var_satellites'</span>]].melt(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span><span class="st">'W_cat'</span>, var_name<span class="op">=</span><span class="st">'Estadístico'</span>, value_name<span class="op">=</span><span class="st">'valor'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plot_df[<span class="st">'Estadístico'</span>] <span class="op">=</span> plot_df[<span class="st">'Estadístico'</span>].<span class="bu">map</span>({</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mean_satellites'</span>: <span class="st">'Media'</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'var_satellites'</span>: <span class="st">'Varianza'</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'W_cat'</span>, y<span class="op">=</span><span class="st">'valor'</span>, hue<span class="op">=</span><span class="st">'Estadístico'</span>, data<span class="op">=</span>plot_df,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span>[<span class="st">'steelblue'</span>, <span class="st">'tomato'</span>], ax<span class="op">=</span>ax</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Bin de ancho (cm)'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Satélites'</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Media vs Varianza de satélites por bin de ancho'</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_eda_frecuentista_files/figure-html/cell-7-output-1.png" width="950" height="470" class="figure-img"></p>
+</figure>
 </div>
-<div id="7" class="cell">
+</div>
+</div>
+<div id="7" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>smooth_series <span class="op">=</span> pd.DataFrame(lowess(df[<span class="st">'Sa'</span>], df[<span class="st">'W'</span>], frac<span class="op">=</span><span class="fl">0.5</span>), columns<span class="op">=</span>[<span class="st">'W'</span>,<span class="st">'Sa'</span>])</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>display(smooth_series.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>smooth_series <span class="op">=</span> pd.DataFrame(lowess(df[<span class="st">'Sa'</span>], df[<span class="st">'W'</span>], frac<span class="op">=</span><span class="fl">0.5</span>), columns<span class="op">=</span>[<span class="st">'W'</span>,<span class="st">'Sa'</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>display(smooth_series.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">W</th>
+<th data-quarto-table-cell-role="th">Sa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>21.0</td>
+<td>-0.075135</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>22.0</td>
+<td>0.352513</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>22.5</td>
+<td>0.585080</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>22.5</td>
+<td>0.585080</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>22.5</td>
+<td>0.585080</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="8" class="cell">
+</div>
+</div>
+<div id="8" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'mean_w'</span>, y<span class="op">=</span><span class="st">'mean_satellites'</span>, data<span class="op">=</span>cat_summary, color<span class="op">=</span><span class="st">'darkcyan'</span>,  label<span class="op">=</span><span class="st">'Binned means'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">'W'</span>, y<span class="op">=</span><span class="st">'Sa'</span>, data<span class="op">=</span>smooth_series, label<span class="op">=</span><span class="st">'LOWESS smoothing'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Smoothings of horseshoe crab counts'</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Width (cm)'</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of satellites'</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="fl">5.5</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'mean_w'</span>, y<span class="op">=</span><span class="st">'mean_satellites'</span>, data<span class="op">=</span>cat_summary, color<span class="op">=</span><span class="st">'darkcyan'</span>,  label<span class="op">=</span><span class="st">'Binned means'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">'W'</span>, y<span class="op">=</span><span class="st">'Sa'</span>, data<span class="op">=</span>smooth_series, label<span class="op">=</span><span class="st">'LOWESS smoothing'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Smoothings of horseshoe crab counts'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Width (cm)'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of satellites'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="fl">5.5</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_eda_frecuentista_files/figure-html/cell-9-output-1.png" width="580" height="449" class="figure-img"></p>
+</figure>
 </div>
-<div id="9" class="cell">
+</div>
+</div>
+<div id="9" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escalado de W</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mean_W <span class="op">=</span> df[<span class="st">'W'</span>].mean()</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>std_W <span class="op">=</span> df[<span class="st">'W'</span>].std()</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_scaled'</span>] <span class="op">=</span> (df[<span class="st">'W'</span>]<span class="op">-</span>mean_W)<span class="op">/</span>std_W</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escalado de W</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mean_W <span class="op">=</span> df[<span class="st">'W'</span>].mean()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>std_W <span class="op">=</span> df[<span class="st">'W'</span>].std()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_scaled'</span>] <span class="op">=</span> (df[<span class="st">'W'</span>]<span class="op">-</span>mean_W)<span class="op">/</span>std_W</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="10" class="cell">
+<div id="10" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.poisson(formula<span class="op">=</span><span class="st">"Sa ~ W_scaled"</span>, data<span class="op">=</span>df)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.poisson(formula<span class="op">=</span><span class="st">"Sa ~ W_scaled"</span>, data<span class="op">=</span>df)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          Poisson Regression Results                          
+==============================================================================
+Dep. Variable:                     Sa   No. Observations:                  173
+Model:                        Poisson   Df Residuals:                      171
+Method:                           MLE   Df Model:                            1
+Date:                Sun, 26 Apr 2026   Pseudo R-squ.:                 0.06570
+Time:                        21:50:40   Log-Likelihood:                -461.59
+converged:                       True   LL-Null:                       -494.04
+Covariance Type:            nonrobust   LLR p-value:                 7.828e-16
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.0094      0.047     21.445      0.000       0.917       1.102
+W_scaled       0.3460      0.042      8.216      0.000       0.263       0.429
+==============================================================================</code></pre>
 </div>
-<div id="11" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((<span class="fl">26.3</span> <span class="op">-</span> mean_W) <span class="op">/</span> std_W)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((<span class="fl">27.3</span> <span class="op">-</span> mean_W) <span class="op">/</span> std_W)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
-<div id="12" class="cell">
+<div id="11" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>results.predict(pd.DataFrame({<span class="st">'W_scaled'</span>:[<span class="dv">0</span>, <span class="fl">0.5</span>]}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((<span class="fl">26.3</span> <span class="op">-</span> mean_W) <span class="op">/</span> std_W)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((<span class="fl">27.3</span> <span class="op">-</span> mean_W) <span class="op">/</span> std_W)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.0005481441165499528
+0.47469280493424015</code></pre>
+</div>
+</div>
+<div id="12" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results.predict(pd.DataFrame({<span class="st">'W_scaled'</span>:[<span class="dv">0</span>, <span class="fl">0.5</span>]}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>0    2.744061
+1    3.262290
+dtype: float64</code></pre>
+</div>
 </div>
 <section id="modelo-binomial-negativo-para-sobredispersión" class="level3" data-number="3.0.1">
 <h3 data-number="3.0.1" class="anchored" data-anchor-id="modelo-binomial-negativo-para-sobredispersión"><span class="header-section-number">3.0.1</span> Modelo Binomial-Negativo para sobredispersión</h3>
-<div id="14" class="cell">
+<div id="14" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model_nb <span class="op">=</span> smf.negativebinomial(formula<span class="op">=</span><span class="st">"Sa ~ W_scaled"</span>, data<span class="op">=</span>df)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results_nb <span class="op">=</span> model_nb.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_nb.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model_nb <span class="op">=</span> smf.negativebinomial(formula<span class="op">=</span><span class="st">"Sa ~ W_scaled"</span>, data<span class="op">=</span>df)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>results_nb <span class="op">=</span> model_nb.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_nb.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     NegativeBinomial Regression Results                      
+==============================================================================
+Dep. Variable:                     Sa   No. Observations:                  173
+Model:               NegativeBinomial   Df Residuals:                      171
+Method:                           MLE   Df Model:                            1
+Date:                Sun, 26 Apr 2026   Pseudo R-squ.:                 0.02100
+Time:                        21:50:40   Log-Likelihood:                -375.65
+converged:                       True   LL-Null:                       -383.70
+Covariance Type:            nonrobust   LLR p-value:                 5.951e-05
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.9988      0.093     10.730      0.000       0.816       1.181
+W_scaled       0.4051      0.100      4.033      0.000       0.208       0.602
+alpha          1.1055      0.197      5.609      0.000       0.719       1.492
+==============================================================================</code></pre>
 </div>
-<div id="15" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>results_nb.predict(pd.DataFrame({<span class="st">'W_scaled'</span>:[<span class="dv">0</span>, <span class="fl">0.5</span>]}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
-<div id="16" class="cell">
+<div id="15" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparación rápida de Log-Likelihood</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ll_poisson <span class="op">=</span> results.llf  <span class="co"># Tu modelo previo</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ll_nb <span class="op">=</span> results_nb.llf</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>lr_stat <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (ll_nb <span class="op">-</span> ll_poisson)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estadístico de la razón de verosimilitud: </span><span class="sc">{</span>lr_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>results_nb.predict(pd.DataFrame({<span class="st">'W_scaled'</span>:[<span class="dv">0</span>, <span class="fl">0.5</span>]}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>0    2.714968
+1    3.324519
+dtype: float64</code></pre>
+</div>
+</div>
+<div id="16" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparación rápida de Log-Likelihood</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ll_poisson <span class="op">=</span> results.llf  <span class="co"># Tu modelo previo</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ll_nb <span class="op">=</span> results_nb.llf</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>lr_stat <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (ll_nb <span class="op">-</span> ll_poisson)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estadístico de la razón de verosimilitud: </span><span class="sc">{</span>lr_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estadístico de la razón de verosimilitud: 171.8853</code></pre>
+</div>
 </div>
 </section>
 <section id="comparación-de-modelos" class="level3" data-number="3.0.2">
 <h3 data-number="3.0.2" class="anchored" data-anchor-id="comparación-de-modelos"><span class="header-section-number">3.0.2</span> Comparación de modelos</h3>
-<div id="18" class="cell">
+<div id="18" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x_range <span class="op">=</span> np.linspace(df[<span class="st">'W_scaled'</span>].<span class="bu">min</span>(), df[<span class="st">'W_scaled'</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> pd.DataFrame({<span class="st">'W_scaled'</span>: x_range})</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Obtener predicciones e intervalos de confianza (95%)</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Para el modelo Poisson (tu objeto 'results')</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>pred_poisson <span class="op">=</span> results.get_prediction(df_plot).summary_frame(alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Para el modelo Binomial Negativa</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>pred_nb <span class="op">=</span> results_nb.get_prediction(df_plot).summary_frame(alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Visualización</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar los datos originales</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">'W_scaled'</span>], df[<span class="st">'Sa'</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">'gray'</span>, label<span class="op">=</span><span class="st">'Datos (Cangrejos)'</span>)</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Curva Poisson</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.plot(x_range, pred_poisson[<span class="st">'predicted'</span>], color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Tendencia Poisson'</span>)</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x_range, pred_poisson[<span class="st">'ci_lower'</span>], pred_poisson[<span class="st">'ci_upper'</span>], </span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, label<span class="op">=</span><span class="st">'IC 95% Poisson'</span>)</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Curva Binomial Negativa</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>plt.plot(x_range, pred_nb[<span class="st">'predicted'</span>], color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Tendencia Binomial Negativa'</span>)</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x_range, pred_nb[<span class="st">'ci_lower'</span>], pred_nb[<span class="st">'ci_upper'</span>], </span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, label<span class="op">=</span><span class="st">'IC 95% Bin. Negativa'</span>)</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparativa: Poisson vs Binomial Negativa'</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Ancho de la Hembra (W_scaled)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de Satélites (Sa)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparación de Criterios de Información</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AIC Poisson: </span><span class="sc">{</span>results<span class="sc">.</span>aic<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AIC Binomial Negativa: </span><span class="sc">{</span>results_nb<span class="sc">.</span>aic<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x_range <span class="op">=</span> np.linspace(df[<span class="st">'W_scaled'</span>].<span class="bu">min</span>(), df[<span class="st">'W_scaled'</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> pd.DataFrame({<span class="st">'W_scaled'</span>: x_range})</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Obtener predicciones e intervalos de confianza (95%)</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Para el modelo Poisson (tu objeto 'results')</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>pred_poisson <span class="op">=</span> results.get_prediction(df_plot).summary_frame(alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Para el modelo Binomial Negativa</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>pred_nb <span class="op">=</span> results_nb.get_prediction(df_plot).summary_frame(alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Visualización</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar los datos originales</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">'W_scaled'</span>], df[<span class="st">'Sa'</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">'gray'</span>, label<span class="op">=</span><span class="st">'Datos (Cangrejos)'</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Curva Poisson</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>plt.plot(x_range, pred_poisson[<span class="st">'predicted'</span>], color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Tendencia Poisson'</span>)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x_range, pred_poisson[<span class="st">'ci_lower'</span>], pred_poisson[<span class="st">'ci_upper'</span>], </span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, label<span class="op">=</span><span class="st">'IC 95% Poisson'</span>)</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Curva Binomial Negativa</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>plt.plot(x_range, pred_nb[<span class="st">'predicted'</span>], color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Tendencia Binomial Negativa'</span>)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x_range, pred_nb[<span class="st">'ci_lower'</span>], pred_nb[<span class="st">'ci_upper'</span>], </span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, label<span class="op">=</span><span class="st">'IC 95% Bin. Negativa'</span>)</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparativa: Poisson vs Binomial Negativa'</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Ancho de la Hembra (W_scaled)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de Satélites (Sa)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparación de Criterios de Información</span></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AIC Poisson: </span><span class="sc">{</span>results<span class="sc">.</span>aic<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AIC Binomial Negativa: </span><span class="sc">{</span>results_nb<span class="sc">.</span>aic<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/javolet/documents/bayesian-glm-count-data/.venv/lib/python3.11/site-packages/statsmodels/base/_prediction_inference.py:782: UserWarning: using default log-link in get_prediction
+  warnings.warn("using default log-link in get_prediction")</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_eda_frecuentista_files/figure-html/cell-17-output-2.png" width="662" height="529" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AIC Poisson: 927.18
+AIC Binomial Negativa: 757.29</code></pre>
+</div>
 </div>
 
 

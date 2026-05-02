@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-290b1a9ea04e41c7ae7ffe087f35970f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -288,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>El notebook <code>01_eda_frecuentista.ipynb</code> sigue el ejemplo de Agresti (2002, cap. 4) usando solo <code>W</code> como predictor. Aquí exploramos los cuatro features disponibles (<code>W</code>, <code>Wt</code>, <code>C</code>, <code>S</code>) y ajustamos modelos frecuentistas completos para evaluar si los features adicionales aportan poder predictivo sobre <code>Sa</code>.</p>
 <p><strong>Features:</strong> - <code>W</code>: ancho del caparazón (cm) — continua - <code>Wt</code>: peso (kg) — continua, correlacionada con W - <code>C</code>: color (1=light medium, 2=medium, 3=dark medium, 4=dark) — ordinal - <code>S</code>: condición de la espina (1=ambas buenas, 2=una dañada, 3=ambas dañadas) — ordinal - <code>Sa</code>: número de satélites — variable respuesta (conteo)</p>
-<div id="1" class="cell">
+<div id="1" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -305,229 +308,579 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.shape)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>display(df.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(173, 5)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th">W</th>
+<th data-quarto-table-cell-role="th">Wt</th>
+<th data-quarto-table-cell-role="th">Sa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2</td>
+<td>3</td>
+<td>28.3</td>
+<td>3.05</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>3</td>
+<td>3</td>
+<td>26.0</td>
+<td>2.60</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3</td>
+<td>3</td>
+<td>25.6</td>
+<td>2.15</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>4</td>
+<td>2</td>
+<td>21.0</td>
+<td>1.85</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2</td>
+<td>3</td>
+<td>29.0</td>
+<td>3.00</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 <section id="distribuciones-univariadas" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="distribuciones-univariadas"><span class="header-section-number">4.1</span> 1. Distribuciones univariadas</h2>
-<div id="3" class="cell">
+<div id="3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Continuas</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, col <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">0</span>], [<span class="st">'W'</span>, <span class="st">'Wt'</span>, <span class="st">'Sa'</span>]):</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ax.hist(df[col], bins<span class="op">=</span><span class="dv">20</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ax.axvline(df[col].mean(), color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'media=</span><span class="sc">{</span>df[col]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ax.set_title(col)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Categóricas</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (col, labels) <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">1</span>], [</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'C'</span>, [<span class="st">'1-light</span><span class="ch">\n</span><span class="st">med'</span>, <span class="st">'2-med'</span>, <span class="st">'3-dark</span><span class="ch">\n</span><span class="st">med'</span>, <span class="st">'4-dark'</span>]),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'S'</span>, [<span class="st">'1-buenas'</span>, <span class="st">'2-una</span><span class="ch">\n</span><span class="st">dañada'</span>, <span class="st">'3-ambas</span><span class="ch">\n</span><span class="st">dañadas'</span>]),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>]):</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> df[col].value_counts().sort_index()</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    ax.bar(counts.index, counts.values, color<span class="op">=</span><span class="st">'steelblue'</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(counts.index)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels(labels, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    ax.set_title(col)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">2</span>].axis(<span class="st">'off'</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Distribuciones univariadas'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Continuas</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, col <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">0</span>], [<span class="st">'W'</span>, <span class="st">'Wt'</span>, <span class="st">'Sa'</span>]):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    ax.hist(df[col], bins<span class="op">=</span><span class="dv">20</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ax.axvline(df[col].mean(), color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'media=</span><span class="sc">{</span>df[col]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ax.set_title(col)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Categóricas</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (col, labels) <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">1</span>], [</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'C'</span>, [<span class="st">'1-light</span><span class="ch">\n</span><span class="st">med'</span>, <span class="st">'2-med'</span>, <span class="st">'3-dark</span><span class="ch">\n</span><span class="st">med'</span>, <span class="st">'4-dark'</span>]),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'S'</span>, [<span class="st">'1-buenas'</span>, <span class="st">'2-una</span><span class="ch">\n</span><span class="st">dañada'</span>, <span class="st">'3-ambas</span><span class="ch">\n</span><span class="st">dañadas'</span>]),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> df[col].value_counts().sort_index()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    ax.bar(counts.index, counts.values, color<span class="op">=</span><span class="st">'steelblue'</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(counts.index)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels(labels, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    ax.set_title(col)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">2</span>].axis(<span class="st">'off'</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Distribuciones univariadas'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01b_eda_general_files/figure-html/cell-3-output-1.png" width="1333" height="757" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="correlaciones-entre-features" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="correlaciones-entre-features"><span class="header-section-number">4.2</span> 2. Correlaciones entre features</h2>
-<div id="5" class="cell">
+<div id="5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df[[<span class="st">'W'</span>, <span class="st">'Wt'</span>, <span class="st">'C'</span>, <span class="st">'S'</span>, <span class="st">'Sa'</span>]].corr()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.2f'</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, center<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>axes[<span class="dv">0</span>], square<span class="op">=</span><span class="va">True</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Correlación de Pearson'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlaciones con Sa ordenadas</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>corr_sa <span class="op">=</span> corr[<span class="st">'Sa'</span>].drop(<span class="st">'Sa'</span>).sort_values(key<span class="op">=</span><span class="bu">abs</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'steelblue'</span> <span class="cf">if</span> v <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">'tomato'</span> <span class="cf">for</span> v <span class="kw">in</span> corr_sa]</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].barh(corr_sa.index, corr_sa.values, color<span class="op">=</span>colors)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, lw<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Correlación con Sa'</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Correlación con la variable respuesta'</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(corr_sa.values):</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text(v <span class="op">+</span> <span class="fl">0.01</span> <span class="op">*</span> np.sign(v), i, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.3f}</span><span class="ss">'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df[[<span class="st">'W'</span>, <span class="st">'Wt'</span>, <span class="st">'C'</span>, <span class="st">'S'</span>, <span class="st">'Sa'</span>]].corr()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.2f'</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, center<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>axes[<span class="dv">0</span>], square<span class="op">=</span><span class="va">True</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Correlación de Pearson'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlaciones con Sa ordenadas</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>corr_sa <span class="op">=</span> corr[<span class="st">'Sa'</span>].drop(<span class="st">'Sa'</span>).sort_values(key<span class="op">=</span><span class="bu">abs</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'steelblue'</span> <span class="cf">if</span> v <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">'tomato'</span> <span class="cf">for</span> v <span class="kw">in</span> corr_sa]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].barh(corr_sa.index, corr_sa.values, color<span class="op">=</span>colors)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, lw<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Correlación con Sa'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Correlación con la variable respuesta'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(corr_sa.values):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text(v <span class="op">+</span> <span class="fl">0.01</span> <span class="op">*</span> np.sign(v), i, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.3f}</span><span class="ss">'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01b_eda_general_files/figure-html/cell-4-output-1.png" width="1085" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="relación-de-cada-feature-con-sa" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="relación-de-cada-feature-con-sa"><span class="header-section-number">4.3</span> 3. Relación de cada feature con Sa</h2>
-<div id="7" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, col <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">'W'</span>, <span class="st">'Wt'</span>]):</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    ax.scatter(df[col], df[<span class="st">'Sa'</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LOWESS</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> statsmodels.nonparametric.smoothers_lowess <span class="im">import</span> lowess</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    smooth <span class="op">=</span> lowess(df[<span class="st">'Sa'</span>], df[col], frac<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(smooth[:, <span class="dv">0</span>], smooth[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'LOWESS'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    r, p <span class="op">=</span> stats.pearsonr(df[col], df[<span class="st">'Sa'</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Sa vs </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">  (r=</span><span class="sc">{</span>r<span class="sc">:.3f}</span><span class="ss">, p=</span><span class="sc">{</span>p<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(col)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Sa'</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Relación entre features continuos y Sa'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="8" class="cell">
+<div id="7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>c_labels <span class="op">=</span> {<span class="dv">1</span>: <span class="st">'light med'</span>, <span class="dv">2</span>: <span class="st">'medium'</span>, <span class="dv">3</span>: <span class="st">'dark med'</span>, <span class="dv">4</span>: <span class="st">'dark'</span>}</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>s_labels <span class="op">=</span> {<span class="dv">1</span>: <span class="st">'buenas'</span>, <span class="dv">2</span>: <span class="st">'una dañada'</span>, <span class="dv">3</span>: <span class="st">'ambas dañadas'</span>}</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (col, labels) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(<span class="st">'C'</span>, c_labels), (<span class="st">'S'</span>, s_labels)]):</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    order <span class="op">=</span> <span class="bu">sorted</span>(df[col].unique())</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(x<span class="op">=</span>col, y<span class="op">=</span><span class="st">'Sa'</span>, data<span class="op">=</span>df, order<span class="op">=</span>order, ax<span class="op">=</span>ax,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                palette<span class="op">=</span><span class="st">'Blues'</span>, width<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Medias por grupo</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> df.groupby(col)[<span class="st">'Sa'</span>].mean()</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(order)), [means[k] <span class="cf">for</span> k <span class="kw">in</span> order],</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'ro--'</span>, ms<span class="op">=</span><span class="dv">6</span>, label<span class="op">=</span><span class="st">'media'</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels([labels[k] <span class="cf">for</span> k <span class="kw">in</span> order], fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Sa por </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">''</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Distribución de Sa por variable categórica'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, col <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">'W'</span>, <span class="st">'Wt'</span>]):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    ax.scatter(df[col], df[<span class="st">'Sa'</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LOWESS</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> statsmodels.nonparametric.smoothers_lowess <span class="im">import</span> lowess</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    smooth <span class="op">=</span> lowess(df[<span class="st">'Sa'</span>], df[col], frac<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(smooth[:, <span class="dv">0</span>], smooth[:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'LOWESS'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    r, p <span class="op">=</span> stats.pearsonr(df[col], df[<span class="st">'Sa'</span>])</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Sa vs </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">  (r=</span><span class="sc">{</span>r<span class="sc">:.3f}</span><span class="ss">, p=</span><span class="sc">{</span>p<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(col)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Sa'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Relación entre features continuos y Sa'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01b_eda_general_files/figure-html/cell-5-output-1.png" width="1142" height="381" class="figure-img"></p>
+</figure>
 </div>
-<div id="9" class="cell">
+</div>
+</div>
+<div id="8" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col, name <span class="kw">in</span> [(<span class="st">'C'</span>, <span class="st">'Color'</span>), (<span class="st">'S'</span>, <span class="st">'Spine condition'</span>)]:</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    summary <span class="op">=</span> df.groupby(col)[<span class="st">'Sa'</span>].agg(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span><span class="st">'count'</span>, mean<span class="op">=</span><span class="st">'mean'</span>, var<span class="op">=</span><span class="st">'var'</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        prop_zeros<span class="op">=</span><span class="kw">lambda</span> x: (x <span class="op">==</span> <span class="dv">0</span>).mean()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ).<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    summary[<span class="st">'disp_index'</span>] <span class="op">=</span> (summary[<span class="st">'var'</span>] <span class="op">/</span> summary[<span class="st">'mean'</span>]).<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="ss">=== Sa por </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> ==='</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    display(summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>c_labels <span class="op">=</span> {<span class="dv">1</span>: <span class="st">'light med'</span>, <span class="dv">2</span>: <span class="st">'medium'</span>, <span class="dv">3</span>: <span class="st">'dark med'</span>, <span class="dv">4</span>: <span class="st">'dark'</span>}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>s_labels <span class="op">=</span> {<span class="dv">1</span>: <span class="st">'buenas'</span>, <span class="dv">2</span>: <span class="st">'una dañada'</span>, <span class="dv">3</span>: <span class="st">'ambas dañadas'</span>}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (col, labels) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(<span class="st">'C'</span>, c_labels), (<span class="st">'S'</span>, s_labels)]):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    order <span class="op">=</span> <span class="bu">sorted</span>(df[col].unique())</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(x<span class="op">=</span>col, y<span class="op">=</span><span class="st">'Sa'</span>, data<span class="op">=</span>df, order<span class="op">=</span>order, ax<span class="op">=</span>ax,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                palette<span class="op">=</span><span class="st">'Blues'</span>, width<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Medias por grupo</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> df.groupby(col)[<span class="st">'Sa'</span>].mean()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(order)), [means[k] <span class="cf">for</span> k <span class="kw">in</span> order],</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'ro--'</span>, ms<span class="op">=</span><span class="dv">6</span>, label<span class="op">=</span><span class="st">'media'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels([labels[k] <span class="cf">for</span> k <span class="kw">in</span> order], fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Sa por </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">''</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Distribución de Sa por variable categórica'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_169643/1799365727.py:8: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(x=col, y='Sa', data=df, order=order, ax=ax,
+/tmp/ipykernel_169643/1799365727.py:14: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax.set_xticklabels([labels[k] for k in order], fontsize=8)
+/tmp/ipykernel_169643/1799365727.py:8: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(x=col, y='Sa', data=df, order=order, ax=ax,
+/tmp/ipykernel_169643/1799365727.py:14: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax.set_xticklabels([labels[k] for k in order], fontsize=8)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01b_eda_general_files/figure-html/cell-6-output-2.png" width="1142" height="381" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col, name <span class="kw">in</span> [(<span class="st">'C'</span>, <span class="st">'Color'</span>), (<span class="st">'S'</span>, <span class="st">'Spine condition'</span>)]:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    summary <span class="op">=</span> df.groupby(col)[<span class="st">'Sa'</span>].agg(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span><span class="st">'count'</span>, mean<span class="op">=</span><span class="st">'mean'</span>, var<span class="op">=</span><span class="st">'var'</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        prop_zeros<span class="op">=</span><span class="kw">lambda</span> x: (x <span class="op">==</span> <span class="dv">0</span>).mean()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    ).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    summary[<span class="st">'disp_index'</span>] <span class="op">=</span> (summary[<span class="st">'var'</span>] <span class="op">/</span> summary[<span class="st">'mean'</span>]).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="ss">=== Sa por </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> ==='</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    display(summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Sa por Color ===</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">n</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">var</th>
+<th data-quarto-table-cell-role="th">prop_zeros</th>
+<th data-quarto-table-cell-role="th">disp_index</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>12</td>
+<td>4.083</td>
+<td>9.720</td>
+<td>0.250</td>
+<td>2.381</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>95</td>
+<td>3.295</td>
+<td>10.274</td>
+<td>0.274</td>
+<td>3.118</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>44</td>
+<td>2.227</td>
+<td>6.738</td>
+<td>0.409</td>
+<td>3.026</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>22</td>
+<td>2.045</td>
+<td>13.093</td>
+<td>0.682</td>
+<td>6.402</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Sa por Spine condition ===</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">n</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">var</th>
+<th data-quarto-table-cell-role="th">prop_zeros</th>
+<th data-quarto-table-cell-role="th">disp_index</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>37</td>
+<td>3.649</td>
+<td>11.512</td>
+<td>0.297</td>
+<td>3.155</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>15</td>
+<td>2.000</td>
+<td>5.571</td>
+<td>0.533</td>
+<td>2.786</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>121</td>
+<td>2.810</td>
+<td>9.822</td>
+<td>0.355</td>
+<td>3.495</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="modelos-frecuentistas-con-todos-los-features" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="modelos-frecuentistas-con-todos-los-features"><span class="header-section-number">4.4</span> 4. Modelos frecuentistas con todos los features</h2>
 <p><code>C</code> y <code>S</code> se tratan como continuas ordinales — un solo coeficiente por variable. Si hubiera efectos no lineales habría que usar <code>C(C)</code> para dummy encoding.</p>
 <p><code>W</code> y <code>Wt</code> están altamente correlacionadas — ajustamos modelos con y sin <code>Wt</code> para evaluar la multicolinealidad.</p>
-<div id="11" class="cell">
+<div id="11" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">'W'</span>, <span class="st">'Wt'</span>, <span class="st">'C'</span>, <span class="st">'S'</span>]:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_sc'</span>] <span class="op">=</span> (df[col] <span class="op">-</span> df[col].mean()) <span class="op">/</span> df[col].std()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Correlación W_sc vs Wt_sc:'</span>, df[<span class="st">'W_sc'</span>].corr(df[<span class="st">'Wt_sc'</span>]).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">'W'</span>, <span class="st">'Wt'</span>, <span class="st">'C'</span>, <span class="st">'S'</span>]:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_sc'</span>] <span class="op">=</span> (df[col] <span class="op">-</span> df[col].mean()) <span class="op">/</span> df[col].std()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Correlación W_sc vs Wt_sc:'</span>, df[<span class="st">'W_sc'</span>].corr(df[<span class="st">'Wt_sc'</span>]).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Correlación W_sc vs Wt_sc: 0.887</code></pre>
 </div>
-<div id="12" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>poisson_specs <span class="op">=</span> {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P1 — W'</span>:          <span class="st">'Sa ~ W_sc'</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P2 — W + Wt'</span>:     <span class="st">'Sa ~ W_sc + Wt_sc'</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P3 — W + C + S'</span>:  <span class="st">'Sa ~ W_sc + C_sc + S_sc'</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P4 — todos'</span>:      <span class="st">'Sa ~ W_sc + Wt_sc + C_sc + S_sc'</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>poisson_results <span class="op">=</span> {}</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Modelo'</span><span class="sc">:&lt;20}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'AIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'BIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'LogLik'</span><span class="sc">:&gt;10}</span><span class="ss">"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">50</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, formula <span class="kw">in</span> poisson_specs.items():</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> smf.poisson(formula<span class="op">=</span>formula, data<span class="op">=</span>df).fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    poisson_results[name] <span class="op">=</span> r</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;20}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>aic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>bic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>llf<span class="sc">:&gt;10.1f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
-<div id="13" class="cell">
+<div id="12" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nb_specs <span class="op">=</span> {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB1 — W'</span>:         <span class="st">'Sa ~ W_sc'</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB2 — W + Wt'</span>:    <span class="st">'Sa ~ W_sc + Wt_sc'</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB3 — W + C + S'</span>: <span class="st">'Sa ~ W_sc + C_sc + S_sc'</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB4 — todos'</span>:     <span class="st">'Sa ~ W_sc + Wt_sc + C_sc + S_sc'</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>nb_results <span class="op">=</span> {}</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Modelo'</span><span class="sc">:&lt;22}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'AIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'BIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'LogLik'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'alpha'</span><span class="sc">:&gt;8}</span><span class="ss">"</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">60</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, formula <span class="kw">in</span> nb_specs.items():</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> smf.negativebinomial(formula<span class="op">=</span>formula, data<span class="op">=</span>df).fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    nb_results[name] <span class="op">=</span> r</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;22}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>aic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>bic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>llf<span class="sc">:&gt;10.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>params[<span class="st">"alpha"</span>]<span class="sc">:&gt;8.3f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>poisson_specs <span class="op">=</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P1 — W'</span>:          <span class="st">'Sa ~ W_sc'</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P2 — W + Wt'</span>:     <span class="st">'Sa ~ W_sc + Wt_sc'</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P3 — W + C + S'</span>:  <span class="st">'Sa ~ W_sc + C_sc + S_sc'</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'P4 — todos'</span>:      <span class="st">'Sa ~ W_sc + Wt_sc + C_sc + S_sc'</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>poisson_results <span class="op">=</span> {}</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Modelo'</span><span class="sc">:&lt;20}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'AIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'BIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'LogLik'</span><span class="sc">:&gt;10}</span><span class="ss">"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, formula <span class="kw">in</span> poisson_specs.items():</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> smf.poisson(formula<span class="op">=</span>formula, data<span class="op">=</span>df).fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    poisson_results[name] <span class="op">=</span> r</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;20}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>aic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>bic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>llf<span class="sc">:&gt;10.1f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modelo                    AIC      BIC     LogLik
+--------------------------------------------------
+P1 — W                  927.2    933.5     -461.6
+P2 — W + Wt             921.2    930.6     -457.6
+P3 — W + C + S          923.5    936.1     -457.7
+P4 — todos              917.1    932.9     -453.6</code></pre>
 </div>
-<div id="14" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficientes del modelo completo Poisson vs NegBin</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>p_full <span class="op">=</span> poisson_results[<span class="st">'P4 — todos'</span>]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>nb_full <span class="op">=</span> nb_results[<span class="st">'NB4 — todos'</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>coef_names <span class="op">=</span> [<span class="st">'Intercept'</span>, <span class="st">'W_sc'</span>, <span class="st">'Wt_sc'</span>, <span class="st">'C_sc'</span>, <span class="st">'S_sc'</span>]</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (res, title) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(p_full, <span class="st">'Poisson — modelo completo'</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                                    (nb_full, <span class="st">'NegBin — modelo completo'</span>)]):</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> res.params[coef_names]</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    cis   <span class="op">=</span> res.conf_int().loc[coef_names]</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    y_pos <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(coef_names))</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    ax.errorbar(coefs, y_pos,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                xerr<span class="op">=</span>[coefs <span class="op">-</span> cis[<span class="dv">0</span>], cis[<span class="dv">1</span>] <span class="op">-</span> coefs],</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                fmt<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, capsize<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks(<span class="bu">list</span>(y_pos))</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    ax.set_yticklabels(coef_names)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Coeficiente (escala log)'</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Coeficientes con IC 95% — modelo completo'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
-<div id="15" class="cell">
+<div id="13" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, r <span class="kw">in</span> poisson_results.items():</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    rows.append({<span class="st">'Familia'</span>: <span class="st">'Poisson'</span>, <span class="st">'Modelo'</span>: name,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'AIC'</span>: <span class="bu">round</span>(r.aic, <span class="dv">1</span>), <span class="st">'BIC'</span>: <span class="bu">round</span>(r.bic, <span class="dv">1</span>), <span class="st">'LogLik'</span>: <span class="bu">round</span>(r.llf, <span class="dv">1</span>)})</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, r <span class="kw">in</span> nb_results.items():</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    rows.append({<span class="st">'Familia'</span>: <span class="st">'NegBin'</span>, <span class="st">'Modelo'</span>: name,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'AIC'</span>: <span class="bu">round</span>(r.aic, <span class="dv">1</span>), <span class="st">'BIC'</span>: <span class="bu">round</span>(r.bic, <span class="dv">1</span>), <span class="st">'LogLik'</span>: <span class="bu">round</span>(r.llf, <span class="dv">1</span>)})</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.DataFrame(rows)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>best_aic <span class="op">=</span> comparison_df[<span class="st">'AIC'</span>].<span class="bu">min</span>()</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>comparison_df[<span class="st">'ΔAIC'</span>] <span class="op">=</span> (comparison_df[<span class="st">'AIC'</span>] <span class="op">-</span> best_aic).<span class="bu">round</span>(<span class="dv">1</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>display(comparison_df.sort_values(<span class="st">'AIC'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nb_specs <span class="op">=</span> {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB1 — W'</span>:         <span class="st">'Sa ~ W_sc'</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB2 — W + Wt'</span>:    <span class="st">'Sa ~ W_sc + Wt_sc'</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB3 — W + C + S'</span>: <span class="st">'Sa ~ W_sc + C_sc + S_sc'</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NB4 — todos'</span>:     <span class="st">'Sa ~ W_sc + Wt_sc + C_sc + S_sc'</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>nb_results <span class="op">=</span> {}</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Modelo'</span><span class="sc">:&lt;22}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'AIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'BIC'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'LogLik'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'alpha'</span><span class="sc">:&gt;8}</span><span class="ss">"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">60</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, formula <span class="kw">in</span> nb_specs.items():</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> smf.negativebinomial(formula<span class="op">=</span>formula, data<span class="op">=</span>df).fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    nb_results[name] <span class="op">=</span> r</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;22}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>aic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>bic<span class="sc">:&gt;8.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>llf<span class="sc">:&gt;10.1f}</span><span class="ss"> </span><span class="sc">{</span>r<span class="sc">.</span>params[<span class="st">"alpha"</span>]<span class="sc">:&gt;8.3f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modelo                      AIC      BIC     LogLik    alpha
+------------------------------------------------------------
+NB1 — W                   757.3    766.8     -375.6    1.106
+NB2 — W + Wt              756.6    769.2     -374.3    1.073
+NB3 — W + C + S           758.9    774.7     -374.5    1.076
+NB4 — todos               758.4    777.3     -373.2    1.045</code></pre>
+</div>
+</div>
+<div id="14" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficientes del modelo completo Poisson vs NegBin</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>p_full <span class="op">=</span> poisson_results[<span class="st">'P4 — todos'</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>nb_full <span class="op">=</span> nb_results[<span class="st">'NB4 — todos'</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>coef_names <span class="op">=</span> [<span class="st">'Intercept'</span>, <span class="st">'W_sc'</span>, <span class="st">'Wt_sc'</span>, <span class="st">'C_sc'</span>, <span class="st">'S_sc'</span>]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (res, title) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(p_full, <span class="st">'Poisson — modelo completo'</span>),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                                    (nb_full, <span class="st">'NegBin — modelo completo'</span>)]):</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> res.params[coef_names]</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    cis   <span class="op">=</span> res.conf_int().loc[coef_names]</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    y_pos <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(coef_names))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    ax.errorbar(coefs, y_pos,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                xerr<span class="op">=</span>[coefs <span class="op">-</span> cis[<span class="dv">0</span>], cis[<span class="dv">1</span>] <span class="op">-</span> coefs],</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                fmt<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, capsize<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks(<span class="bu">list</span>(y_pos))</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    ax.set_yticklabels(coef_names)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Coeficiente (escala log)'</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Coeficientes con IC 95% — modelo completo'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01b_eda_general_files/figure-html/cell-11-output-1.png" width="1236" height="381" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="15" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, r <span class="kw">in</span> poisson_results.items():</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    rows.append({<span class="st">'Familia'</span>: <span class="st">'Poisson'</span>, <span class="st">'Modelo'</span>: name,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'AIC'</span>: <span class="bu">round</span>(r.aic, <span class="dv">1</span>), <span class="st">'BIC'</span>: <span class="bu">round</span>(r.bic, <span class="dv">1</span>), <span class="st">'LogLik'</span>: <span class="bu">round</span>(r.llf, <span class="dv">1</span>)})</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, r <span class="kw">in</span> nb_results.items():</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    rows.append({<span class="st">'Familia'</span>: <span class="st">'NegBin'</span>, <span class="st">'Modelo'</span>: name,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'AIC'</span>: <span class="bu">round</span>(r.aic, <span class="dv">1</span>), <span class="st">'BIC'</span>: <span class="bu">round</span>(r.bic, <span class="dv">1</span>), <span class="st">'LogLik'</span>: <span class="bu">round</span>(r.llf, <span class="dv">1</span>)})</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.DataFrame(rows)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>best_aic <span class="op">=</span> comparison_df[<span class="st">'AIC'</span>].<span class="bu">min</span>()</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>comparison_df[<span class="st">'ΔAIC'</span>] <span class="op">=</span> (comparison_df[<span class="st">'AIC'</span>] <span class="op">-</span> best_aic).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>display(comparison_df.sort_values(<span class="st">'AIC'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Familia</th>
+<th data-quarto-table-cell-role="th">Modelo</th>
+<th data-quarto-table-cell-role="th">AIC</th>
+<th data-quarto-table-cell-role="th">BIC</th>
+<th data-quarto-table-cell-role="th">LogLik</th>
+<th data-quarto-table-cell-role="th">ΔAIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>NegBin</td>
+<td>NB2 — W + Wt</td>
+<td>756.6</td>
+<td>769.2</td>
+<td>-374.3</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>NegBin</td>
+<td>NB1 — W</td>
+<td>757.3</td>
+<td>766.8</td>
+<td>-375.6</td>
+<td>0.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>NegBin</td>
+<td>NB4 — todos</td>
+<td>758.4</td>
+<td>777.3</td>
+<td>-373.2</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>NegBin</td>
+<td>NB3 — W + C + S</td>
+<td>758.9</td>
+<td>774.7</td>
+<td>-374.5</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Poisson</td>
+<td>P4 — todos</td>
+<td>917.1</td>
+<td>932.9</td>
+<td>-453.6</td>
+<td>160.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Poisson</td>
+<td>P2 — W + Wt</td>
+<td>921.2</td>
+<td>930.6</td>
+<td>-457.6</td>
+<td>164.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Poisson</td>
+<td>P3 — W + C + S</td>
+<td>923.5</td>
+<td>936.1</td>
+<td>-457.7</td>
+<td>166.9</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Poisson</td>
+<td>P1 — W</td>
+<td>927.2</td>
+<td>933.5</td>
+<td>-461.6</td>
+<td>170.6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="conclusiones-del-eda-extendido" class="level2" data-number="4.5">

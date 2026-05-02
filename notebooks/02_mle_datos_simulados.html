@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-290b1a9ea04e41c7ae7ffe087f35970f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -380,7 +380,7 @@ window.Quarto = {
 <li>Máximo global único <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></li>
 <li>Convergencia cuadrática de Newton-Raphson en la vecindad del máximo</li>
 </ul>
-<div id="3" class="cell">
+<div id="3" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -403,7 +403,7 @@ window.Quarto = {
 <p>Generamos datos donde el verdadero modelo es Poisson con parámetros conocidos. Usamos <span class="math inline">\(\log(x)\)</span> como predictor para capturar relaciones multiplicativas.</p>
 <p>Modelo verdadero:</p>
 <p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 \log(x_i), \quad \beta_0 = 1.0, \quad \beta_1 = 0.8\]</span></p>
-<div id="5" class="cell">
+<div id="5" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1500</span></span>
@@ -423,143 +423,223 @@ window.Quarto = {
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Media de y: </span><span class="sc">{</span>y<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">  |  Varianza de y: </span><span class="sc">{</span>y<span class="sc">.</span>var()<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Índice de dispersión D = </span><span class="sc">{</span>y<span class="sc">.</span>var()<span class="op">/</span>y<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">  (esperado ≈ 1.0 para Poisson puro)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>n = 1500
+Parámetros reales: β₀ = 1.0, β₁ = 0.8
+Media de y: 46.607  |  Varianza de y: 84.121
+Índice de dispersión D = 1.805  (esperado ≈ 1.0 para Poisson puro)</code></pre>
+</div>
 </div>
 <section id="verificación-del-supuesto-vary-ey" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="verificación-del-supuesto-vary-ey"><span class="header-section-number">5.2.1</span> Verificación del supuesto Var[Y] ≈ E[Y]</h3>
 <p>En datos verdaderamente Poisson, la varianza condicional debe aproximarse a la media.</p>
-<div id="7" class="cell">
+<div id="7" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_sim[<span class="st">'x_cat'</span>] <span class="op">=</span> pd.qcut(df_sim[<span class="st">'x'</span>], q<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grupo <span class="op">=</span> df_sim.groupby(<span class="st">'x_cat'</span>, observed<span class="op">=</span><span class="va">False</span>)[<span class="st">'y'</span>].agg(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span><span class="st">'count'</span>, media<span class="op">=</span><span class="st">'mean'</span>, varianza<span class="op">=</span><span class="st">'var'</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>grupo[<span class="st">'D'</span>] <span class="op">=</span> (grupo[<span class="st">'varianza'</span>] <span class="op">/</span> grupo[<span class="st">'media'</span>]).<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grupo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_sim[<span class="st">'x_cat'</span>] <span class="op">=</span> pd.qcut(df_sim[<span class="st">'x'</span>], q<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>grupo <span class="op">=</span> df_sim.groupby(<span class="st">'x_cat'</span>, observed<span class="op">=</span><span class="va">False</span>)[<span class="st">'y'</span>].agg(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span><span class="st">'count'</span>, media<span class="op">=</span><span class="st">'mean'</span>, varianza<span class="op">=</span><span class="st">'var'</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>grupo[<span class="st">'D'</span>] <span class="op">=</span> (grupo[<span class="st">'varianza'</span>] <span class="op">/</span> grupo[<span class="st">'media'</span>]).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grupo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    n   media  varianza      D
+x_cat                                         
+(16.557, 27.578]  150  35.427    27.602  0.779
+(27.578, 30.007]  150  40.507    36.601  0.904
+(30.007, 31.654]  150  41.713    39.669  0.951
+(31.654, 33.243]  150  44.333    45.875  1.035
+(33.243, 34.936]  150  46.067    49.418  1.073
+(34.936, 36.486]  150  47.360    54.272  1.146
+(36.486, 38.137]  150  49.500    51.755  1.046
+(38.137, 39.91]   150  50.700    49.581  0.978
+(39.91, 42.422]   150  52.973    49.556  0.935
+(42.422, 53.879]  150  57.487    63.795  1.110</code></pre>
 </div>
-<div id="8" class="cell">
+</div>
+<div id="8" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">6</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hexbin: relación X vs Y</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>hb <span class="op">=</span> axes[<span class="dv">0</span>].hexbin(df_sim[<span class="st">'x'</span>], df_sim[<span class="st">'y'</span>], gridsize<span class="op">=</span><span class="dv">25</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.colorbar(hb, ax<span class="op">=</span>axes[<span class="dv">0</span>], label<span class="op">=</span><span class="st">'n observaciones'</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Relación X vs Y (densidad hexagonal)'</span>, xlabel<span class="op">=</span><span class="st">'X'</span>, ylabel<span class="op">=</span><span class="st">'Conteo Y'</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot por deciles</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df_sim, x<span class="op">=</span><span class="st">'x_cat'</span>, y<span class="op">=</span><span class="st">'y'</span>, palette<span class="op">=</span><span class="st">'viridis'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Distribución de Y por deciles de X'</span>, xlabel<span class="op">=</span><span class="st">'Deciles de X'</span>, ylabel<span class="op">=</span><span class="st">'Y'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hexbin: relación X vs Y</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>hb <span class="op">=</span> axes[<span class="dv">0</span>].hexbin(df_sim[<span class="st">'x'</span>], df_sim[<span class="st">'y'</span>], gridsize<span class="op">=</span><span class="dv">25</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.colorbar(hb, ax<span class="op">=</span>axes[<span class="dv">0</span>], label<span class="op">=</span><span class="st">'n observaciones'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Relación X vs Y (densidad hexagonal)'</span>, xlabel<span class="op">=</span><span class="st">'X'</span>, ylabel<span class="op">=</span><span class="st">'Conteo Y'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot por deciles</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df_sim, x<span class="op">=</span><span class="st">'x_cat'</span>, y<span class="op">=</span><span class="st">'y'</span>, palette<span class="op">=</span><span class="st">'viridis'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Distribución de Y por deciles de X'</span>, xlabel<span class="op">=</span><span class="st">'Deciles de X'</span>, ylabel<span class="op">=</span><span class="st">'Y'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_169708/3674485917.py:9: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df_sim, x='x_cat', y='y', palette='viridis', ax=axes[1])</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02_mle_datos_simulados_files/figure-html/cell-5-output-2.png" width="1233" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 </section>
 <section id="mle-manual-con-scipy.optimize" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="mle-manual-con-scipy.optimize"><span class="header-section-number">5.3</span> 3. MLE manual con <code>scipy.optimize</code></h2>
 <p>Implementamos directamente las tres funciones derivadas de la log-verosimilitud.</p>
-<div id="10" class="cell">
+<div id="10" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X_mat <span class="op">=</span> np.column_stack([np.ones(n), log_x])</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_nll(beta, X, y):</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>np.<span class="bu">sum</span>(y <span class="op">*</span> (X <span class="op">@</span> beta) <span class="op">-</span> mu)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_gradient(beta, X, y):</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>(X.T <span class="op">@</span> (y <span class="op">-</span> mu))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_hessian(beta, X, y):</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X.T <span class="op">*</span> mu <span class="op">@</span> X</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X_mat <span class="op">=</span> np.column_stack([np.ones(n), log_x])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_nll(beta, X, y):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>np.<span class="bu">sum</span>(y <span class="op">*</span> (X <span class="op">@</span> beta) <span class="op">-</span> mu)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_gradient(beta, X, y):</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>(X.T <span class="op">@</span> (y <span class="op">-</span> mu))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_hessian(beta, X, y):</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X.T <span class="op">*</span> mu <span class="op">@</span> X</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="11" class="cell">
+<div id="11" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>beta_init <span class="op">=</span> np.zeros(<span class="dv">2</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> minimize(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    fun<span class="op">=</span>poisson_nll, x0<span class="op">=</span>beta_init, args<span class="op">=</span>(X_mat, y),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">'Newton-CG'</span>, jac<span class="op">=</span>poisson_gradient, hess<span class="op">=</span>poisson_hessian</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="op">=</span> res.x</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimización exitosa:'</span>, res.success)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'β̂₀ = </span><span class="sc">{</span>beta_hat[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">  (real: </span><span class="sc">{</span>beta_0_real<span class="sc">}</span><span class="ss">)'</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'β̂₁ = </span><span class="sc">{</span>beta_hat[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">  (real: </span><span class="sc">{</span>beta_1_real<span class="sc">}</span><span class="ss">)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>beta_init <span class="op">=</span> np.zeros(<span class="dv">2</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> minimize(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    fun<span class="op">=</span>poisson_nll, x0<span class="op">=</span>beta_init, args<span class="op">=</span>(X_mat, y),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">'Newton-CG'</span>, jac<span class="op">=</span>poisson_gradient, hess<span class="op">=</span>poisson_hessian</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="op">=</span> res.x</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimización exitosa:'</span>, res.success)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'β̂₀ = </span><span class="sc">{</span>beta_hat[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">  (real: </span><span class="sc">{</span>beta_0_real<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'β̂₁ = </span><span class="sc">{</span>beta_hat[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">  (real: </span><span class="sc">{</span>beta_1_real<span class="sc">}</span><span class="ss">)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimización exitosa: True
+β̂₀ = 1.0817  (real: 1.0)
+β̂₁ = 0.7773  (real: 0.8)</code></pre>
 </div>
-<div id="12" class="cell">
+</div>
+<div id="12" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covarianza = inversa de la Hessiana observada</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> poisson_hessian(beta_hat, X_mat, y)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cov <span class="op">=</span> np.linalg.inv(H)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(np.diag(cov))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> beta_hat <span class="op">/</span> se</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>p_vals <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(np.<span class="bu">abs</span>(z)))</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>z_crit <span class="op">=</span> stats.norm.ppf(<span class="fl">0.975</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="sc">{</span><span class="st">"Variable"</span><span class="sc">:&lt;15}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"Coef"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"SE"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"z"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"P&gt;|z|"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"[0.025"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"0.975]"</span><span class="sc">:&gt;8}</span><span class="ss">'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">65</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="st">'Intercepto'</span>, <span class="st">'log(x)'</span>]):</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;15}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>se[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>z[i]<span class="sc">:8.4f}</span><span class="ss"> '</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'</span><span class="sc">{</span>p_vals[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="op">-</span>z_crit<span class="op">*</span>se[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="op">+</span>z_crit<span class="op">*</span>se[i]<span class="sc">:8.4f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covarianza = inversa de la Hessiana observada</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> poisson_hessian(beta_hat, X_mat, y)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>cov <span class="op">=</span> np.linalg.inv(H)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(np.diag(cov))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> beta_hat <span class="op">/</span> se</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>p_vals <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(np.<span class="bu">abs</span>(z)))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>z_crit <span class="op">=</span> stats.norm.ppf(<span class="fl">0.975</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="sc">{</span><span class="st">"Variable"</span><span class="sc">:&lt;15}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"Coef"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"SE"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"z"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"P&gt;|z|"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"[0.025"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"0.975]"</span><span class="sc">:&gt;8}</span><span class="ss">'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">65</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="st">'Intercepto'</span>, <span class="st">'log(x)'</span>]):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;15}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>se[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>z[i]<span class="sc">:8.4f}</span><span class="ss"> '</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'</span><span class="sc">{</span>p_vals[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="op">-</span>z_crit<span class="op">*</span>se[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="op">+</span>z_crit<span class="op">*</span>se[i]<span class="sc">:8.4f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Variable            Coef       SE        z    P&gt;|z|   [0.025   0.975]
+-----------------------------------------------------------------
+Intercepto        1.0817   0.0788  13.7307   0.0000   0.9273   1.2361
+log(x)            0.7773   0.0221  35.1917   0.0000   0.7340   0.8206</code></pre>
+</div>
 </div>
 </section>
 <section id="verificación-con-statsmodels" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="verificación-con-statsmodels"><span class="header-section-number">5.4</span> 4. Verificación con <code>statsmodels</code></h2>
 <p>Comparamos con la implementación de referencia. Los resultados deben ser idénticos.</p>
-<div id="14" class="cell">
+<div id="14" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.poisson(formula<span class="op">=</span><span class="st">'y ~ log_x'</span>, data<span class="op">=</span>df_sim)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.poisson(formula<span class="op">=</span><span class="st">'y ~ log_x'</span>, data<span class="op">=</span>df_sim)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          Poisson Regression Results                          
+==============================================================================
+Dep. Variable:                      y   No. Observations:                 1500
+Model:                        Poisson   Df Residuals:                     1498
+Method:                           MLE   Df Model:                            1
+Date:                Sun, 26 Apr 2026   Pseudo R-squ.:                  0.1130
+Time:                        21:51:02   Log-Likelihood:                -4967.3
+converged:                       True   LL-Null:                       -5600.5
+Covariance Type:            nonrobust   LLR p-value:                2.443e-277
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.0817      0.079     13.731      0.000       0.927       1.236
+log_x          0.7773      0.022     35.192      0.000       0.734       0.821
+==============================================================================</code></pre>
 </div>
-<div id="15" class="cell">
+</div>
+<div id="15" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incident Rate Ratios (IRR): exp(coeficiente)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Interpretación: por cada unidad que aumenta log(x), y se multiplica por IRR</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>irr <span class="op">=</span> np.exp(results.params)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'IRR (exp(coef)):'</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(irr.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incident Rate Ratios (IRR): exp(coeficiente)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Interpretación: por cada unidad que aumenta log(x), y se multiplica por IRR</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>irr <span class="op">=</span> np.exp(results.params)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'IRR (exp(coef)):'</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(irr.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>IRR (exp(coef)):
+Intercept    2.9496
+log_x        2.1756
+dtype: float64</code></pre>
+</div>
 </div>
 </section>
 <section id="diagnóstico-de-sobredispersión" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="diagnóstico-de-sobredispersión"><span class="header-section-number">5.5</span> 5. Diagnóstico de sobredispersión</h2>
 <p>Para datos simulados de forma verdaderamente Poisson, el índice φ debe ser ≈ 1. Si φ &gt;&gt; 1, habría sobredispersión y el modelo Poisson sería inadecuado.</p>
 <p><span class="math display">\[\hat{\phi} = \frac{\chi^2_{\text{Pearson}}}{n - p}\]</span></p>
-<div id="17" class="cell">
+<div id="17" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>phi <span class="op">=</span> np.<span class="bu">sum</span>(results.resid_pearson<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> results.df_resid</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Dispersión estimada φ = </span><span class="sc">{</span>phi<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> phi <span class="op">&gt;</span> <span class="fl">1.5</span>:</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'⚠ Sobredispersión detectada (φ &gt;&gt; 1). Considerar Binomial Negativa.'</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'✓ Dispersión aceptable para Poisson (φ ≈ 1). El supuesto se cumple.'</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(results.fittedvalues, results.resid_pearson, alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Valores ajustados'</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Residuos de Pearson'</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Residuos vs Ajustados (φ = </span><span class="sc">{</span>phi<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>phi <span class="op">=</span> np.<span class="bu">sum</span>(results.resid_pearson<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> results.df_resid</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Dispersión estimada φ = </span><span class="sc">{</span>phi<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> phi <span class="op">&gt;</span> <span class="fl">1.5</span>:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'⚠ Sobredispersión detectada (φ &gt;&gt; 1). Considerar Binomial Negativa.'</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'✓ Dispersión aceptable para Poisson (φ ≈ 1). El supuesto se cumple.'</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(results.fittedvalues, results.resid_pearson, alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Valores ajustados'</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Residuos de Pearson'</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Residuos vs Ajustados (φ = </span><span class="sc">{</span>phi<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dispersión estimada φ = 0.9592
+✓ Dispersión aceptable para Poisson (φ ≈ 1). El supuesto se cumple.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02_mle_datos_simulados_files/figure-html/cell-11-output-2.png" width="758" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="conclusiones" class="level2" data-number="5.6">

@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-290b1a9ea04e41c7ae7ffe087f35970f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -291,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="prerequisito" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="prerequisito"><span class="header-section-number">7.1</span> Prerequisito</h2>
 <p>Ejecutar primero <code>03_inferencia_bayesiana.ipynb</code> para generar <code>outputs/pois_idata.nc</code> y <code>outputs/neg_idata.nc</code> con los grupos <code>posterior_predictive</code> y <code>log_likelihood</code>.</p>
-<div id="1" class="cell">
+<div id="1" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -304,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2" class="cell">
+<div id="2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar InferenceData con posterior predictive</span></span>
@@ -322,174 +325,351 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grupos disponibles Poisson:  </span><span class="sc">{</span><span class="bu">list</span>(idata_pois.groups())<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grupos disponibles NegBin:   </span><span class="sc">{</span><span class="bu">list</span>(idata_nb.groups())<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Grupos disponibles Poisson:  ['posterior', 'posterior_predictive', 'log_likelihood', 'sample_stats', 'observed_data']
+Grupos disponibles NegBin:   ['posterior', 'posterior_predictive', 'log_likelihood', 'sample_stats', 'observed_data']</code></pre>
+</div>
 </div>
 </section>
 <section id="verificación-de-sobredispersión-en-los-datos-observados" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="verificación-de-sobredispersión-en-los-datos-observados"><span class="header-section-number">7.2</span> 1. Verificación de sobredispersión en los datos observados</h2>
 <p>Bajo Poisson: E[Y] = Var[Y] → Índice de dispersión D = Var/Mean ≈ 1<br>
 Si D &gt; 1 → sobredispersión (la Binomial Negativa es más apropiada)</p>
-<div id="4" class="cell">
+<div id="4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_obs <span class="op">=</span> np.mean(y_obs)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>var_obs  <span class="op">=</span> np.var(y_obs)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>D_obs    <span class="op">=</span> var_obs <span class="op">/</span> mean_obs  <span class="co"># Índice de dispersión (VMR)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Media observada:              </span><span class="sc">{</span>mean_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Varianza observada:           </span><span class="sc">{</span>var_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Índice de dispersión (D=V/M): </span><span class="sc">{</span>D_obs<span class="sc">:.3f}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'← sobredispersión'</span> <span class="cf">if</span> D_obs <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">'← equidispersión'</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proporción de ceros:          </span><span class="sc">{</span>np<span class="sc">.</span>mean(y_obs <span class="op">==</span> <span class="dv">0</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor máximo:                 </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">max</span>(y_obs)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_obs <span class="op">=</span> np.mean(y_obs)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>var_obs  <span class="op">=</span> np.var(y_obs)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>D_obs    <span class="op">=</span> var_obs <span class="op">/</span> mean_obs  <span class="co"># Índice de dispersión (VMR)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Media observada:              </span><span class="sc">{</span>mean_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Varianza observada:           </span><span class="sc">{</span>var_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Índice de dispersión (D=V/M): </span><span class="sc">{</span>D_obs<span class="sc">:.3f}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'← sobredispersión'</span> <span class="cf">if</span> D_obs <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">'← equidispersión'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proporción de ceros:          </span><span class="sc">{</span>np<span class="sc">.</span>mean(y_obs <span class="op">==</span> <span class="dv">0</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor máximo:                 </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">max</span>(y_obs)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Media observada:              2.919
+Varianza observada:           9.855
+Índice de dispersión (D=V/M): 3.376  ← sobredispersión
+Proporción de ceros:          0.358
+Valor máximo:                 15</code></pre>
+</div>
 </div>
 </section>
 <section id="ppc-visual-distribución-marginal" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="ppc-visual-distribución-marginal"><span class="header-section-number">7.3</span> 2. PPC visual — Distribución marginal</h2>
 <p><code>az.plot_ppc</code> superpone la distribución de los datos replicados y_rep sobre y_obs. Si el modelo es adecuado, la nube de y_rep debe envolver a y_obs.</p>
-<div id="6" class="cell">
+<div id="6" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_pois, ax<span class="op">=</span>axes[<span class="dv">0</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson'</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_nb, ax<span class="op">=</span>axes[<span class="dv">1</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlim(<span class="dv">0</span>, <span class="fl">17.5</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal de y_rep vs y_obs'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_pois, ax<span class="op">=</span>axes[<span class="dv">0</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_nb, ax<span class="op">=</span>axes[<span class="dv">1</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlim(<span class="dv">0</span>, <span class="fl">17.5</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal de y_rep vs y_obs'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_predictive_checks_base_models_files/figure-html/cell-5-output-1.png" width="1122" height="382" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="ppcs-con-estadísticos-de-prueba-test-statistics" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba-test-statistics"><span class="header-section-number">7.4</span> 3. PPCs con estadísticos de prueba (test statistics)</h2>
 <p>Para cada estadístico T, comparamos T(y_obs) con la distribución de T(y_rep). Si T(y_obs) cae en la cola de T(y_rep) → el modelo no captura esa propiedad.</p>
 <p><strong>Estadísticos para sobredispersión:</strong> - <code>std</code>: ¿captura la dispersión total? - <code>var/mean</code>: índice de dispersión (D=1 bajo Poisson) - <code>max</code>: ¿captura las colas pesadas? - <code>mean(y==0)</code>: ¿captura la inflación de ceros?</p>
-<div id="8" class="cell">
+<div id="8" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Índice de dispersión: Var/Mean. Bajo Poisson debe ser ~1."""</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Proporción de ceros."""</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Índice de dispersión: Var/Mean. Bajo Poisson debe ser ~1."""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Proporción de ceros."""</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="9" class="cell">
+<div id="9" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer muestras y_rep</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y_rep_pois <span class="op">=</span> idata_pois.posterior_predictive[<span class="st">'y'</span>].values  <span class="co"># shape: (chains, draws, N)</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y_rep_nb   <span class="op">=</span> idata_nb.posterior_predictive[<span class="st">'y'</span>].values</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplanar chains y draws</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>y_rep_pois_flat <span class="op">=</span> y_rep_pois.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_pois.shape[<span class="op">-</span><span class="dv">1</span>])  <span class="co"># (S, N)</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>y_rep_nb_flat   <span class="op">=</span> y_rep_nb.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_nb.shape[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_pois shape: </span><span class="sc">{</span>y_rep_pois_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_nb shape:   </span><span class="sc">{</span>y_rep_nb_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer muestras y_rep</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>y_rep_pois <span class="op">=</span> idata_pois.posterior_predictive[<span class="st">'y'</span>].values  <span class="co"># shape: (chains, draws, N)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>y_rep_nb   <span class="op">=</span> idata_nb.posterior_predictive[<span class="st">'y'</span>].values</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplanar chains y draws</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>y_rep_pois_flat <span class="op">=</span> y_rep_pois.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_pois.shape[<span class="op">-</span><span class="dv">1</span>])  <span class="co"># (S, N)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>y_rep_nb_flat   <span class="op">=</span> y_rep_nb.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_nb.shape[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_pois shape: </span><span class="sc">{</span>y_rep_pois_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_nb shape:   </span><span class="sc">{</span>y_rep_nb_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>y_rep_pois shape: (8000, 173)
+y_rep_nb shape:   (8000, 173)</code></pre>
 </div>
-<div id="10" class="cell">
+</div>
+<div id="10" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (y_rep_flat, model_name) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'Binomial Negativa'</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    ]):</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs) = </span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">Bayesian p-value = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (y_rep_flat, model_name) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'Binomial Negativa'</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    ]):</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs) = </span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">Bayesian p-value = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_predictive_checks_base_models_files/figure-html/cell-8-output-1.png" width="1142" height="1556" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="loo-pit-calibración-predictiva" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="loo-pit-calibración-predictiva"><span class="header-section-number">7.5</span> 4. LOO-PIT — Calibración predictiva</h2>
 <p>El LOO-PIT evalúa calibración: si el modelo está bien calibrado, los quantiles de y_obs dentro de la distribución predictiva leave-one-out deben ser uniformes.</p>
-<div id="12" class="cell">
+<div id="12" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_pois, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson — LOO-PIT'</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_nb, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa — LOO-PIT'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_pois, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson — LOO-PIT'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_nb, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa — LOO-PIT'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_predictive_checks_base_models_files/figure-html/cell-9-output-1.png" width="1143" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="comparación-de-modelos-loo-cv" class="level2" data-number="7.6">
 <h2 data-number="7.6" class="anchored" data-anchor-id="comparación-de-modelos-loo-cv"><span class="header-section-number">7.6</span> 5. Comparación de modelos (LOO-CV)</h2>
 <p><code>az.compare</code> usa Leave-One-Out Cross-Validation para comparar la capacidad predictiva de los modelos. Un ELPD más alto = mejor predicción out-of-sample.</p>
-<div id="14" class="cell">
+<div id="14" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({<span class="st">'Poisson'</span>: idata_pois, <span class="st">'NegBin'</span>: idata_nb})</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparación LOO-CV: Poisson vs Binomial Negativa'</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({<span class="st">'Poisson'</span>: idata_pois, <span class="st">'NegBin'</span>: idata_nb})</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparación LOO-CV: Poisson vs Binomial Negativa'</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rank</th>
+<th data-quarto-table-cell-role="th">elpd_loo</th>
+<th data-quarto-table-cell-role="th">p_loo</th>
+<th data-quarto-table-cell-role="th">elpd_diff</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">se</th>
+<th data-quarto-table-cell-role="th">dse</th>
+<th data-quarto-table-cell-role="th">warning</th>
+<th data-quarto-table-cell-role="th">scale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NegBin</th>
+<td>0</td>
+<td>-378.435266</td>
+<td>2.593778</td>
+<td>0.000000</td>
+<td>1.0</td>
+<td>13.521200</td>
+<td>0.000000</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Poisson</th>
+<td>1</td>
+<td>-465.237914</td>
+<td>5.263937</td>
+<td>86.802648</td>
+<td>0.0</td>
+<td>23.064273</td>
+<td>17.322102</td>
+<td>False</td>
+<td>log</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_predictive_checks_base_models_files/figure-html/cell-10-output-2.png" width="719" height="308" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="resumen-de-evidencia-y-conclusiones" class="level2" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="resumen-de-evidencia-y-conclusiones"><span class="header-section-number">7.7</span> 6. Resumen de evidencia y conclusiones</h2>
-<div id="16" class="cell">
+<div id="16" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla resumen</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y_rep_flat, model_name <span class="kw">in</span> [</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'NegBin'</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ]:</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: model_name,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(np.mean(t_rep), <span class="dv">3</span>),</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs), <span class="dv">3</span>),</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla resumen</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y_rep_flat, model_name <span class="kw">in</span> [</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'NegBin'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    ]:</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: model_name,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(np.mean(t_rep), <span class="dv">3</span>),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs), <span class="dv">3</span>),</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Modelo</th>
+<th data-quarto-table-cell-role="th">Estadístico</th>
+<th data-quarto-table-cell-role="th">T(y_obs)</th>
+<th data-quarto-table-cell-role="th">E[T(y_rep)]</th>
+<th data-quarto-table-cell-role="th">Bayesian p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>NegBin</td>
+<td>max</td>
+<td>15.000</td>
+<td>27.266</td>
+<td>0.963</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Poisson</td>
+<td>max</td>
+<td>15.000</td>
+<td>11.078</td>
+<td>0.075</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>NegBin</td>
+<td>prop. ceros</td>
+<td>0.358</td>
+<td>0.291</td>
+<td>0.092</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Poisson</td>
+<td>prop. ceros</td>
+<td>0.358</td>
+<td>0.082</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>NegBin</td>
+<td>std</td>
+<td>3.139</td>
+<td>4.089</td>
+<td>0.889</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Poisson</td>
+<td>std</td>
+<td>3.139</td>
+<td>2.031</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>NegBin</td>
+<td>Índice dispersión</td>
+<td>3.376</td>
+<td>5.709</td>
+<td>0.950</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Poisson</td>
+<td>Índice dispersión</td>
+<td>3.376</td>
+<td>1.423</td>
+<td>0.000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 <section id="conclusiones" class="level3" data-number="7.7.1">
 <h3 data-number="7.7.1" class="anchored" data-anchor-id="conclusiones"><span class="header-section-number">7.7.1</span> Conclusiones</h3>

@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-290b1a9ea04e41c7ae7ffe087f35970f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,6 +107,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
 
 </head>
@@ -293,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="0" class="cell">
+<div id="0" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -311,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2" class="cell">
+<div id="2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Grid approach ---</span></span>
@@ -505,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="carga-de-datos-y-ajuste-por-mv" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Carga de datos y ajuste por MV</h1>
-<div id="4" class="cell">
+<div id="4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../data/agresti_crab_satellites_dataset.csv'</span>)</span>
@@ -530,340 +534,959 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MLE alpha: </span><span class="sc">{</span>alpha_mle<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>alpha_mle_se<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MLE alpha: </span><span class="sc">{</span>beta_mle<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>beta_mle_se<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>MLE alpha: 1.009 ± 0.047
+MLE alpha: 0.346 ± 0.042</code></pre>
+</div>
 </div>
 </section>
 <section id="enfoque-bayesiano---aproximación-en-grid" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Enfoque Bayesiano - Aproximación en grid</h1>
 <section id="grid-de-parámetros" class="level3" data-number="8.0.1">
 <h3 data-number="8.0.1" class="anchored" data-anchor-id="grid-de-parámetros"><span class="header-section-number">8.0.1</span> Grid de parámetros</h3>
-<div id="7" class="cell">
+<div id="7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> <span class="dv">201</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>alpha_min <span class="op">=</span> alpha_mle <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> alpha_mle_se</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>alpha_max <span class="op">=</span> alpha_mle <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> alpha_mle_se</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>beta_min <span class="op">=</span> beta_mle <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> beta_mle_se</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>beta_max <span class="op">=</span> beta_mle <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> beta_mle_se</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>alpha_grid <span class="op">=</span> np.linspace(alpha_min, alpha_max, points)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>delta_alpha <span class="op">=</span> alpha_grid[<span class="dv">1</span>] <span class="op">-</span> alpha_grid[<span class="dv">0</span>]</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>beta_grid <span class="op">=</span> np.linspace(beta_min, beta_max, points)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>delta_beta <span class="op">=</span> beta_grid[<span class="dv">1</span>] <span class="op">-</span> beta_grid[<span class="dv">0</span>]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grid de Alpha centrado en </span><span class="sc">{</span>alpha_mle<span class="sc">:.4f}</span><span class="ss"> con rango [</span><span class="sc">{</span>alpha_min<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>alpha_max<span class="sc">:.4f}</span><span class="ss">]"</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grid de Beta centrado en </span><span class="sc">{</span>beta_mle<span class="sc">:.4f}</span><span class="ss"> con rango [</span><span class="sc">{</span>beta_min<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>beta_max<span class="sc">:.4f}</span><span class="ss">]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> <span class="dv">201</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>alpha_min <span class="op">=</span> alpha_mle <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> alpha_mle_se</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>alpha_max <span class="op">=</span> alpha_mle <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> alpha_mle_se</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>beta_min <span class="op">=</span> beta_mle <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> beta_mle_se</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>beta_max <span class="op">=</span> beta_mle <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> beta_mle_se</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>alpha_grid <span class="op">=</span> np.linspace(alpha_min, alpha_max, points)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>delta_alpha <span class="op">=</span> alpha_grid[<span class="dv">1</span>] <span class="op">-</span> alpha_grid[<span class="dv">0</span>]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>beta_grid <span class="op">=</span> np.linspace(beta_min, beta_max, points)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>delta_beta <span class="op">=</span> beta_grid[<span class="dv">1</span>] <span class="op">-</span> beta_grid[<span class="dv">0</span>]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grid de Alpha centrado en </span><span class="sc">{</span>alpha_mle<span class="sc">:.4f}</span><span class="ss"> con rango [</span><span class="sc">{</span>alpha_min<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>alpha_max<span class="sc">:.4f}</span><span class="ss">]"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grid de Beta centrado en </span><span class="sc">{</span>beta_mle<span class="sc">:.4f}</span><span class="ss"> con rango [</span><span class="sc">{</span>beta_min<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>beta_max<span class="sc">:.4f}</span><span class="ss">]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Grid de Alpha centrado en 1.0094 con rango [0.7741, 1.2448]
+Grid de Beta centrado en 0.3460 con rango [0.1354, 0.5565]</code></pre>
+</div>
 </div>
 </section>
 <section id="cálculo-de-posterior-y-marginales" class="level3" data-number="8.0.2">
 <h3 data-number="8.0.2" class="anchored" data-anchor-id="cálculo-de-posterior-y-marginales"><span class="header-section-number">8.0.2</span> Cálculo de posterior y marginales</h3>
-<div id="9" class="cell">
+<div id="9" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>A, B <span class="op">=</span> np.meshgrid(alpha_grid, beta_grid)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>log_likelihood_surface <span class="op">=</span> np.zeros((points, points))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(points):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(points):</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        log_likelihood_surface[i, j] <span class="op">=</span> get_log_likelihood(alpha_grid[j], beta_grid[i], x, y)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>log_l_max <span class="op">=</span> np.<span class="bu">max</span>(log_likelihood_surface)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>posterior_unnorm <span class="op">=</span> np.exp(log_likelihood_surface <span class="op">-</span> log_l_max)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>posterior <span class="op">=</span> posterior_unnorm <span class="op">/</span> np.<span class="bu">sum</span>(posterior_unnorm)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>posterior_alpha <span class="op">=</span> np.<span class="bu">sum</span>(posterior, axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>posterior_beta <span class="op">=</span> np.<span class="bu">sum</span>(posterior, axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>A, B <span class="op">=</span> np.meshgrid(alpha_grid, beta_grid)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>log_likelihood_surface <span class="op">=</span> np.zeros((points, points))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(points):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(points):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        log_likelihood_surface[i, j] <span class="op">=</span> get_log_likelihood(alpha_grid[j], beta_grid[i], x, y)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>log_l_max <span class="op">=</span> np.<span class="bu">max</span>(log_likelihood_surface)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>posterior_unnorm <span class="op">=</span> np.exp(log_likelihood_surface <span class="op">-</span> log_l_max)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>posterior <span class="op">=</span> posterior_unnorm <span class="op">/</span> np.<span class="bu">sum</span>(posterior_unnorm)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>posterior_alpha <span class="op">=</span> np.<span class="bu">sum</span>(posterior, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>posterior_beta <span class="op">=</span> np.<span class="bu">sum</span>(posterior, axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 <section id="visualizaciones" class="level3" data-number="8.0.3">
 <h3 data-number="8.0.3" class="anchored" data-anchor-id="visualizaciones"><span class="header-section-number">8.0.3</span> Visualizaciones</h3>
-<div id="11" class="cell">
+<div id="11" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.contourf(A, B, posterior, cmap<span class="op">=</span><span class="st">'inferno'</span>, levels<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Densidad Posterior'</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="vs">r'</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Intercepto</span><span class="kw">)</span><span class="vs">'</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Pendiente</span><span class="kw">)</span><span class="vs">'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribución Posterior mediante Aproximación por Rejilla'</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> np.unravel_index(np.argmax(posterior), posterior.shape)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAP Estimado: alpha = </span><span class="sc">{</span>alpha_grid[idx[<span class="dv">1</span>]]<span class="sc">:.3f}</span><span class="ss">, beta = </span><span class="sc">{</span>beta_grid[idx[<span class="dv">0</span>]]<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.plot(alpha_grid[idx[<span class="dv">1</span>]], beta_grid[idx[<span class="dv">0</span>]], <span class="st">'ro'</span>, label<span class="op">=</span><span class="st">'MAP'</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="12" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>alpha_low_p, alpha_high_p <span class="op">=</span> get_percentile_interval(alpha_grid, posterior_alpha, <span class="fl">0.95</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>alpha_low_h, alpha_high_h <span class="op">=</span> get_hpdi(alpha_grid, posterior_alpha, <span class="fl">0.95</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mu_alpha, sigma_alpha <span class="op">=</span> get_posterior_stats(alpha_grid, posterior_alpha)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>densidad_mle <span class="op">=</span> norm.pdf(alpha_grid, loc<span class="op">=</span>alpha_mle, scale<span class="op">=</span>alpha_mle_se)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>densidad_bayes <span class="op">=</span> norm.pdf(alpha_grid, loc<span class="op">=</span>mu_alpha, scale<span class="op">=</span>sigma_alpha)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>alpha_grid, y<span class="op">=</span>posterior_alpha<span class="op">/</span>delta_alpha, label<span class="op">=</span><span class="st">'Posterior'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>alpha_grid, y<span class="op">=</span>densidad_mle, label<span class="op">=</span><span class="st">'Densidad MLE'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>alpha_grid, y<span class="op">=</span>densidad_bayes, label<span class="op">=</span><span class="st">'Densidad Bayesiana'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribución Posterior Marginal de $</span><span class="ch">\\</span><span class="st">alpha$'</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo Percentiles: [</span><span class="sc">{</span>alpha_low_p<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>alpha_high_p<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo HPDI:        [</span><span class="sc">{</span>alpha_low_h<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>alpha_high_h<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"alpha: </span><span class="sc">{</span>mu_alpha<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>sigma_alpha<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="13" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>beta_low_p, beta_high_p <span class="op">=</span> get_percentile_interval(beta_grid, posterior_beta, <span class="fl">0.95</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>beta_low_h, beta_high_h <span class="op">=</span> get_hpdi(beta_grid, posterior_beta, <span class="fl">0.95</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mu_beta, sigma_beta <span class="op">=</span> get_posterior_stats(beta_grid, posterior_beta)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>densidad_mle <span class="op">=</span> norm.pdf(beta_grid, loc<span class="op">=</span>beta_mle, scale<span class="op">=</span>beta_mle_se)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>densidad_bayes <span class="op">=</span> norm.pdf(beta_grid, loc<span class="op">=</span>mu_beta, scale<span class="op">=</span>sigma_beta)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.contourf(A, B, posterior, cmap<span class="op">=</span><span class="st">'inferno'</span>, levels<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Densidad Posterior'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="vs">r'</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Intercepto</span><span class="kw">)</span><span class="vs">'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Pendiente</span><span class="kw">)</span><span class="vs">'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribución Posterior mediante Aproximación por Rejilla'</span>)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>beta_grid, y<span class="op">=</span>posterior_beta<span class="op">/</span>delta_beta, label<span class="op">=</span><span class="st">'Posterior'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>beta_grid, y<span class="op">=</span>densidad_mle, label<span class="op">=</span><span class="st">'Densidad MLE'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>beta_grid, y<span class="op">=</span>densidad_bayes, label<span class="op">=</span><span class="st">'Densidad Bayesiana'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribución Posterior Marginal de $</span><span class="ch">\\</span><span class="st">beta$'</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo Percentiles: [</span><span class="sc">{</span>beta_low_p<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>beta_high_p<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo HPDI:        [</span><span class="sc">{</span>beta_low_h<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>beta_high_h<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Beta: </span><span class="sc">{</span>mu_beta<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>sigma_beta<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> np.unravel_index(np.argmax(posterior), posterior.shape)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAP Estimado: alpha = </span><span class="sc">{</span>alpha_grid[idx[<span class="dv">1</span>]]<span class="sc">:.3f}</span><span class="ss">, beta = </span><span class="sc">{</span>beta_grid[idx[<span class="dv">0</span>]]<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.plot(alpha_grid[idx[<span class="dv">1</span>]], beta_grid[idx[<span class="dv">0</span>]], <span class="st">'ro'</span>, label<span class="op">=</span><span class="st">'MAP'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>MAP Estimado: alpha = 1.009, beta = 0.346</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-7-output-2.png" width="686" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="12" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>alpha_low_p, alpha_high_p <span class="op">=</span> get_percentile_interval(alpha_grid, posterior_alpha, <span class="fl">0.95</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>alpha_low_h, alpha_high_h <span class="op">=</span> get_hpdi(alpha_grid, posterior_alpha, <span class="fl">0.95</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>mu_alpha, sigma_alpha <span class="op">=</span> get_posterior_stats(alpha_grid, posterior_alpha)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>densidad_mle <span class="op">=</span> norm.pdf(alpha_grid, loc<span class="op">=</span>alpha_mle, scale<span class="op">=</span>alpha_mle_se)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>densidad_bayes <span class="op">=</span> norm.pdf(alpha_grid, loc<span class="op">=</span>mu_alpha, scale<span class="op">=</span>sigma_alpha)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>alpha_grid, y<span class="op">=</span>posterior_alpha<span class="op">/</span>delta_alpha, label<span class="op">=</span><span class="st">'Posterior'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>alpha_grid, y<span class="op">=</span>densidad_mle, label<span class="op">=</span><span class="st">'Densidad MLE'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>alpha_grid, y<span class="op">=</span>densidad_bayes, label<span class="op">=</span><span class="st">'Densidad Bayesiana'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribución Posterior Marginal de $</span><span class="ch">\\</span><span class="st">alpha$'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo Percentiles: [</span><span class="sc">{</span>alpha_low_p<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>alpha_high_p<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo HPDI:        [</span><span class="sc">{</span>alpha_low_h<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>alpha_high_h<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"alpha: </span><span class="sc">{</span>mu_alpha<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>sigma_alpha<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-8-output-1.png" width="483" height="359" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intervalo Percentiles: [0.915, 1.099]
+Intervalo HPDI:        [0.915, 1.099]
+alpha: 1.0076 ± 0.0471</code></pre>
+</div>
+</div>
+<div id="13" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>beta_low_p, beta_high_p <span class="op">=</span> get_percentile_interval(beta_grid, posterior_beta, <span class="fl">0.95</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>beta_low_h, beta_high_h <span class="op">=</span> get_hpdi(beta_grid, posterior_beta, <span class="fl">0.95</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mu_beta, sigma_beta <span class="op">=</span> get_posterior_stats(beta_grid, posterior_beta)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>densidad_mle <span class="op">=</span> norm.pdf(beta_grid, loc<span class="op">=</span>beta_mle, scale<span class="op">=</span>beta_mle_se)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>densidad_bayes <span class="op">=</span> norm.pdf(beta_grid, loc<span class="op">=</span>mu_beta, scale<span class="op">=</span>sigma_beta)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>beta_grid, y<span class="op">=</span>posterior_beta<span class="op">/</span>delta_beta, label<span class="op">=</span><span class="st">'Posterior'</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>beta_grid, y<span class="op">=</span>densidad_mle, label<span class="op">=</span><span class="st">'Densidad MLE'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>beta_grid, y<span class="op">=</span>densidad_bayes, label<span class="op">=</span><span class="st">'Densidad Bayesiana'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribución Posterior Marginal de $</span><span class="ch">\\</span><span class="st">beta$'</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo Percentiles: [</span><span class="sc">{</span>beta_low_p<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>beta_high_p<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intervalo HPDI:        [</span><span class="sc">{</span>beta_low_h<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>beta_high_h<span class="sc">:.3f}</span><span class="ss">]"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Beta: </span><span class="sc">{</span>mu_beta<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>sigma_beta<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-9-output-1.png" width="483" height="359" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intervalo Percentiles: [0.264, 0.428]
+Intervalo HPDI:        [0.264, 0.428]
+Beta: 0.3457 ± 0.0421</code></pre>
+</div>
 </div>
 </section>
 </section>
 <section id="metropolis-hastings" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Metropolis-Hastings</h1>
-<div id="15" class="cell">
+<div id="15" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n_iterations <span class="op">=</span> <span class="dv">20000</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>burn_in <span class="op">=</span> <span class="dv">5000</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>alpha_curr <span class="op">=</span> alpha_mle </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>beta_curr <span class="op">=</span> beta_mle</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>trace_alpha <span class="op">=</span> np.zeros(n_iterations)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>trace_beta <span class="op">=</span> np.zeros(n_iterations)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>accepted <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>proposal_width_a <span class="op">=</span> alpha_mle_se <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>proposal_width_b <span class="op">=</span> beta_mle_se <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_iterations):</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    alpha_prop <span class="op">=</span> np.random.normal(alpha_curr, proposal_width_a)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    beta_prop <span class="op">=</span> np.random.normal(beta_curr, proposal_width_b)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    lp_curr <span class="op">=</span> get_log_likelihood(alpha_curr, beta_curr, x, y)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    lp_prop <span class="op">=</span> get_log_likelihood(alpha_prop, beta_prop, x, y)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    log_r <span class="op">=</span> lp_prop <span class="op">-</span> lp_curr</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.log(np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">&lt;</span> log_r:</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        alpha_curr <span class="op">=</span> alpha_prop</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        beta_curr <span class="op">=</span> beta_prop</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        accepted <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    trace_alpha[i] <span class="op">=</span> alpha_curr</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    trace_beta[i] <span class="op">=</span> beta_curr</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>trace_alpha <span class="op">=</span> trace_alpha[burn_in:]</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>trace_beta <span class="op">=</span> trace_beta[burn_in:]</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>acceptance_rate <span class="op">=</span> accepted <span class="op">/</span> n_iterations</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tasa de aceptación: </span><span class="sc">{</span>acceptance_rate<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Alpha (Posterior Mean): </span><span class="sc">{</span>np<span class="sc">.</span>mean(trace_alpha)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Beta  (Posterior Mean): </span><span class="sc">{</span>np<span class="sc">.</span>mean(trace_beta)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n_iterations <span class="op">=</span> <span class="dv">20000</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>burn_in <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>alpha_curr <span class="op">=</span> alpha_mle </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>beta_curr <span class="op">=</span> beta_mle</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>trace_alpha <span class="op">=</span> np.zeros(n_iterations)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>trace_beta <span class="op">=</span> np.zeros(n_iterations)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>accepted <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>proposal_width_a <span class="op">=</span> alpha_mle_se <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>proposal_width_b <span class="op">=</span> beta_mle_se <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_iterations):</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    alpha_prop <span class="op">=</span> np.random.normal(alpha_curr, proposal_width_a)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    beta_prop <span class="op">=</span> np.random.normal(beta_curr, proposal_width_b)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    lp_curr <span class="op">=</span> get_log_likelihood(alpha_curr, beta_curr, x, y)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    lp_prop <span class="op">=</span> get_log_likelihood(alpha_prop, beta_prop, x, y)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    log_r <span class="op">=</span> lp_prop <span class="op">-</span> lp_curr</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.log(np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">&lt;</span> log_r:</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        alpha_curr <span class="op">=</span> alpha_prop</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        beta_curr <span class="op">=</span> beta_prop</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        accepted <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    trace_alpha[i] <span class="op">=</span> alpha_curr</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    trace_beta[i] <span class="op">=</span> beta_curr</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>trace_alpha <span class="op">=</span> trace_alpha[burn_in:]</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>trace_beta <span class="op">=</span> trace_beta[burn_in:]</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>acceptance_rate <span class="op">=</span> accepted <span class="op">/</span> n_iterations</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tasa de aceptación: </span><span class="sc">{</span>acceptance_rate<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Alpha (Posterior Mean): </span><span class="sc">{</span>np<span class="sc">.</span>mean(trace_alpha)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Beta  (Posterior Mean): </span><span class="sc">{</span>np<span class="sc">.</span>mean(trace_beta)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tasa de aceptación: 28.11%
+Alpha (Posterior Mean): 1.0092
+Beta  (Posterior Mean): 0.3440</code></pre>
+</div>
 </div>
 <section id="dianósticos-de-la-cadena" class="level3" data-number="9.0.1">
 <h3 data-number="9.0.1" class="anchored" data-anchor-id="dianósticos-de-la-cadena"><span class="header-section-number">9.0.1</span> Dianósticos de la cadena</h3>
-<div id="17" class="cell">
+<div id="17" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_diagnostics(trace_alpha, <span class="st">'Alpha (Intercepto)'</span>, acceptance_rate)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plot_mcmc_diagnostics(trace_beta, <span class="st">'Beta (Ancho)'</span>, acceptance_rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_diagnostics(trace_alpha, <span class="st">'Alpha (Intercepto)'</span>, acceptance_rate)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plot_mcmc_diagnostics(trace_beta, <span class="st">'Beta (Ancho)'</span>, acceptance_rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-11-output-1.png" width="1240" height="370" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-11-output-2.png" width="1235" height="370" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="análisis-de-valores-simulados" class="level3" data-number="9.0.2">
 <h3 data-number="9.0.2" class="anchored" data-anchor-id="análisis-de-valores-simulados"><span class="header-section-number">9.0.2</span> Análisis de valores simulados</h3>
-<div id="19" class="cell">
+<div id="19" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_joint_posterior(trace_alpha, trace_beta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_joint_posterior(trace_alpha, trace_beta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-12-output-1.png" width="650" height="451" class="figure-img"></p>
+</figure>
 </div>
-<div id="20" class="cell">
+</div>
+</div>
+<div id="20" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_parameter_comparison(trace_alpha, alpha_mle, alpha_mle_se, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Intercepto</span><span class="kw">)</span><span class="vs">"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plot_parameter_comparison(trace_beta, beta_mle, beta_mle_se, <span class="vs">r"</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Pendiente</span><span class="kw">)</span><span class="vs">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_parameter_comparison(trace_alpha, alpha_mle, alpha_mle_se, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Intercepto</span><span class="kw">)</span><span class="vs">"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plot_parameter_comparison(trace_beta, beta_mle, beta_mle_se, <span class="vs">r"</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Pendiente</span><span class="kw">)</span><span class="vs">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-13-output-1.png" width="502" height="378" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Estadísticas para $\alpha$ (Intercepto) ---
+Media: 1.0092 | Desv. Est: 0.0472
+Intervalo Percentiles 95%: [0.9170, 1.0981]
+HPDI 95%:                [0.9174, 1.0983]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-13-output-3.png" width="502" height="378" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Estadísticas para $\beta$ (Pendiente) ---
+Media: 0.3440 | Desv. Est: 0.0419
+Intervalo Percentiles 95%: [0.2638, 0.4273]
+HPDI 95%:                [0.2629, 0.4257]</code></pre>
+</div>
 </div>
 </section>
 </section>
 <section id="stan" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Stan</h1>
-<div id="22" class="cell">
+<div id="22" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stan_data <span class="op">=</span> {</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'N'</span>: <span class="bu">len</span>(df),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>: df[<span class="st">'W_scaled'</span>].values,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: df[<span class="st">'Sa'</span>].values</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>model_stan <span class="op">=</span> CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/poisson_model.stan'</span>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>fit <span class="op">=</span> model_stan.sample(data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_sampling<span class="op">=</span><span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stan_data <span class="op">=</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'N'</span>: <span class="bu">len</span>(df),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>: df[<span class="st">'W_scaled'</span>].values,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: df[<span class="st">'Sa'</span>].values</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>model_stan <span class="op">=</span> CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/poisson_model.stan'</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>fit <span class="op">=</span> model_stan.sample(data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_sampling<span class="op">=</span><span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>21:51:59 - cmdstanpy - INFO - compiling stan file /home/javolet/documents/bayesian-glm-count-data/models/poisson_model.stan to exe file /home/javolet/documents/bayesian-glm-count-data/models/poisson_model
+21:52:22 - cmdstanpy - INFO - compiled model executable: /home/javolet/documents/bayesian-glm-count-data/models/poisson_model
+21:52:22 - cmdstanpy - INFO - CmdStan start processing</code></pre>
 </div>
-<div id="23" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>display(fit.summary())</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>alpha_samples <span class="op">=</span> fit.stan_variable(<span class="st">'alpha'</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>beta_samples <span class="op">=</span> fit.stan_variable(<span class="st">'beta'</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>az.plot_trace(fit, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>], compact<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Gráfica de Autocorrelación (Stan suele tener mucha menos que MH)</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>az.plot_autocorr(fit, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>], combined<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"9a9c46d802d64e5d9fefbdf75b1f1c98","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
-<div id="24" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_joint_posterior(alpha_samples, beta_samples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"85667a2c088c49ea90d181d34eb460c4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
-<div id="25" class="cell">
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"beb7854a55bb4704a5d828ae9e7d671f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"05d83c37f89f404bafaea66df410f1ae","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                                                                                                                                                                                                                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>21:52:23 - cmdstanpy - INFO - CmdStan done processing.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code></code></pre>
+</div>
+</div>
+<div id="23" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plot_stan_parameter_comparison(fit, <span class="st">'alpha'</span>, alpha_mle, alpha_mle_se, mu_alpha, sigma_alpha, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Intercepto</span><span class="kw">)</span><span class="vs">"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plot_stan_parameter_comparison(fit, <span class="st">'beta'</span>, beta_mle, beta_mle_se, mu_beta, sigma_beta, <span class="vs">r"</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Ancho</span><span class="kw">)</span><span class="vs">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>display(fit.summary())</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>alpha_samples <span class="op">=</span> fit.stan_variable(<span class="st">'alpha'</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>beta_samples <span class="op">=</span> fit.stan_variable(<span class="st">'beta'</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>az.plot_trace(fit, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>], compact<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Gráfica de Autocorrelación (Stan suele tener mucha menos que MH)</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>az.plot_autocorr(fit, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>], combined<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Mean</th>
+<th data-quarto-table-cell-role="th">MCSE</th>
+<th data-quarto-table-cell-role="th">StdDev</th>
+<th data-quarto-table-cell-role="th">MAD</th>
+<th data-quarto-table-cell-role="th">5%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">95%</th>
+<th data-quarto-table-cell-role="th">ESS_bulk</th>
+<th data-quarto-table-cell-role="th">ESS_tail</th>
+<th data-quarto-table-cell-role="th">ESS_bulk/s</th>
+<th data-quarto-table-cell-role="th">R_hat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">lp__</th>
+<td>67.471100</td>
+<td>0.015970</td>
+<td>0.947582</td>
+<td>0.700441</td>
+<td>65.559800</td>
+<td>67.765500</td>
+<td>68.38970</td>
+<td>3770.33</td>
+<td>5006.54</td>
+<td>1150.19</td>
+<td>1.000520</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">alpha</th>
+<td>1.006460</td>
+<td>0.000640</td>
+<td>0.046697</td>
+<td>0.046999</td>
+<td>0.929180</td>
+<td>1.006480</td>
+<td>1.08360</td>
+<td>5336.62</td>
+<td>4841.64</td>
+<td>1628.01</td>
+<td>1.000070</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">beta</th>
+<td>0.346471</td>
+<td>0.000573</td>
+<td>0.041311</td>
+<td>0.041233</td>
+<td>0.277196</td>
+<td>0.346876</td>
+<td>0.41379</td>
+<td>5228.39</td>
+<td>4947.93</td>
+<td>1594.99</td>
+<td>1.000150</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">y_rep[1]</th>
+<td>3.753380</td>
+<td>0.022430</td>
+<td>1.962470</td>
+<td>1.482600</td>
+<td>1.000000</td>
+<td>4.000000</td>
+<td>7.00000</td>
+<td>7765.13</td>
+<td>7162.33</td>
+<td>2368.86</td>
+<td>1.000370</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">y_rep[2]</th>
+<td>2.603000</td>
+<td>0.018157</td>
+<td>1.633390</td>
+<td>1.482600</td>
+<td>0.000000</td>
+<td>2.000000</td>
+<td>6.00000</td>
+<td>8116.21</td>
+<td>8014.52</td>
+<td>2475.97</td>
+<td>1.000230</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_lik[169]</th>
+<td>-3.805500</td>
+<td>0.002132</td>
+<td>0.189661</td>
+<td>0.190049</td>
+<td>-4.123540</td>
+<td>-3.800030</td>
+<td>-3.50176</td>
+<td>7898.46</td>
+<td>5117.01</td>
+<td>2409.54</td>
+<td>1.000110</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">log_lik[170]</th>
+<td>-1.850780</td>
+<td>0.000718</td>
+<td>0.053462</td>
+<td>0.053625</td>
+<td>-1.944520</td>
+<td>-1.847890</td>
+<td>-1.76780</td>
+<td>5604.92</td>
+<td>4669.11</td>
+<td>1709.86</td>
+<td>0.999982</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_lik[171]</th>
+<td>-4.079370</td>
+<td>0.002543</td>
+<td>0.189922</td>
+<td>0.191356</td>
+<td>-4.400290</td>
+<td>-4.076590</td>
+<td>-3.77046</td>
+<td>5604.91</td>
+<td>4669.11</td>
+<td>1709.86</td>
+<td>0.999982</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">log_lik[172]</th>
+<td>-1.521420</td>
+<td>0.000247</td>
+<td>0.017417</td>
+<td>0.016441</td>
+<td>-1.554550</td>
+<td>-1.518370</td>
+<td>-1.49899</td>
+<td>5160.45</td>
+<td>4842.03</td>
+<td>1574.27</td>
+<td>1.000400</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_lik[173]</th>
+<td>-2.040540</td>
+<td>0.002036</td>
+<td>0.137357</td>
+<td>0.137314</td>
+<td>-2.274240</td>
+<td>-2.037300</td>
+<td>-1.82014</td>
+<td>4545.51</td>
+<td>4414.04</td>
+<td>1386.67</td>
+<td>1.000760</td>
+</tr>
+</tbody>
+</table>
+
+<p>349 rows × 11 columns</p>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-15-output-2.png" width="1142" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-15-output-3.png" width="1302" height="497" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="24" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_joint_posterior(alpha_samples, beta_samples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-16-output-1.png" width="650" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="25" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plot_stan_parameter_comparison(fit, <span class="st">'alpha'</span>, alpha_mle, alpha_mle_se, mu_alpha, sigma_alpha, <span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Intercepto</span><span class="kw">)</span><span class="vs">"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plot_stan_parameter_comparison(fit, <span class="st">'beta'</span>, beta_mle, beta_mle_se, mu_beta, sigma_beta, <span class="vs">r"</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">Ancho</span><span class="kw">)</span><span class="vs">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-17-output-1.png" width="502" height="378" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Estadísticas Stan para $\alpha$ (Intercepto) ---
+Media Post: 1.0065 | Desv. Est: 0.0467
+95% HDI:    [0.9147, 1.0977]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-17-output-3.png" width="502" height="378" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Estadísticas Stan para $\beta$ (Ancho) ---
+Media Post: 0.3465 | Desv. Est: 0.0413
+95% HDI:    [0.2660, 0.4275]</code></pre>
+</div>
 </div>
 </section>
 <section id="guardar-inferencedata" class="level1" data-number="11">
 <h1 data-number="11"><span class="header-section-number">11</span> Guardar InferenceData</h1>
 <p>Convierte los fits de cmdstanpy a <code>az.InferenceData</code> y los guarda en <code>outputs/</code>. Incluye <code>posterior_predictive</code> (y_rep) y <code>log_likelihood</code> (log_lik) generados por Stan.</p>
-<div id="27" class="cell">
+<div id="27" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">'../outputs'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>idata_poisson <span class="op">=</span> az.from_cmdstanpy(</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    fit,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    observed_data<span class="op">=</span>{<span class="st">'y'</span>: stan_data[<span class="st">'y'</span>]},</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    log_likelihood<span class="op">=</span><span class="st">'log_lik'</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>az.to_netcdf(idata_poisson, <span class="st">'../outputs/pois_idata.nc'</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Guardado: ../outputs/pois_idata.nc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">'../outputs'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>idata_poisson <span class="op">=</span> az.from_cmdstanpy(</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    fit,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    observed_data<span class="op">=</span>{<span class="st">'y'</span>: stan_data[<span class="st">'y'</span>]},</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    log_likelihood<span class="op">=</span><span class="st">'log_lik'</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>az.to_netcdf(idata_poisson, <span class="st">'../outputs/pois_idata.nc'</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Guardado: ../outputs/pois_idata.nc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Guardado: ../outputs/pois_idata.nc</code></pre>
+</div>
 </div>
 </section>
 <section id="negative-binomial-model" class="level1" data-number="12">
 <h1 data-number="12"><span class="header-section-number">12</span> Negative binomial model</h1>
-<div id="29" class="cell">
+<div id="29" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>stan_data <span class="op">=</span> {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'N'</span>: <span class="bu">len</span>(df),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>: df[<span class="st">'W_scaled'</span>].values,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: df[<span class="st">'Sa'</span>].values</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_inits():</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"alpha"</span>: <span class="fl">1.0</span>, </span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"beta"</span>: <span class="fl">0.4</span>, </span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"phi"</span>: <span class="fl">1.0</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>model_nb <span class="op">=</span> CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/negative_binomial_model.stan'</span>)</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>fit_nb <span class="op">=</span> model_nb.sample(data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_sampling<span class="op">=</span><span class="dv">2000</span>, inits<span class="op">=</span>get_inits())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>stan_data <span class="op">=</span> {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'N'</span>: <span class="bu">len</span>(df),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>: df[<span class="st">'W_scaled'</span>].values,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: df[<span class="st">'Sa'</span>].values</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_inits():</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"alpha"</span>: <span class="fl">1.0</span>, </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"beta"</span>: <span class="fl">0.4</span>, </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"phi"</span>: <span class="fl">1.0</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>model_nb <span class="op">=</span> CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/negative_binomial_model.stan'</span>)</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>fit_nb <span class="op">=</span> model_nb.sample(data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_sampling<span class="op">=</span><span class="dv">2000</span>, inits<span class="op">=</span>get_inits())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>21:52:37 - cmdstanpy - INFO - compiling stan file /home/javolet/documents/bayesian-glm-count-data/models/negative_binomial_model.stan to exe file /home/javolet/documents/bayesian-glm-count-data/models/negative_binomial_model
+21:52:53 - cmdstanpy - INFO - compiled model executable: /home/javolet/documents/bayesian-glm-count-data/models/negative_binomial_model
+21:52:53 - cmdstanpy - INFO - CmdStan start processing</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"821d0f3822c341cc941abd6dcb3bb2fc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"c9e17c5277af4208ac2f5c9537814bef","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"2ccc972362714060b892fafe5c5f6ca6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"8853fef1e5ef4116a6305df64d0076fb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                                                                                                                                                                                                                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>21:52:56 - cmdstanpy - INFO - CmdStan done processing.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code></code></pre>
+</div>
+</div>
+<div id="30" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>display(fit_nb.summary())</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>az.plot_trace(fit_nb, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>,<span class="st">'alpha_sm'</span>], compact<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Gráfica de Autocorrelación (Stan suele tener mucha menos que MH)</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>az.plot_autocorr(fit_nb, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>,<span class="st">'alpha_sm'</span>], combined<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Mean</th>
+<th data-quarto-table-cell-role="th">MCSE</th>
+<th data-quarto-table-cell-role="th">StdDev</th>
+<th data-quarto-table-cell-role="th">MAD</th>
+<th data-quarto-table-cell-role="th">5%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">95%</th>
+<th data-quarto-table-cell-role="th">ESS_bulk</th>
+<th data-quarto-table-cell-role="th">ESS_tail</th>
+<th data-quarto-table-cell-role="th">ESS_bulk/s</th>
+<th data-quarto-table-cell-role="th">R_hat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">lp__</th>
+<td>-377.212000</td>
+<td>0.018451</td>
+<td>1.204370</td>
+<td>0.961659</td>
+<td>-379.584000</td>
+<td>-376.904000</td>
+<td>-375.911000</td>
+<td>4422.65</td>
+<td>5351.24</td>
+<td>482.506</td>
+<td>1.00053</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">alpha</th>
+<td>1.002690</td>
+<td>0.001049</td>
+<td>0.091858</td>
+<td>0.091041</td>
+<td>0.852798</td>
+<td>1.001680</td>
+<td>1.156620</td>
+<td>7701.78</td>
+<td>5966.40</td>
+<td>840.255</td>
+<td>1.00013</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">beta</th>
+<td>0.407677</td>
+<td>0.001133</td>
+<td>0.097586</td>
+<td>0.097082</td>
+<td>0.251067</td>
+<td>0.406969</td>
+<td>0.568339</td>
+<td>7423.63</td>
+<td>5669.73</td>
+<td>809.909</td>
+<td>1.00034</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">phi</th>
+<td>0.930853</td>
+<td>0.002027</td>
+<td>0.169479</td>
+<td>0.163928</td>
+<td>0.681485</td>
+<td>0.914168</td>
+<td>1.230490</td>
+<td>7282.27</td>
+<td>5488.44</td>
+<td>794.487</td>
+<td>1.00065</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">alpha_sm</th>
+<td>1.109870</td>
+<td>0.002393</td>
+<td>0.202203</td>
+<td>0.195881</td>
+<td>0.812682</td>
+<td>1.093890</td>
+<td>1.467380</td>
+<td>7282.27</td>
+<td>5488.44</td>
+<td>794.488</td>
+<td>1.00087</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_lik[169]</th>
+<td>-1.545680</td>
+<td>0.001926</td>
+<td>0.172153</td>
+<td>0.174475</td>
+<td>-1.833800</td>
+<td>-1.538970</td>
+<td>-1.273500</td>
+<td>7952.56</td>
+<td>5681.91</td>
+<td>867.616</td>
+<td>1.00014</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">log_lik[170]</th>
+<td>-2.598180</td>
+<td>0.001014</td>
+<td>0.086424</td>
+<td>0.086843</td>
+<td>-2.745290</td>
+<td>-2.595760</td>
+<td>-2.460400</td>
+<td>7322.07</td>
+<td>5600.69</td>
+<td>798.829</td>
+<td>1.00081</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_lik[171]</th>
+<td>-3.486050</td>
+<td>0.001133</td>
+<td>0.100834</td>
+<td>0.101488</td>
+<td>-3.654920</td>
+<td>-3.482790</td>
+<td>-3.327020</td>
+<td>8013.83</td>
+<td>5906.34</td>
+<td>874.299</td>
+<td>1.00023</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">log_lik[172]</th>
+<td>-2.301650</td>
+<td>0.000987</td>
+<td>0.083451</td>
+<td>0.083236</td>
+<td>-2.442850</td>
+<td>-2.299500</td>
+<td>-2.168510</td>
+<td>7187.82</td>
+<td>5567.30</td>
+<td>784.183</td>
+<td>1.00061</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">log_lik[173]</th>
+<td>-1.038610</td>
+<td>0.001321</td>
+<td>0.110823</td>
+<td>0.112555</td>
+<td>-1.226920</td>
+<td>-1.034630</td>
+<td>-0.864973</td>
+<td>7022.64</td>
+<td>5261.87</td>
+<td>766.162</td>
+<td>1.00091</td>
+</tr>
+</tbody>
+</table>
+
+<p>351 rows × 11 columns</p>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-20-output-2.png" width="1142" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-20-output-3.png" width="1900" height="497" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="31" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>alpha_nb_samples <span class="op">=</span> fit_nb.stan_variable(<span class="st">'alpha'</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>beta_nb_samples <span class="op">=</span> fit_nb.stan_variable(<span class="st">'beta'</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>alpha_sm_nb_samples <span class="op">=</span> fit_nb.stan_variable(<span class="st">'alpha_sm'</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>mean_alpha_nb <span class="op">=</span> np.mean(alpha_nb_samples)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>std_alpha_nb <span class="op">=</span> np.std(alpha_nb_samples)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>mean_beta_nb <span class="op">=</span> np.mean(beta_nb_samples)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>mean_beta_nb <span class="op">=</span> np.std(beta_nb_samples)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>mean_alpha_sm_nb <span class="op">=</span> np.mean(alpha_sm_nb_samples)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>std_alpha_sm_nb <span class="op">=</span> np.std(alpha_sm_nb_samples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="30" class="cell">
+<div id="32" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>display(fit_nb.summary())</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>az.plot_trace(fit_nb, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>,<span class="st">'alpha_sm'</span>], compact<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Gráfica de Autocorrelación (Stan suele tener mucha menos que MH)</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>az.plot_autocorr(fit_nb, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>,<span class="st">'alpha_sm'</span>], combined<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_joint_posterior(alpha_nb_samples, beta_nb_samples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-22-output-1.png" width="642" height="451" class="figure-img"></p>
+</figure>
 </div>
-<div id="31" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>alpha_nb_samples <span class="op">=</span> fit_nb.stan_variable(<span class="st">'alpha'</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>beta_nb_samples <span class="op">=</span> fit_nb.stan_variable(<span class="st">'beta'</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>alpha_sm_nb_samples <span class="op">=</span> fit_nb.stan_variable(<span class="st">'alpha_sm'</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>mean_alpha_nb <span class="op">=</span> np.mean(alpha_nb_samples)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>std_alpha_nb <span class="op">=</span> np.std(alpha_nb_samples)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>mean_beta_nb <span class="op">=</span> np.mean(beta_nb_samples)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>mean_beta_nb <span class="op">=</span> np.std(beta_nb_samples)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>mean_alpha_sm_nb <span class="op">=</span> np.mean(alpha_sm_nb_samples)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>std_alpha_sm_nb <span class="op">=</span> np.std(alpha_sm_nb_samples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
-<div id="32" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_mcmc_joint_posterior(alpha_nb_samples, beta_nb_samples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
-<div id="33" class="cell">
+<div id="33" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot_density_and_normal_approx(fit_nb, var_name<span class="op">=</span><span class="st">'alpha'</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plot_density_and_normal_approx(fit_nb, var_name<span class="op">=</span><span class="st">'beta'</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plot_density_and_normal_approx(fit_nb, var_name<span class="op">=</span><span class="st">'alpha_sm'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>plot_density_and_normal_approx(fit_nb, var_name<span class="op">=</span><span class="st">'alpha'</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>plot_density_and_normal_approx(fit_nb, var_name<span class="op">=</span><span class="st">'beta'</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>plot_density_and_normal_approx(fit_nb, var_name<span class="op">=</span><span class="st">'alpha_sm'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-23-output-1.png" width="483" height="357" class="figure-img"></p>
+</figure>
 </div>
-<div id="34" class="cell">
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-23-output-2.png" width="496" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_inferencia_bayesiana_files/figure-html/cell-23-output-3.png" width="505" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="34" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>idata_nb <span class="op">=</span> az.from_cmdstanpy(</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    fit_nb,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    observed_data<span class="op">=</span>{<span class="st">'y'</span>: stan_data[<span class="st">'y'</span>]},</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    log_likelihood<span class="op">=</span><span class="st">'log_lik'</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>az.to_netcdf(idata_nb, <span class="st">'../outputs/neg_idata.nc'</span>)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Guardado: ../outputs/neg_idata.nc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>idata_nb <span class="op">=</span> az.from_cmdstanpy(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    fit_nb,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    observed_data<span class="op">=</span>{<span class="st">'y'</span>: stan_data[<span class="st">'y'</span>]},</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    log_likelihood<span class="op">=</span><span class="st">'log_lik'</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>az.to_netcdf(idata_nb, <span class="st">'../outputs/neg_idata.nc'</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Guardado: ../outputs/neg_idata.nc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Guardado: ../outputs/neg_idata.nc</code></pre>
+</div>
 </div>
 <hr>
 <section id="qué-sigue" class="level2" data-number="12.1">
@@ -877,6 +1500,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"05d83c37f89f404bafaea66df410f1ae":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_7f994aa1c3aa41f5bc15fc96314791b3","IPY_MODEL_061b49053d9f4c8d8c25acbb97c60885","IPY_MODEL_baba5accdc414d31b69640d1f6204164"],"layout":"IPY_MODEL_9594c06f172043b7af9cee9cf1bd831b","tabbable":null,"tooltip":null}},"061b49053d9f4c8d8c25acbb97c60885":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_62138b7cd04e47128dbf11417cc6a510","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_c69cc0648cca42c68ece183b0e44ef23","tabbable":null,"tooltip":null,"value":3000}},"087da666cc5348c0887a8ebf43602d92":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"0c24e75b5c8b448ca81f3ccb44ac851c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"0c65364b865541b5acd87836de30022c":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"0cc3d4820c5d4fd38be875636db81b1e":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_2b0a0be2c6ad42b9ae77a28935d11d53","placeholder":"​","style":"IPY_MODEL_47890170c34844f1b4bd4a0e73a6ed87","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:01&lt;00:00, 2735.67it/s, (Sampling completed)]"}},"0fcb13250b644f31ab3963804c39a171":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"12dc374de7164e2ba394f52372b1df56":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_518a0583508548e69a56b5f20867e148","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_81ad5d6d0ab64088a8e57767b0988aba","tabbable":null,"tooltip":null,"value":3000}},"14c75701ae8345b596eac0744affccfe":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_f1a5d8ea33b24be9b5d8d5c9b8409a0e","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_cb15b2c20fa5490c800ac2d894c0df53","tabbable":null,"tooltip":null,"value":3000}},"14cf294f94574d2bbb941004cbfffbad":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_0c24e75b5c8b448ca81f3ccb44ac851c","placeholder":"​","style":"IPY_MODEL_8e19cfd45ee448a8b6091de61f6a47d4","tabbable":null,"tooltip":null,"value":"chain 3: 100%"}},"1532781840014da3adbd077e79d73b6f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_ac87da9cccec476bbde9ae5ef9f2ddbc","placeholder":"​","style":"IPY_MODEL_0c65364b865541b5acd87836de30022c","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:01&lt;00:00, 2832.62it/s, (Sampling completed)]"}},"15e72f6021e04a3095022bad1d3f2493":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"1d8978992dab44e98dabb45ce2afb305":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"1dccfc2a1ca7424c8ab8dea85ada88fc":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_5676d725c20741ff8991be55f8a2c7b0","placeholder":"​","style":"IPY_MODEL_9abaf706a4284c42a4eb599f85bf0282","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:02&lt;00:00, 832.97it/s, (Sampling completed)]"}},"284d2acd80fa4dc7a348eec61584187d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"2b0a0be2c6ad42b9ae77a28935d11d53":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"2ccc972362714060b892fafe5c5f6ca6":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_14cf294f94574d2bbb941004cbfffbad","IPY_MODEL_4caca1546c94477bbee306b5d8f655e2","IPY_MODEL_e62927c6ef9e47359148ee72acb7b636"],"layout":"IPY_MODEL_4cc128e8d05e4202a44291edb95973f8","tabbable":null,"tooltip":null}},"310b97aa7ca14381aea68c3e6313c5db":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"32f54768e201439aae515c6e249cf707":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"34e36927dfcf491bbfb091c5dc415221":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"358ece5a79f84b4f88701a05a5f09939":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"361b9a0f528f47dda3efef490d6558f4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"41494a978ad34d6f8b069bcaa82a7c1c":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"47890170c34844f1b4bd4a0e73a6ed87":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"487727a2a48b416dad7fd9bb9c36aeff":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"4b830ea758bf472794e12a488c31e5f7":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"4caca1546c94477bbee306b5d8f655e2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_9492131b471c46a3817874eaca71fccd","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_7785315785cb471d84d4baad2dd73a62","tabbable":null,"tooltip":null,"value":3000}},"4cc128e8d05e4202a44291edb95973f8":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"518a0583508548e69a56b5f20867e148":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"5676d725c20741ff8991be55f8a2c7b0":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"575894845a414cc4bb58835ae6e60f2a":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"5bdd7bf0ec8440509f282c31f4808fdb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"60d003c2066c4bd9b7bd890deb7e3394":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"62138b7cd04e47128dbf11417cc6a510":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"671779ada44243c68992129b971456b2":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_41494a978ad34d6f8b069bcaa82a7c1c","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_358ece5a79f84b4f88701a05a5f09939","tabbable":null,"tooltip":null,"value":3000}},"6a674923c87b4b25a40f4eef657d7d24":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"6e4d73a1d84d421894c72fb780d944b6":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"6f2be598469a402d8c8f417ea8a98cda":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"7028bef7e914482c9c403e30591a2f20":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"77461af461c34601843b746e220c40d1":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"7785315785cb471d84d4baad2dd73a62":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"78174a160852421f85b5d61c6a79de8e":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_60d003c2066c4bd9b7bd890deb7e3394","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_0fcb13250b644f31ab3963804c39a171","tabbable":null,"tooltip":null,"value":3000}},"7da8e03ffa694931ab40dfa57b22caa5":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_32f54768e201439aae515c6e249cf707","placeholder":"​","style":"IPY_MODEL_7028bef7e914482c9c403e30591a2f20","tabbable":null,"tooltip":null,"value":"chain 1: 100%"}},"7f994aa1c3aa41f5bc15fc96314791b3":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_e3a3d121cf314111aa4442cbafe06a14","placeholder":"​","style":"IPY_MODEL_77461af461c34601843b746e220c40d1","tabbable":null,"tooltip":null,"value":"chain 4: 100%"}},"8031c3eb294d47e2a7ec9f9450d443c4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"81ad5d6d0ab64088a8e57767b0988aba":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"821d0f3822c341cc941abd6dcb3bb2fc":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_7da8e03ffa694931ab40dfa57b22caa5","IPY_MODEL_14c75701ae8345b596eac0744affccfe","IPY_MODEL_1dccfc2a1ca7424c8ab8dea85ada88fc"],"layout":"IPY_MODEL_8533fef49aeb423ba3d4ce8d72cc6130","tabbable":null,"tooltip":null}},"8533fef49aeb423ba3d4ce8d72cc6130":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"85667a2c088c49ea90d181d34eb460c4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_d5858d0be7aa4b05970b5c99cd11e311","IPY_MODEL_12dc374de7164e2ba394f52372b1df56","IPY_MODEL_1532781840014da3adbd077e79d73b6f"],"layout":"IPY_MODEL_15e72f6021e04a3095022bad1d3f2493","tabbable":null,"tooltip":null}},"8853fef1e5ef4116a6305df64d0076fb":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_c3711a7ddda74b6389d0f9f6211de49e","IPY_MODEL_9f0b693cd4a94004afc18704ffdb617b","IPY_MODEL_b36265b09e5b47899e96d4c8b2dab58d"],"layout":"IPY_MODEL_b22ede31e3344b41aea7e7f8ea40bec7","tabbable":null,"tooltip":null}},"8b7817f0f1f34064996f584e06facd12":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"8deacdf41c224b1485265b290dbb0bea":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"8e19cfd45ee448a8b6091de61f6a47d4":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"9492131b471c46a3817874eaca71fccd":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9594c06f172043b7af9cee9cf1bd831b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"998df0533603429cb252785a3ea0c453":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_6f2be598469a402d8c8f417ea8a98cda","placeholder":"​","style":"IPY_MODEL_361b9a0f528f47dda3efef490d6558f4","tabbable":null,"tooltip":null,"value":"chain 2: 100%"}},"99cef5c32ae744488e361b23f582227f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_4b830ea758bf472794e12a488c31e5f7","placeholder":"​","style":"IPY_MODEL_8031c3eb294d47e2a7ec9f9450d443c4","tabbable":null,"tooltip":null,"value":"chain 3: 100%"}},"9a9c46d802d64e5d9fefbdf75b1f1c98":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_ab7662d07ab849be841bf87183a929d8","IPY_MODEL_9da75f3b5377484c9f941d585d7d1dff","IPY_MODEL_0cc3d4820c5d4fd38be875636db81b1e"],"layout":"IPY_MODEL_310b97aa7ca14381aea68c3e6313c5db","tabbable":null,"tooltip":null}},"9abaf706a4284c42a4eb599f85bf0282":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"9c06408447434c939a2b7f9ebf1cb6e7":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9c51875c7f664de785eda512fae03407":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"9da75f3b5377484c9f941d585d7d1dff":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_b8685f5989624c198d14ea7350730a31","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_5bdd7bf0ec8440509f282c31f4808fdb","tabbable":null,"tooltip":null,"value":3000}},"9e5c8b588857468083fa6af90edeca20":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"9f0b693cd4a94004afc18704ffdb617b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"ProgressView","bar_style":"success","description":"","description_allow_html":false,"layout":"IPY_MODEL_8deacdf41c224b1485265b290dbb0bea","max":3000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_9c51875c7f664de785eda512fae03407","tabbable":null,"tooltip":null,"value":3000}},"ab526df395604bb9a0ab539476ec81f1":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ab7662d07ab849be841bf87183a929d8":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_9c06408447434c939a2b7f9ebf1cb6e7","placeholder":"​","style":"IPY_MODEL_fad9e3d445dc4f339c3a81f997d0518a","tabbable":null,"tooltip":null,"value":"chain 1: 100%"}},"ac87da9cccec476bbde9ae5ef9f2ddbc":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b22ede31e3344b41aea7e7f8ea40bec7":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b36265b09e5b47899e96d4c8b2dab58d":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_ab526df395604bb9a0ab539476ec81f1","placeholder":"​","style":"IPY_MODEL_ff64517a26fa4f29ac63c06ebbb5394c","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:02&lt;00:00, 715.07it/s, (Sampling completed)]"}},"b8685f5989624c198d14ea7350730a31":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"baba5accdc414d31b69640d1f6204164":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_487727a2a48b416dad7fd9bb9c36aeff","placeholder":"​","style":"IPY_MODEL_284d2acd80fa4dc7a348eec61584187d","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:00&lt;00:00, 2672.66it/s, (Sampling completed)]"}},"beb7854a55bb4704a5d828ae9e7d671f":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_99cef5c32ae744488e361b23f582227f","IPY_MODEL_671779ada44243c68992129b971456b2","IPY_MODEL_f417b3102aaa4c679e0d5f17e4ff1d11"],"layout":"IPY_MODEL_087da666cc5348c0887a8ebf43602d92","tabbable":null,"tooltip":null}},"c3711a7ddda74b6389d0f9f6211de49e":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_34e36927dfcf491bbfb091c5dc415221","placeholder":"​","style":"IPY_MODEL_9e5c8b588857468083fa6af90edeca20","tabbable":null,"tooltip":null,"value":"chain 4: 100%"}},"c69cc0648cca42c68ece183b0e44ef23":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"c9e17c5277af4208ac2f5c9537814bef":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_998df0533603429cb252785a3ea0c453","IPY_MODEL_78174a160852421f85b5d61c6a79de8e","IPY_MODEL_ec16cc618d0945edac7179b977112e5e"],"layout":"IPY_MODEL_fff9c59e9db34252abcb5dfb4d380c68","tabbable":null,"tooltip":null}},"cb15b2c20fa5490c800ac2d894c0df53":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","bar_color":"blue","description_width":""}},"d101fc1e459748b9a47aa54e290d01d9":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"d5858d0be7aa4b05970b5c99cd11e311":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_d101fc1e459748b9a47aa54e290d01d9","placeholder":"​","style":"IPY_MODEL_8b7817f0f1f34064996f584e06facd12","tabbable":null,"tooltip":null,"value":"chain 2: 100%"}},"e3a3d121cf314111aa4442cbafe06a14":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"e62927c6ef9e47359148ee72acb7b636":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_6e4d73a1d84d421894c72fb780d944b6","placeholder":"​","style":"IPY_MODEL_6a674923c87b4b25a40f4eef657d7d24","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:02&lt;00:00, 796.45it/s, (Sampling completed)]"}},"e7c176f3e75c41e684f131d746ad055b":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"ec16cc618d0945edac7179b977112e5e":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_575894845a414cc4bb58835ae6e60f2a","placeholder":"​","style":"IPY_MODEL_e7c176f3e75c41e684f131d746ad055b","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:02&lt;00:00, 753.21it/s, (Sampling completed)]"}},"f1a5d8ea33b24be9b5d8d5c9b8409a0e":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"f417b3102aaa4c679e0d5f17e4ff1d11":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"2.0.0","_view_name":"HTMLView","description":"","description_allow_html":false,"layout":"IPY_MODEL_f46d3b42823040a5a87ca442f21abd96","placeholder":"​","style":"IPY_MODEL_1d8978992dab44e98dabb45ce2afb305","tabbable":null,"tooltip":null,"value":" 3000/3000 [00:00&lt;00:00, 2839.81it/s, (Sampling completed)]"}},"f46d3b42823040a5a87ca442f21abd96":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"fad9e3d445dc4f339c3a81f997d0518a":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"ff64517a26fa4f29ac63c06ebbb5394c":{"model_module":"@jupyter-widgets/controls","model_module_version":"2.0.0","model_name":"HTMLStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"2.0.0","_model_name":"HTMLStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"StyleView","background":null,"description_width":"","font_size":null,"text_color":null}},"fff9c59e9db34252abcb5dfb4d380c68":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}}},"version_major":2,"version_minor":0}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

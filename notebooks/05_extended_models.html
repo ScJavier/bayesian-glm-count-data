@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-290b1a9ea04e41c7ae7ffe087f35970f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -106,6 +106,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -329,7 +332,7 @@ window.Quarto = {
 <section id="prerequisito" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="prerequisito"><span class="header-section-number">8.1</span> Prerequisito</h2>
 <p>Ejecutar primero <code>03_inferencia_bayesiana.ipynb</code> (modelos base) y este notebook en orden (ajusta ZIP y ZINB si los <code>.nc</code> no existen en <code>outputs/</code>).</p>
-<div id="1" class="cell">
+<div id="1" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -348,7 +351,7 @@ window.Quarto = {
 </section>
 <section id="datos-y-modelos-base" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="datos-y-modelos-base"><span class="header-section-number">8.2</span> 1. Datos y modelos base</h2>
-<div id="3" class="cell">
+<div id="3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../data/agresti_crab_satellites_dataset.csv'</span>)</span>
@@ -374,252 +377,703 @@ window.Quarto = {
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"prop. ceros: </span><span class="sc">{</span>np<span class="sc">.</span>mean(y_obs <span class="op">==</span> <span class="dv">0</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"índice de dispersión: </span><span class="sc">{</span>np<span class="sc">.</span>var(y_obs)<span class="op">/</span>np<span class="sc">.</span>mean(y_obs)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>N observaciones: 173
+prop. ceros: 0.358
+índice de dispersión: 3.376</code></pre>
+</div>
 </div>
 </section>
 <section id="ajuste-de-zip-y-zinb" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="ajuste-de-zip-y-zinb"><span class="header-section-number">8.3</span> 2. Ajuste de ZIP y ZINB</h2>
 <p>Ambos modelos tienen dos componentes con predictor lineal sobre <code>W_scaled</code>: - <strong>Componente de conteo</strong>: liga log, igual que los modelos base - <strong>Componente de ceros</strong>: liga logit, modela P(cero estructural | W)</p>
 <p>El prior de <code>phi</code> en ZINB es <code>exponential(1)</code> — apropiado para un parámetro positivo con media 1 y soporte (0, ∞).</p>
-<div id="5" class="cell">
+<div id="5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.path.exists(<span class="st">'../outputs/zip_idata.nc'</span>) <span class="kw">and</span> os.path.exists(<span class="st">'../outputs/zinb_idata.nc'</span>):</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Cargando .nc existentes..."</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    idata_zip  <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/zip_idata.nc'</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    idata_zinb <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/zinb_idata.nc'</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Ajustando modelos..."</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    zip_model  <span class="op">=</span> cmdstanpy.CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/zip_model.stan'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    zinb_model <span class="op">=</span> cmdstanpy.CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/zinb_model.stan'</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    zip_fit <span class="op">=</span> zip_model.sample(</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_warmup<span class="op">=</span><span class="dv">1000</span>, iter_sampling<span class="op">=</span><span class="dv">1000</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        show_progress<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    zinb_fit <span class="op">=</span> zinb_model.sample(</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_warmup<span class="op">=</span><span class="dv">1000</span>, iter_sampling<span class="op">=</span><span class="dv">1000</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        show_progress<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    idata_zip <span class="op">=</span> az.from_cmdstanpy(</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        posterior<span class="op">=</span>zip_fit,</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        log_likelihood<span class="op">=</span><span class="st">'log_lik'</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        observed_data<span class="op">=</span>{<span class="st">'y'</span>: y_obs},</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    idata_zinb <span class="op">=</span> az.from_cmdstanpy(</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        posterior<span class="op">=</span>zinb_fit,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        log_likelihood<span class="op">=</span><span class="st">'log_lik'</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        observed_data<span class="op">=</span>{<span class="st">'y'</span>: y_obs},</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    idata_zip.to_netcdf(<span class="st">'../outputs/zip_idata.nc'</span>)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    idata_zinb.to_netcdf(<span class="st">'../outputs/zinb_idata.nc'</span>)</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Renombrar para plot_ppc</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>idata_zip.posterior_predictive  <span class="op">=</span> idata_zip.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>idata_zinb.posterior_predictive <span class="op">=</span> idata_zinb.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ZIP  grupos:"</span>, <span class="bu">list</span>(idata_zip.groups()))</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ZINB grupos:"</span>, <span class="bu">list</span>(idata_zinb.groups()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.path.exists(<span class="st">'../outputs/zip_idata.nc'</span>) <span class="kw">and</span> os.path.exists(<span class="st">'../outputs/zinb_idata.nc'</span>):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Cargando .nc existentes..."</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    idata_zip  <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/zip_idata.nc'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    idata_zinb <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/zinb_idata.nc'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Ajustando modelos..."</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    zip_model  <span class="op">=</span> cmdstanpy.CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/zip_model.stan'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    zinb_model <span class="op">=</span> cmdstanpy.CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/zinb_model.stan'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    zip_fit <span class="op">=</span> zip_model.sample(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_warmup<span class="op">=</span><span class="dv">1000</span>, iter_sampling<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        show_progress<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    zinb_fit <span class="op">=</span> zinb_model.sample(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_warmup<span class="op">=</span><span class="dv">1000</span>, iter_sampling<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        show_progress<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    idata_zip <span class="op">=</span> az.from_cmdstanpy(</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        posterior<span class="op">=</span>zip_fit,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        log_likelihood<span class="op">=</span><span class="st">'log_lik'</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        observed_data<span class="op">=</span>{<span class="st">'y'</span>: y_obs},</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    idata_zinb <span class="op">=</span> az.from_cmdstanpy(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        posterior<span class="op">=</span>zinb_fit,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        log_likelihood<span class="op">=</span><span class="st">'log_lik'</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        observed_data<span class="op">=</span>{<span class="st">'y'</span>: y_obs},</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    idata_zip.to_netcdf(<span class="st">'../outputs/zip_idata.nc'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    idata_zinb.to_netcdf(<span class="st">'../outputs/zinb_idata.nc'</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Renombrar para plot_ppc</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>idata_zip.posterior_predictive  <span class="op">=</span> idata_zip.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>idata_zinb.posterior_predictive <span class="op">=</span> idata_zinb.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ZIP  grupos:"</span>, <span class="bu">list</span>(idata_zip.groups()))</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ZINB grupos:"</span>, <span class="bu">list</span>(idata_zinb.groups()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cargando .nc existentes...
+ZIP  grupos: ['posterior', 'posterior_predictive', 'log_likelihood', 'sample_stats', 'observed_data']
+ZINB grupos: ['posterior', 'posterior_predictive', 'log_likelihood', 'sample_stats', 'observed_data']</code></pre>
+</div>
 </div>
 </section>
 <section id="diagnósticos-mcmc" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="diagnósticos-mcmc"><span class="header-section-number">8.4</span> 3. Diagnósticos MCMC</h2>
-<div id="7" class="cell">
+<div id="7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== ZIP ==="</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>display(az.summary(idata_zip,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                   var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   round_to<span class="op">=</span><span class="dv">3</span>))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== ZINB ==="</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>display(az.summary(idata_zinb,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                   var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'phi'</span>,<span class="st">'alpha_sm'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                   round_to<span class="op">=</span><span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== ZIP ==="</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>display(az.summary(idata_zip,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                   var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                   round_to<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== ZINB ==="</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>display(az.summary(idata_zinb,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                   var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'phi'</span>,<span class="st">'alpha_sm'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                   round_to<span class="op">=</span><span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== ZIP ===</code></pre>
 </div>
-<div id="8" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>az.plot_trace(idata_zip,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              axes<span class="op">=</span>axes, compact<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Trace plots — ZIP'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">sd</th>
+<th data-quarto-table-cell-role="th">hdi_3%</th>
+<th data-quarto-table-cell-role="th">hdi_97%</th>
+<th data-quarto-table-cell-role="th">mcse_mean</th>
+<th data-quarto-table-cell-role="th">mcse_sd</th>
+<th data-quarto-table-cell-role="th">ess_bulk</th>
+<th data-quarto-table-cell-role="th">ess_tail</th>
+<th data-quarto-table-cell-role="th">r_hat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">alpha_count</th>
+<td>1.477</td>
+<td>0.050</td>
+<td>1.383</td>
+<td>1.566</td>
+<td>0.001</td>
+<td>0.001</td>
+<td>3758.832</td>
+<td>2803.684</td>
+<td>1.001</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">beta_count</th>
+<td>0.072</td>
+<td>0.046</td>
+<td>-0.013</td>
+<td>0.159</td>
+<td>0.001</td>
+<td>0.001</td>
+<td>3865.454</td>
+<td>3305.843</td>
+<td>1.002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">alpha_zero</th>
+<td>-0.788</td>
+<td>0.190</td>
+<td>-1.161</td>
+<td>-0.443</td>
+<td>0.003</td>
+<td>0.003</td>
+<td>3801.909</td>
+<td>2859.664</td>
+<td>1.001</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">beta_zero</th>
+<td>-1.085</td>
+<td>0.221</td>
+<td>-1.543</td>
+<td>-0.705</td>
+<td>0.003</td>
+<td>0.003</td>
+<td>4045.371</td>
+<td>3073.930</td>
+<td>1.000</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="9" class="cell">
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== ZINB ===</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">sd</th>
+<th data-quarto-table-cell-role="th">hdi_3%</th>
+<th data-quarto-table-cell-role="th">hdi_97%</th>
+<th data-quarto-table-cell-role="th">mcse_mean</th>
+<th data-quarto-table-cell-role="th">mcse_sd</th>
+<th data-quarto-table-cell-role="th">ess_bulk</th>
+<th data-quarto-table-cell-role="th">ess_tail</th>
+<th data-quarto-table-cell-role="th">r_hat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">alpha_count</th>
+<td>1.415</td>
+<td>0.081</td>
+<td>1.250</td>
+<td>1.554</td>
+<td>0.001</td>
+<td>0.001</td>
+<td>3109.943</td>
+<td>2798.345</td>
+<td>1.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">beta_count</th>
+<td>0.098</td>
+<td>0.074</td>
+<td>-0.041</td>
+<td>0.233</td>
+<td>0.001</td>
+<td>0.001</td>
+<td>3637.571</td>
+<td>2868.703</td>
+<td>1.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">phi</th>
+<td>3.509</td>
+<td>1.010</td>
+<td>1.824</td>
+<td>5.475</td>
+<td>0.019</td>
+<td>0.019</td>
+<td>2972.847</td>
+<td>2724.716</td>
+<td>1.002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">alpha_sm</th>
+<td>0.308</td>
+<td>0.089</td>
+<td>0.157</td>
+<td>0.471</td>
+<td>0.002</td>
+<td>0.002</td>
+<td>2972.847</td>
+<td>2724.716</td>
+<td>1.002</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">alpha_zero</th>
+<td>-1.034</td>
+<td>0.260</td>
+<td>-1.523</td>
+<td>-0.562</td>
+<td>0.005</td>
+<td>0.005</td>
+<td>2948.451</td>
+<td>2253.263</td>
+<td>1.001</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">beta_zero</th>
+<td>-1.183</td>
+<td>0.270</td>
+<td>-1.675</td>
+<td>-0.676</td>
+<td>0.005</td>
+<td>0.005</td>
+<td>3390.422</td>
+<td>2351.002</td>
+<td>1.002</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="8" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>az.plot_trace(idata_zinb,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'phi'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              axes<span class="op">=</span>axes, compact<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Trace plots — ZINB'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>az.plot_trace(idata_zip,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              axes<span class="op">=</span>axes, compact<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Trace plots — ZIP'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_extended_models_files/figure-html/cell-6-output-1.png" width="1141" height="946" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>az.plot_trace(idata_zinb,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'phi'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              axes<span class="op">=</span>axes, compact<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Trace plots — ZINB'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_extended_models_files/figure-html/cell-7-output-1.png" width="1140" height="1134" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="ppcs-visuales-distribución-marginal" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="ppcs-visuales-distribución-marginal"><span class="header-section-number">8.5</span> 4. PPCs visuales — Distribución marginal</h2>
 <p>Comparamos los cuatro modelos lado a lado para ver visualmente la mejora en la captura de la distribución marginal de satélites.</p>
-<div id="11" class="cell">
+<div id="11" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (idata, title) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, [</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    (idata_pois, <span class="st">'Poisson'</span>),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    (idata_nb,   <span class="st">'Binomial Negativa'</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    (idata_zip,  <span class="st">'ZIP'</span>),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    (idata_zinb, <span class="st">'ZINB'</span>),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>]):</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    az.plot_ppc(idata, ax<span class="op">=</span>ax, num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Número de satélites'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">17</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal — cuatro modelos'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (idata, title) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, [</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    (idata_pois, <span class="st">'Poisson'</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    (idata_nb,   <span class="st">'Binomial Negativa'</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    (idata_zip,  <span class="st">'ZIP'</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    (idata_zinb, <span class="st">'ZINB'</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    az.plot_ppc(idata, ax<span class="op">=</span>ax, num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Número de satélites'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">17</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal — cuatro modelos'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_extended_models_files/figure-html/cell-8-output-1.png" width="1333" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="ppcs-con-estadísticos-de-prueba" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba"><span class="header-section-number">8.6</span> 5. PPCs con estadísticos de prueba</h2>
 <p>Evaluamos la mejora con los mismos cuatro estadísticos del análisis base.</p>
-<div id="13" class="cell">
+<div id="13" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y): <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y): <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> [</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Poisson'</span>, idata_pois),</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'NegBin'</span>,  idata_nb),</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ZIP'</span>,     idata_zip),</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ZINB'</span>,    idata_zinb),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>y_rep_dict <span class="op">=</span> {}</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, idata <span class="kw">in</span> models:</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> idata.posterior_predictive[<span class="st">'y'</span>].values</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    y_rep_dict[name] <span class="op">=</span> arr.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="bu">len</span>(y_obs))</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla comparativa</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, y_rep_flat <span class="kw">in</span> y_rep_dict.items():</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: name,</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(<span class="bu">float</span>(np.mean(t_rep)), <span class="dv">3</span>),</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(<span class="bu">float</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs)), <span class="dv">3</span>),</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y): <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y): <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> [</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Poisson'</span>, idata_pois),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'NegBin'</span>,  idata_nb),</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ZIP'</span>,     idata_zip),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ZINB'</span>,    idata_zinb),</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>y_rep_dict <span class="op">=</span> {}</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, idata <span class="kw">in</span> models:</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> idata.posterior_predictive[<span class="st">'y'</span>].values</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    y_rep_dict[name] <span class="op">=</span> arr.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="bu">len</span>(y_obs))</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla comparativa</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, y_rep_flat <span class="kw">in</span> y_rep_dict.items():</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: name,</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(<span class="bu">float</span>(np.mean(t_rep)), <span class="dv">3</span>),</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(<span class="bu">float</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs)), <span class="dv">3</span>),</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Modelo</th>
+<th data-quarto-table-cell-role="th">Estadístico</th>
+<th data-quarto-table-cell-role="th">T(y_obs)</th>
+<th data-quarto-table-cell-role="th">E[T(y_rep)]</th>
+<th data-quarto-table-cell-role="th">Bayesian p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">9</th>
+<td>NegBin</td>
+<td>max</td>
+<td>15.000</td>
+<td>27.266</td>
+<td>0.963</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">8</th>
+<td>Poisson</td>
+<td>max</td>
+<td>15.000</td>
+<td>11.078</td>
+<td>0.075</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">11</th>
+<td>ZINB</td>
+<td>max</td>
+<td>15.000</td>
+<td>16.025</td>
+<td>0.624</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">10</th>
+<td>ZIP</td>
+<td>max</td>
+<td>15.000</td>
+<td>10.852</td>
+<td>0.014</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">13</th>
+<td>NegBin</td>
+<td>prop. ceros</td>
+<td>0.358</td>
+<td>0.291</td>
+<td>0.092</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">12</th>
+<td>Poisson</td>
+<td>prop. ceros</td>
+<td>0.358</td>
+<td>0.082</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">15</th>
+<td>ZINB</td>
+<td>prop. ceros</td>
+<td>0.358</td>
+<td>0.359</td>
+<td>0.532</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">14</th>
+<td>ZIP</td>
+<td>prop. ceros</td>
+<td>0.358</td>
+<td>0.358</td>
+<td>0.514</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>NegBin</td>
+<td>std</td>
+<td>3.139</td>
+<td>4.089</td>
+<td>0.889</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Poisson</td>
+<td>std</td>
+<td>3.139</td>
+<td>2.031</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>ZINB</td>
+<td>std</td>
+<td>3.139</td>
+<td>3.282</td>
+<td>0.635</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>ZIP</td>
+<td>std</td>
+<td>3.139</td>
+<td>2.745</td>
+<td>0.011</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>NegBin</td>
+<td>Índice dispersión</td>
+<td>3.376</td>
+<td>5.709</td>
+<td>0.950</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Poisson</td>
+<td>Índice dispersión</td>
+<td>3.376</td>
+<td>1.423</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>ZINB</td>
+<td>Índice dispersión</td>
+<td>3.376</td>
+<td>3.695</td>
+<td>0.691</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>ZIP</td>
+<td>Índice dispersión</td>
+<td>3.376</td>
+<td>2.596</td>
+<td>0.008</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="14" class="cell">
+</div>
+</div>
+<div id="14" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="bu">len</span>(models), figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (model_name, y_rep_flat) <span class="kw">in</span> <span class="bu">enumerate</span>(</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        (n, y_rep_dict[n]) <span class="cf">for</span> n, _ <span class="kw">in</span> models</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ):</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs)=</span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">p = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">7</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba — cuatro modelos'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="bu">len</span>(models), figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (model_name, y_rep_flat) <span class="kw">in</span> <span class="bu">enumerate</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        (n, y_rep_dict[n]) <span class="cf">for</span> n, _ <span class="kw">in</span> models</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs)=</span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">p = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba — cuatro modelos'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_extended_models_files/figure-html/cell-10-output-1.png" width="1526" height="1556" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="comparación-global-loo-cv-cuatro-modelos" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="comparación-global-loo-cv-cuatro-modelos"><span class="header-section-number">8.7</span> 6. Comparación global LOO-CV — cuatro modelos</h2>
 <p>ELPD (Expected Log Predictive Density) — más alto = mejor capacidad predictiva out-of-sample.</p>
-<div id="16" class="cell">
+<div id="16" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Poisson'</span>: idata_pois,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NegBin'</span>:  idata_nb,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ZIP'</span>:     idata_zip,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ZINB'</span>:    idata_zinb,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">3</span>))</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Comparación LOO-CV — cuatro modelos'</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Poisson'</span>: idata_pois,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NegBin'</span>:  idata_nb,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ZIP'</span>:     idata_zip,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ZINB'</span>:    idata_zinb,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">3</span>))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Comparación LOO-CV — cuatro modelos'</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rank</th>
+<th data-quarto-table-cell-role="th">elpd_loo</th>
+<th data-quarto-table-cell-role="th">p_loo</th>
+<th data-quarto-table-cell-role="th">elpd_diff</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">se</th>
+<th data-quarto-table-cell-role="th">dse</th>
+<th data-quarto-table-cell-role="th">warning</th>
+<th data-quarto-table-cell-role="th">scale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ZINB</th>
+<td>0</td>
+<td>-358.487671</td>
+<td>4.271028</td>
+<td>0.000000</td>
+<td>0.463509</td>
+<td>14.449078</td>
+<td>0.000000</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ZIP</th>
+<td>1</td>
+<td>-369.544010</td>
+<td>5.290222</td>
+<td>11.056340</td>
+<td>0.406980</td>
+<td>18.528866</td>
+<td>7.344846</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NegBin</th>
+<td>2</td>
+<td>-378.435266</td>
+<td>2.593778</td>
+<td>19.947596</td>
+<td>0.129511</td>
+<td>13.521200</td>
+<td>5.559237</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Poisson</th>
+<td>3</td>
+<td>-465.237914</td>
+<td>5.263937</td>
+<td>106.750243</td>
+<td>0.000000</td>
+<td>23.064273</td>
+<td>17.760474</td>
+<td>False</td>
+<td>log</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_extended_models_files/figure-html/cell-11-output-2.png" width="852" height="279" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="posterior-del-componente-de-ceros" class="level2" data-number="8.8">
 <h2 data-number="8.8" class="anchored" data-anchor-id="posterior-del-componente-de-ceros"><span class="header-section-number">8.8</span> 7. Posterior del componente de ceros</h2>
 <p>El componente logístico modela cómo varía P(cero estructural) con el ancho de la hembra.</p>
-<div id="18" class="cell">
+<div id="18" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>W_range <span class="op">=</span> np.linspace(df[<span class="st">'W'</span>].<span class="bu">min</span>(), df[<span class="st">'W'</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>W_scaled_range <span class="op">=</span> (W_range <span class="op">-</span> mean_W) <span class="op">/</span> std_W</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (name, idata) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(<span class="st">'ZIP'</span>, idata_zip), (<span class="st">'ZINB'</span>, idata_zinb)]):</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    a0 <span class="op">=</span> idata.posterior[<span class="st">'alpha_zero'</span>].values.flatten()</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    b0 <span class="op">=</span> idata.posterior[<span class="st">'beta_zero'</span>].values.flatten()</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curvas de theta para 200 muestras del posterior</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.random.choice(<span class="bu">len</span>(a0), <span class="dv">200</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> idx:</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(a0[i] <span class="op">+</span> b0[i] <span class="op">*</span> W_scaled_range)))</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        ax.plot(W_range, theta, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curva media posterior</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    theta_mean <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(a0.mean() <span class="op">+</span> b0.mean() <span class="op">*</span> W_scaled_range)))</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    ax.plot(W_range, theta_mean, color<span class="op">=</span><span class="st">'navy'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Media posterior'</span>)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Ancho de caparazón W (cm)'</span>)</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'P(cero estructural | W)'</span>)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> — Componente de ceros'</span>)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Probabilidad de cero estructural vs ancho de caparazón'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>W_range <span class="op">=</span> np.linspace(df[<span class="st">'W'</span>].<span class="bu">min</span>(), df[<span class="st">'W'</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>W_scaled_range <span class="op">=</span> (W_range <span class="op">-</span> mean_W) <span class="op">/</span> std_W</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (name, idata) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(<span class="st">'ZIP'</span>, idata_zip), (<span class="st">'ZINB'</span>, idata_zinb)]):</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    a0 <span class="op">=</span> idata.posterior[<span class="st">'alpha_zero'</span>].values.flatten()</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    b0 <span class="op">=</span> idata.posterior[<span class="st">'beta_zero'</span>].values.flatten()</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curvas de theta para 200 muestras del posterior</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.random.choice(<span class="bu">len</span>(a0), <span class="dv">200</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> idx:</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(a0[i] <span class="op">+</span> b0[i] <span class="op">*</span> W_scaled_range)))</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        ax.plot(W_range, theta, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curva media posterior</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    theta_mean <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(a0.mean() <span class="op">+</span> b0.mean() <span class="op">*</span> W_scaled_range)))</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    ax.plot(W_range, theta_mean, color<span class="op">=</span><span class="st">'navy'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Media posterior'</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Ancho de caparazón W (cm)'</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'P(cero estructural | W)'</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> — Componente de ceros'</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Probabilidad de cero estructural vs ancho de caparazón'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_extended_models_files/figure-html/cell-12-output-1.png" width="1238" height="382" class="figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="conclusiones" class="level2" data-number="8.9">
