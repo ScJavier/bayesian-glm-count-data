@@ -1,4 +1,13 @@
-name: Publish to GitHub Pages
+name: Validate (no publish)
+
+# CI solo valida que Quarto puede leer el proyecto.
+# La publicación a GitHub Pages se hace manualmente desde local:
+#   QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
+#
+# Razón: quarto render en CI produce HTML sin outputs porque los notebooks
+# están strippeados (nbstripout) y el mecanismo freeze no bypassa el hash
+# check en la práctica. quarto publish desde local usa los notebooks con
+# outputs que Quarto generó durante --execute, y sí produce HTML correcto.
 
 on:
   push:
@@ -6,10 +15,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-deploy:
+  validate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout
@@ -18,14 +25,8 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Render book
-        # _freeze/ committed al repo — no requiere instalar Python ni Stan en CI
-        uses: quarto-dev/quarto-actions/render@v2
-
-      - name: Publish to gh-pages
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-          render: "false"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate project structure
+        run: |
+          quarto check
+          echo "✓ _freeze/ entries: $(find _freeze -name '*.json' | wc -l)"
+          echo "✓ notebooks: $(ls notebooks/*.ipynb | wc -l)"

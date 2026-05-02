@@ -3,15 +3,15 @@ _Archivo de gestión interna. Actualizado por Claude Code._
 
 ---
 
-## Estado actual (2026-04-26)
+## Estado actual (2026-05-02)
 
 - **Git:** ✅ rama master
 - **GitHub:** ✅ github.com/ScJavier/bayesian-glm-count-data (**PÚBLICO desde 2026-04-26**)
 - **GitHub Pages:** ✅ https://ScJavier.github.io/bayesian-glm-count-data/
 - **Entorno:** uv ✅ (`pyproject.toml` + `uv.lock`), Python 3.11.15
 - **Kernel Jupyter:** `bayesian-glm-count-data` registrado en `~/.local/share/jupyter/kernels/`
-- **Quarto:** ✅ configurado (`_quarto.yml`, `index.qmd`), freeze committeado en `_freeze/`
-- **CI:** ✅ GitHub Actions en `.github/workflows/publish.yml`
+- **Quarto:** ✅ configurado (`_quarto.yml`, `index.qmd`), `freeze: true`
+- **CI:** ✅ GitHub Actions — solo valida, NO publica (ver razón abajo)
 
 ---
 
@@ -40,19 +40,28 @@ _Archivo de gestión interna. Actualizado por Claude Code._
 
 ## Flujo de trabajo
 
-### Publicación (CI automático)
+### ⚠️ Por qué la publicación es MANUAL (no CI)
 
-Cada push a `master` activa GitHub Actions:
-1. Instala Quarto en ubuntu-latest
-2. Corre `quarto render` (usa `_freeze/` — sin ejecutar notebooks)
-3. Publica en rama `gh-pages` → GitHub Pages actualiza el sitio
+El CI (`quarto render`) produce HTML sin outputs porque:
+1. nbstripout limpia los notebooks al hacer `git add` → git almacena notebooks sin outputs
+2. CI recibe notebooks sin outputs y el mecanismo de freeze de Quarto no bypassa el
+   hash check en la práctica (aunque `freeze: true` está configurado)
+3. `quarto publish gh-pages` desde **local** sí funciona porque Quarto escribe los
+   outputs de vuelta en los notebooks durante `--execute`, y el publish usa esos outputs
 
-**Nota freeze:true:** `_quarto.yml` usa `freeze: true` (no `freeze: auto`).
-Con `freeze: auto`, nbstripout limpiaba los notebooks al commitear cambiando el
-hash, y Quarto descartaba el freeze silenciosamente en CI → sin outputs visibles.
-Con `freeze: true` el freeze siempre se usa sin verificar hashes.
+**Consecuencia:** publicar siempre desde local con el comando de abajo.
 
-### Re-ejecutar notebooks (cuando cambie código Python/Stan)
+### Publicar a GitHub Pages (comando principal)
+
+```bash
+cd /home/javolet/documents/bayesian-glm-count-data
+QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
+```
+
+Esto hace render (con outputs) y publica directamente a gh-pages. No requiere
+commit previo — el sitio queda actualizado en minutos.
+
+### Re-ejecutar notebooks cuando cambie código Python/Stan
 
 ```bash
 cd /home/javolet/documents/bayesian-glm-count-data
@@ -60,6 +69,8 @@ QUARTO_PYTHON=.venv/bin/python quarto render --execute
 git add _freeze/ notebooks/
 git commit -m "Re-ejecutar notebooks: <descripción>"
 git push
+# Luego publicar:
+QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
 ```
 
 ⚠️ Usar `.venv/bin/python` (NO `python3`) — el jupyter del venv tiene shebang incorrecto
@@ -75,8 +86,8 @@ Si los `.nc` no existen, notebook 05 tiene fallback para ajustar con Stan.
 
 - Cada variación de modelo Stan = nuevo archivo `.stan` (nunca modificar el original)
 - nbstripout activo: outputs de notebooks se limpian en cada commit
-- `_freeze/` SÍ va al repo (es el cache de Quarto para CI)
-- `_site/` NO va al repo (se regenera en cada render)
+- `_freeze/` SÍ va al repo (referencia del último render, pero no lo usa CI)
+- `_site/` NO va al repo (se regenera en cada render/publish)
 
 ---
 
@@ -93,11 +104,10 @@ Si los `.nc` no existen, notebook 05 tiene fallback para ajustar con Stan.
 - Notebook 02 (simulación básica) eliminado — reemplazado por scripts
 
 ### 2026-04-26 (publicación)
-- Reorganización como recorrido de 5 partes:
-  - 00 (intro), 02 (MLE desde cero con Newton-Raphson/IRLS), transiciones entre notebooks
-  - Tabla PPC completada con p-values exactos (ZIP: solo arregla ceros; ZINB: arregla todo)
-  - Gancho quasi-Poisson (Wedderburn 1974) al final de notebook 05
-- Quarto book configurado con freeze: auto
-- GitHub Pages publicado: https://ScJavier.github.io/bayesian-glm-count-data/
-- Repo hecho público
-- CI con GitHub Actions configurado (publica automáticamente en push a master)
+- Reorganización como recorrido de 5 partes
+- Quarto book configurado, GitHub Pages publicado, CI configurado
+
+### 2026-05-02 (fix outputs)
+- Diagnóstico: CI produce HTML sin outputs por interacción nbstripout + Quarto freeze
+- Fix: CI cambiado a validate-only; publicación manual con `quarto publish gh-pages`
+- `quarto publish gh-pages --no-browser` publicó HTML correcto con todos los outputs
