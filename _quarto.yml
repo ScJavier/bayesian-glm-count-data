@@ -37,7 +37,8 @@ format:
     highlight-style: github
     fig-align: center
 
-# Para re-ejecutar notebooks localmente:
-# QUARTO_PYTHON=.venv/bin/python quarto render --execute
+# freeze: true — CI siempre usa _freeze/ sin verificar hashes
+# (freeze: auto descartaba el cache cuando nbstripout limpiaba los notebooks)
+# Para re-ejecutar localmente: QUARTO_PYTHON=.venv/bin/python quarto render --execute
 execute:
-  freeze: auto
+  freeze: true
