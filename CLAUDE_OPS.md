@@ -47,6 +47,11 @@ Cada push a `master` activa GitHub Actions:
 2. Corre `quarto render` (usa `_freeze/` — sin ejecutar notebooks)
 3. Publica en rama `gh-pages` → GitHub Pages actualiza el sitio
 
+**Nota freeze:true:** `_quarto.yml` usa `freeze: true` (no `freeze: auto`).
+Con `freeze: auto`, nbstripout limpiaba los notebooks al commitear cambiando el
+hash, y Quarto descartaba el freeze silenciosamente en CI → sin outputs visibles.
+Con `freeze: true` el freeze siempre se usa sin verificar hashes.
+
 ### Re-ejecutar notebooks (cuando cambie código Python/Stan)
 
 ```bash
