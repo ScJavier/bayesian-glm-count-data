@@ -61,17 +61,26 @@ QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
 Esto hace render (con outputs) y publica directamente a gh-pages. No requiere
 commit previo — el sitio queda actualizado en minutos.
 
-### Re-ejecutar notebooks cuando cambie código Python/Stan
+### Re-ejecutar notebooks cuando cambie código Python/Stan o texto
 
 ```bash
 cd /home/javolet/documents/bayesian-glm-count-data
+# 1. Cambiar freeze a auto para que --execute funcione
+sed -i 's/freeze: true/freeze: auto/' _quarto.yml
+# 2. Re-ejecutar
 QUARTO_PYTHON=.venv/bin/python quarto render --execute
-git add _freeze/ notebooks/
+# 3. Volver freeze a true
+sed -i 's/freeze: auto/freeze: true/' _quarto.yml
+# 4. Commit y push
+git add _freeze/ notebooks/ _quarto.yml
 git commit -m "Re-ejecutar notebooks: <descripción>"
 git push
-# Luego publicar:
+# 5. Publicar
 QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
 ```
+
+⚠️ `freeze: true` hace que `--execute` no funcione a nivel de proyecto. Hay que
+cambiar a `freeze: auto` antes de re-ejecutar y volver a `freeze: true` después.
 
 ⚠️ Usar `.venv/bin/python` (NO `python3`) — el jupyter del venv tiene shebang incorrecto
 (apunta a `poisson-reg-example`), pero Quarto con `python` sí encuentra el kernel correcto.
