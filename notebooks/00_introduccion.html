@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Modelos para Datos de Conteo: Un Recorrido Bayesiano – Modelos para Datos de Conteo</title>
+<title>Modelos para Datos de Conteo: Un Recorrido Bayesiano – Modelos para Datos de Conteo</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -115,8 +115,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -130,20 +129,17 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></span></a>
+  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></span></a>
+  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span></a>
+  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></a>
   </div>
 </li>
       </ul>
@@ -159,8 +155,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></span></a>
+  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a>
   </div>
 </li>
       </ul>
@@ -176,8 +171,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
   </div>
 </li>
       </ul>
@@ -193,14 +187,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></span></a>
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span></a>
+  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></a>
   </div>
 </li>
       </ul>
@@ -215,20 +207,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#origen-del-problema" id="toc-origen-del-problema" class="nav-link active" data-scroll-target="#origen-del-problema"><span class="header-section-number">2.1</span> Origen del problema</a></li>
-  <li><a href="#el-dataset" id="toc-el-dataset" class="nav-link" data-scroll-target="#el-dataset"><span class="header-section-number">2.2</span> El dataset</a></li>
-  <li><a href="#pregunta-de-investigación" id="toc-pregunta-de-investigación" class="nav-link" data-scroll-target="#pregunta-de-investigación"><span class="header-section-number">2.3</span> Pregunta de investigación</a></li>
-  <li><a href="#estructura-del-recorrido" id="toc-estructura-del-recorrido" class="nav-link" data-scroll-target="#estructura-del-recorrido"><span class="header-section-number">2.4</span> Estructura del recorrido</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">2.5</span> Referencias</a></li>
+  <li><a href="#origen-del-problema" id="toc-origen-del-problema" class="nav-link active" data-scroll-target="#origen-del-problema">Origen del problema</a></li>
+  <li><a href="#el-dataset" id="toc-el-dataset" class="nav-link" data-scroll-target="#el-dataset">El dataset</a></li>
+  <li><a href="#pregunta-de-investigación" id="toc-pregunta-de-investigación" class="nav-link" data-scroll-target="#pregunta-de-investigación">Pregunta de investigación</a></li>
+  <li><a href="#estructura-del-recorrido" id="toc-estructura-del-recorrido" class="nav-link" data-scroll-target="#estructura-del-recorrido">Estructura del recorrido</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></h1>
+<h1 class="title"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></h1>
 </div>
 
 
@@ -246,13 +238,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><em>Horseshoe Crab Satellites — Agresti (2002)</em></p>
-<section id="origen-del-problema" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="origen-del-problema"><span class="header-section-number">2.1</span> Origen del problema</h2>
+<section id="origen-del-problema" class="level2">
+<h2 class="anchored" data-anchor-id="origen-del-problema">Origen del problema</h2>
 <p>En un problema aplicado de predicción de demanda, la regresión Poisson fue el primer modelo candidato. Su supuesto central — que la varianza de la respuesta es igual a su media (Var[Y] = E[Y]) — rara vez se cumple en datos reales. La sobredispersión llevó a explorar Binomial Negativa, y la abundancia de ceros a modelos Zero-Inflated. Este minicurso documenta ese recorrido de forma sistemática.</p>
 <p>El vehículo de estudio es el dataset <strong>Horseshoe Crab Satellites</strong> (Agresti 2002): un ejemplo clásico donde los problemas son concretos y verificables, y el comportamiento de cada modelo es interpretable.</p>
 </section>
-<section id="el-dataset" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="el-dataset"><span class="header-section-number">2.2</span> El dataset</h2>
+<section id="el-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="el-dataset">El dataset</h2>
 <p><strong>Horseshoe Crab Satellites</strong> (n = 173 hembras, Agresti 2002):</p>
 <table class="caption-top table">
 <thead>
@@ -319,16 +311,16 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <p>La sobredispersión (D &gt;&gt; 1) invalida el modelo Poisson. El exceso de ceros motiva los modelos Zero-Inflated.</p>
 </section>
-<section id="pregunta-de-investigación" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="pregunta-de-investigación"><span class="header-section-number">2.3</span> Pregunta de investigación</h2>
+<section id="pregunta-de-investigación" class="level2">
+<h2 class="anchored" data-anchor-id="pregunta-de-investigación">Pregunta de investigación</h2>
 <blockquote class="blockquote">
 <p>¿Cómo modelar datos de conteo con sobredispersión y exceso de ceros?<br>
 ¿Qué gana el paradigma bayesiano sobre el frecuentista en este contexto?</p>
 </blockquote>
 <p>La respuesta no es “usa Stan en lugar de statsmodels” — es entender qué dimensiones del ajuste captura cada modelo y cómo verificarlo mediante el workflow bayesiano (Gelman et al.&nbsp;2020).</p>
 </section>
-<section id="estructura-del-recorrido" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="estructura-del-recorrido"><span class="header-section-number">2.4</span> Estructura del recorrido</h2>
+<section id="estructura-del-recorrido" class="level2">
+<h2 class="anchored" data-anchor-id="estructura-del-recorrido">Estructura del recorrido</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -377,8 +369,8 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <p><strong>Nota de lectura:</strong> El notebook <code>02</code> documenta la base teórica (MLE desde cero) y puede leerse antes o después de los notebooks de EDA. Los notebooks <code>01/01b → 03 → 04 → 05</code> forman una secuencia lineal.</p>
 </section>
-<section id="referencias" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.5</span> Referencias</h2>
+<section id="referencias" class="level2">
+<h2 class="anchored" data-anchor-id="referencias">Referencias</h2>
 <ul>
 <li>Agresti, A. (2002). <em>Categorical Data Analysis</em>, 2nd ed.&nbsp;Wiley.</li>
 <li>Carlin, B. P. &amp; Louis, T. A. (2009). <em>Bayesian Methods for Data Analysis</em>, 3rd ed.</li>
@@ -847,12 +839,12 @@ ul.task-list li input[type="checkbox"] {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../index.html" class="pagination-link" aria-label="Prefacio">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Prefacio</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notebooks/01_eda_frecuentista.html" class="pagination-link" aria-label="Descripción del dataset:">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notebooks/01_eda_frecuentista.html" class="pagination-link" aria-label="01 — EDA Frecuentista: Sobredispersión y relación con W">
+        <span class="nav-page-text"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

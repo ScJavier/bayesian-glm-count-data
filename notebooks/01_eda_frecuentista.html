@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Descripción del dataset: – Modelos para Datos de Conteo</title>
+<title>01 — EDA Frecuentista: Sobredispersión y relación con W – Modelos para Datos de Conteo</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -123,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/01_eda_frecuentista.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/01_eda_frecuentista.html"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,8 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -168,20 +167,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></span></a>
+  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></span></a>
+  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span></a>
+  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></a>
   </div>
 </li>
       </ul>
@@ -197,8 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></span></a>
+  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a>
   </div>
 </li>
       </ul>
@@ -214,8 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
   </div>
 </li>
       </ul>
@@ -231,14 +225,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></span></a>
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span></a>
+  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></a>
   </div>
 </li>
       </ul>
@@ -253,17 +245,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#modelo-binomial-negativo-para-sobredispersión" id="toc-modelo-binomial-negativo-para-sobredispersión" class="nav-link active" data-scroll-target="#modelo-binomial-negativo-para-sobredispersión"><span class="header-section-number">3.0.1</span> Modelo Binomial-Negativo para sobredispersión</a></li>
-  <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos"><span class="header-section-number">3.0.2</span> Comparación de modelos</a></li>
+  <li><a href="#modelo-binomial-negativo-para-sobredispersión" id="toc-modelo-binomial-negativo-para-sobredispersión" class="nav-link active" data-scroll-target="#modelo-binomial-negativo-para-sobredispersión">Modelo Binomial-Negativo para sobredispersión</a></li>
+  <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos">Comparación de modelos</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/01_eda_frecuentista.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/00_introduccion.html">Exploración de datos</a></li><li class="breadcrumb-item"><a href="../notebooks/01_eda_frecuentista.html"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -722,8 +714,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Dep. Variable:                     Sa   No. Observations:                  173
 Model:                        Poisson   Df Residuals:                      171
 Method:                           MLE   Df Model:                            1
-Date:                Sun, 26 Apr 2026   Pseudo R-squ.:                 0.06570
-Time:                        21:50:40   Log-Likelihood:                -461.59
+Date:                Sun, 03 May 2026   Pseudo R-squ.:                 0.06570
+Time:                        13:49:51   Log-Likelihood:                -461.59
 converged:                       True   LL-Null:                       -494.04
 Covariance Type:            nonrobust   LLR p-value:                 7.828e-16
 ==============================================================================
@@ -757,8 +749,8 @@ W_scaled       0.3460      0.042      8.216      0.000       0.263       0.429
 dtype: float64</code></pre>
 </div>
 </div>
-<section id="modelo-binomial-negativo-para-sobredispersión" class="level3" data-number="3.0.1">
-<h3 data-number="3.0.1" class="anchored" data-anchor-id="modelo-binomial-negativo-para-sobredispersión"><span class="header-section-number">3.0.1</span> Modelo Binomial-Negativo para sobredispersión</h3>
+<section id="modelo-binomial-negativo-para-sobredispersión" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-binomial-negativo-para-sobredispersión">Modelo Binomial-Negativo para sobredispersión</h3>
 <div id="14" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
@@ -773,8 +765,8 @@ dtype: float64</code></pre>
 Dep. Variable:                     Sa   No. Observations:                  173
 Model:               NegativeBinomial   Df Residuals:                      171
 Method:                           MLE   Df Model:                            1
-Date:                Sun, 26 Apr 2026   Pseudo R-squ.:                 0.02100
-Time:                        21:50:40   Log-Likelihood:                -375.65
+Date:                Sun, 03 May 2026   Pseudo R-squ.:                 0.02100
+Time:                        13:49:51   Log-Likelihood:                -375.65
 converged:                       True   LL-Null:                       -383.70
 Covariance Type:            nonrobust   LLR p-value:                 5.951e-05
 ==============================================================================
@@ -812,8 +804,8 @@ dtype: float64</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-modelos" class="level3" data-number="3.0.2">
-<h3 data-number="3.0.2" class="anchored" data-anchor-id="comparación-de-modelos"><span class="header-section-number">3.0.2</span> Comparación de modelos</h3>
+<section id="comparación-de-modelos" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-de-modelos">Comparación de modelos</h3>
 <div id="18" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1328,12 +1320,12 @@ AIC Binomial Negativa: 757.29</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../notebooks/00_introduccion.html" class="pagination-link" aria-label="Modelos para Datos de Conteo: Un Recorrido Bayesiano">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../notebooks/01b_eda_general.html" class="pagination-link" aria-label="01b — EDA General y Modelos Frecuentistas con Todos los Features">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

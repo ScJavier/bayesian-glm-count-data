@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Parte I: GLM Poisson — Estimación por Máxima Verosimilitud – Modelos para Datos de Conteo</title>
+<title>Parte I: GLM Poisson — Estimación por Máxima Verosimilitud – Modelos para Datos de Conteo</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -149,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html">Teoría: MLE desde cero</a></li><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html">Teoría: MLE desde cero</a></li><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -179,8 +179,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -194,20 +193,17 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></span></a>
+  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></span></a>
+  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span></a>
+  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></a>
   </div>
 </li>
       </ul>
@@ -223,8 +219,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></span></a>
+  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a>
   </div>
 </li>
       </ul>
@@ -240,8 +235,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
   </div>
 </li>
       </ul>
@@ -257,14 +251,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></span></a>
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span></a>
+  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></a>
   </div>
 </li>
       </ul>
@@ -279,30 +271,30 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#el-modelo-glm-poisson" id="toc-el-modelo-glm-poisson" class="nav-link active" data-scroll-target="#el-modelo-glm-poisson"><span class="header-section-number">5.1</span> 1. El modelo GLM Poisson</a>
+  <li><a href="#el-modelo-glm-poisson" id="toc-el-modelo-glm-poisson" class="nav-link active" data-scroll-target="#el-modelo-glm-poisson">1. El modelo GLM Poisson</a>
   <ul class="collapse">
-  <li><a href="#formulación" id="toc-formulación" class="nav-link" data-scroll-target="#formulación"><span class="header-section-number">5.1.1</span> Formulación</a></li>
-  <li><a href="#log-verosimilitud" id="toc-log-verosimilitud" class="nav-link" data-scroll-target="#log-verosimilitud"><span class="header-section-number">5.1.2</span> Log-verosimilitud</a></li>
-  <li><a href="#gradiente-y-hessiana" id="toc-gradiente-y-hessiana" class="nav-link" data-scroll-target="#gradiente-y-hessiana"><span class="header-section-number">5.1.3</span> Gradiente y Hessiana</a></li>
-  <li><a href="#algoritmo-de-newton-raphson" id="toc-algoritmo-de-newton-raphson" class="nav-link" data-scroll-target="#algoritmo-de-newton-raphson"><span class="header-section-number">5.1.4</span> Algoritmo de Newton-Raphson</a></li>
+  <li><a href="#formulación" id="toc-formulación" class="nav-link" data-scroll-target="#formulación">Formulación</a></li>
+  <li><a href="#log-verosimilitud" id="toc-log-verosimilitud" class="nav-link" data-scroll-target="#log-verosimilitud">Log-verosimilitud</a></li>
+  <li><a href="#gradiente-y-hessiana" id="toc-gradiente-y-hessiana" class="nav-link" data-scroll-target="#gradiente-y-hessiana">Gradiente y Hessiana</a></li>
+  <li><a href="#algoritmo-de-newton-raphson" id="toc-algoritmo-de-newton-raphson" class="nav-link" data-scroll-target="#algoritmo-de-newton-raphson">Algoritmo de Newton-Raphson</a></li>
   </ul></li>
-  <li><a href="#simulación-de-datos" id="toc-simulación-de-datos" class="nav-link" data-scroll-target="#simulación-de-datos"><span class="header-section-number">5.2</span> 2. Simulación de datos</a>
+  <li><a href="#simulación-de-datos" id="toc-simulación-de-datos" class="nav-link" data-scroll-target="#simulación-de-datos">2. Simulación de datos</a>
   <ul class="collapse">
-  <li><a href="#verificación-del-supuesto-vary-ey" id="toc-verificación-del-supuesto-vary-ey" class="nav-link" data-scroll-target="#verificación-del-supuesto-vary-ey"><span class="header-section-number">5.2.1</span> Verificación del supuesto Var[Y] ≈ E[Y]</a></li>
+  <li><a href="#verificación-del-supuesto-vary-ey" id="toc-verificación-del-supuesto-vary-ey" class="nav-link" data-scroll-target="#verificación-del-supuesto-vary-ey">Verificación del supuesto Var[Y] ≈ E[Y]</a></li>
   </ul></li>
-  <li><a href="#mle-manual-con-scipy.optimize" id="toc-mle-manual-con-scipy.optimize" class="nav-link" data-scroll-target="#mle-manual-con-scipy.optimize"><span class="header-section-number">5.3</span> 3. MLE manual con <code>scipy.optimize</code></a></li>
-  <li><a href="#verificación-con-statsmodels" id="toc-verificación-con-statsmodels" class="nav-link" data-scroll-target="#verificación-con-statsmodels"><span class="header-section-number">5.4</span> 4. Verificación con <code>statsmodels</code></a></li>
-  <li><a href="#diagnóstico-de-sobredispersión" id="toc-diagnóstico-de-sobredispersión" class="nav-link" data-scroll-target="#diagnóstico-de-sobredispersión"><span class="header-section-number">5.5</span> 5. Diagnóstico de sobredispersión</a></li>
-  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">5.6</span> 6. Conclusiones</a></li>
+  <li><a href="#mle-manual-con-scipy.optimize" id="toc-mle-manual-con-scipy.optimize" class="nav-link" data-scroll-target="#mle-manual-con-scipy.optimize">3. MLE manual con <code>scipy.optimize</code></a></li>
+  <li><a href="#verificación-con-statsmodels" id="toc-verificación-con-statsmodels" class="nav-link" data-scroll-target="#verificación-con-statsmodels">4. Verificación con <code>statsmodels</code></a></li>
+  <li><a href="#diagnóstico-de-sobredispersión" id="toc-diagnóstico-de-sobredispersión" class="nav-link" data-scroll-target="#diagnóstico-de-sobredispersión">5. Diagnóstico de sobredispersión</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">6. Conclusiones</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html">Teoría: MLE desde cero</a></li><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html">Teoría: MLE desde cero</a></li><li class="breadcrumb-item"><a href="../notebooks/02_mle_datos_simulados.html"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -321,17 +313,17 @@ window.Quarto = {
 
 <p>Este notebook implementa el GLM Poisson desde cero sobre datos simulados, donde el verdadero valor de los parámetros es conocido. El objetivo es verificar que la teoría funciona cuando los datos se portan bien — antes de enfrentar datos reales con sobredispersión.</p>
 <p>Contenido: 1. Formulación del GLM Poisson 2. Simulación de datos 3. MLE manual con <code>scipy.optimize</code> 4. Verificación con <code>statsmodels</code> 5. Diagnóstico de sobredispersión</p>
-<section id="el-modelo-glm-poisson" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="el-modelo-glm-poisson"><span class="header-section-number">5.1</span> 1. El modelo GLM Poisson</h2>
-<section id="formulación" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="formulación"><span class="header-section-number">5.1.1</span> Formulación</h3>
+<section id="el-modelo-glm-poisson" class="level2">
+<h2 class="anchored" data-anchor-id="el-modelo-glm-poisson">1. El modelo GLM Poisson</h2>
+<section id="formulación" class="level3">
+<h3 class="anchored" data-anchor-id="formulación">Formulación</h3>
 <p><span class="math display">\[Y_i \sim \text{Poisson}(\lambda_i), \quad i = 1, \ldots, n\]</span></p>
 <p><span class="math display">\[\log(\lambda_i) = \eta_i = \mathbf{x}_i^\top \boldsymbol{\beta}\]</span></p>
 <p>donde <span class="math inline">\(\mathbf{x}_i = (1, x_{i1}, \ldots, x_{ip})^\top\)</span> y <span class="math inline">\(\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_p)^\top\)</span>.</p>
 <p>La función de enlace logarítmica garantiza <span class="math inline">\(\lambda_i &gt; 0\)</span> para cualquier valor de <span class="math inline">\(\eta_i\)</span>.</p>
 </section>
-<section id="log-verosimilitud" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="log-verosimilitud"><span class="header-section-number">5.1.2</span> Log-verosimilitud</h3>
+<section id="log-verosimilitud" class="level3">
+<h3 class="anchored" data-anchor-id="log-verosimilitud">Log-verosimilitud</h3>
 <p>La función de masa de probabilidad de Poisson es:</p>
 <p><span class="math display">\[P(Y_i = y_i \mid \lambda_i) = \frac{e^{-\lambda_i} \lambda_i^{y_i}}{y_i!}\]</span></p>
 <p>La log-verosimilitud del vector de observaciones <span class="math inline">\((y_1, \ldots, y_n)\)</span> es:</p>
@@ -346,8 +338,8 @@ window.Quarto = {
   - e^{\mathbf{x}_i^\top \boldsymbol{\beta}}
 \right]\]</span></p>
 </section>
-<section id="gradiente-y-hessiana" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="gradiente-y-hessiana"><span class="header-section-number">5.1.3</span> Gradiente y Hessiana</h3>
+<section id="gradiente-y-hessiana" class="level3">
+<h3 class="anchored" data-anchor-id="gradiente-y-hessiana">Gradiente y Hessiana</h3>
 <p>Definiendo <span class="math inline">\(\mu_i = e^{\mathbf{x}_i^\top \boldsymbol{\beta}}\)</span> (media condicional):</p>
 <p><strong>Gradiente</strong> (score):</p>
 <p><span class="math display">\[\nabla_{\boldsymbol{\beta}} \ell = \mathbf{X}^\top (\mathbf{y} - \boldsymbol{\mu})\]</span></p>
@@ -358,23 +350,23 @@ window.Quarto = {
 <p><span class="math display">\[\text{Cov}(\hat{\boldsymbol{\beta}}) \approx (-\mathbf{H})^{-1} = (\mathbf{X}^\top \mathbf{W} \mathbf{X})^{-1}\]</span></p>
 <p>Esta es la <strong>Información de Fisher Observada</strong> evaluada en <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>.</p>
 </section>
-<section id="algoritmo-de-newton-raphson" class="level3" data-number="5.1.4">
-<h3 data-number="5.1.4" class="anchored" data-anchor-id="algoritmo-de-newton-raphson"><span class="header-section-number">5.1.4</span> Algoritmo de Newton-Raphson</h3>
+<section id="algoritmo-de-newton-raphson" class="level3">
+<h3 class="anchored" data-anchor-id="algoritmo-de-newton-raphson">Algoritmo de Newton-Raphson</h3>
 <p>Para maximizar <span class="math inline">\(\ell(\boldsymbol{\beta})\)</span> se aplica la actualización de Newton-Raphson:</p>
 <p><span class="math display">\[\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} - \left[\mathbf{H}(\boldsymbol{\beta}^{(t)})\right]^{-1} \nabla \ell(\boldsymbol{\beta}^{(t)})\]</span></p>
 <p>Sustituyendo gradiente y Hessiana:</p>
 <p><span class="math display">\[\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} + \left(\mathbf{X}^\top \mathbf{W}^{(t)} \mathbf{X}\right)^{-1} \mathbf{X}^\top \left(\mathbf{y} - \boldsymbol{\mu}^{(t)}\right)\]</span></p>
 <p>donde <span class="math inline">\(\mathbf{W}^{(t)} = \text{diag}(\mu_1^{(t)}, \ldots, \mu_n^{(t)})\)</span> se actualiza en cada iteración.</p>
-<section id="conexión-con-irls" class="level4" data-number="5.1.4.1">
-<h4 data-number="5.1.4.1" class="anchored" data-anchor-id="conexión-con-irls"><span class="header-section-number">5.1.4.1</span> Conexión con IRLS</h4>
+<section id="conexión-con-irls" class="level4">
+<h4 class="anchored" data-anchor-id="conexión-con-irls">Conexión con IRLS</h4>
 <p>La actualización anterior es algebraicamente equivalente a resolver en cada paso un problema de <strong>mínimos cuadrados ponderados</strong> (<em>Iteratively Reweighted Least Squares</em>, IRLS):</p>
 <p><span class="math display">\[\boldsymbol{\beta}^{(t+1)} = \arg\min_{\boldsymbol{\beta}} \sum_{i=1}^n w_i^{(t)} \left(z_i^{(t)} - \mathbf{x}_i^\top \boldsymbol{\beta}\right)^2\]</span></p>
 <p>con pesos <span class="math inline">\(w_i^{(t)} = \mu_i^{(t)}\)</span> y <strong>respuesta ajustada</strong>:</p>
 <p><span class="math display">\[z_i^{(t)} = \eta_i^{(t)} + \frac{y_i - \mu_i^{(t)}}{\mu_i^{(t)}}\]</span></p>
 <p>donde <span class="math inline">\(\eta_i^{(t)} = \mathbf{x}_i^\top \boldsymbol{\beta}^{(t)}\)</span> es el predictor lineal actual. IRLS es el algoritmo estándar de ajuste de GLMs implementado en <code>statsmodels</code> y R.</p>
 </section>
-<section id="convergencia" class="level4" data-number="5.1.4.2">
-<h4 data-number="5.1.4.2" class="anchored" data-anchor-id="convergencia"><span class="header-section-number">5.1.4.2</span> Convergencia</h4>
+<section id="convergencia" class="level4">
+<h4 class="anchored" data-anchor-id="convergencia">Convergencia</h4>
 <p>Para GLMs Poisson con <span class="math inline">\(\mathbf{X}\)</span> de rango completo, la log-verosimilitud es <strong>estrictamente cóncava</strong>: la Hessiana <span class="math inline">\(\mathbf{H}\)</span> es negativa definida para cualquier <span class="math inline">\(\boldsymbol{\beta}\)</span>, lo que garantiza:</p>
 <ul>
 <li>Máximo global único <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></li>
@@ -398,8 +390,8 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="simulación-de-datos" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="simulación-de-datos"><span class="header-section-number">5.2</span> 2. Simulación de datos</h2>
+<section id="simulación-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="simulación-de-datos">2. Simulación de datos</h2>
 <p>Generamos datos donde el verdadero modelo es Poisson con parámetros conocidos. Usamos <span class="math inline">\(\log(x)\)</span> como predictor para capturar relaciones multiplicativas.</p>
 <p>Modelo verdadero:</p>
 <p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 \log(x_i), \quad \beta_0 = 1.0, \quad \beta_1 = 0.8\]</span></p>
@@ -430,8 +422,8 @@ Media de y: 46.607  |  Varianza de y: 84.121
 Índice de dispersión D = 1.805  (esperado ≈ 1.0 para Poisson puro)</code></pre>
 </div>
 </div>
-<section id="verificación-del-supuesto-vary-ey" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="verificación-del-supuesto-vary-ey"><span class="header-section-number">5.2.1</span> Verificación del supuesto Var[Y] ≈ E[Y]</h3>
+<section id="verificación-del-supuesto-vary-ey" class="level3">
+<h3 class="anchored" data-anchor-id="verificación-del-supuesto-vary-ey">Verificación del supuesto Var[Y] ≈ E[Y]</h3>
 <p>En datos verdaderamente Poisson, la varianza condicional debe aproximarse a la media.</p>
 <div id="7" class="cell" data-execution_count="3">
 <details class="code-fold">
@@ -493,8 +485,8 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </div>
 </section>
 </section>
-<section id="mle-manual-con-scipy.optimize" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="mle-manual-con-scipy.optimize"><span class="header-section-number">5.3</span> 3. MLE manual con <code>scipy.optimize</code></h2>
+<section id="mle-manual-con-scipy.optimize" class="level2">
+<h2 class="anchored" data-anchor-id="mle-manual-con-scipy.optimize">3. MLE manual con <code>scipy.optimize</code></h2>
 <p>Implementamos directamente las tres funciones derivadas de la log-verosimilitud.</p>
 <div id="10" class="cell" data-execution_count="5">
 <details class="code-fold">
@@ -561,8 +553,8 @@ log(x)            0.7773   0.0221  35.1917   0.0000   0.7340   0.8206</code></pr
 </div>
 </div>
 </section>
-<section id="verificación-con-statsmodels" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="verificación-con-statsmodels"><span class="header-section-number">5.4</span> 4. Verificación con <code>statsmodels</code></h2>
+<section id="verificación-con-statsmodels" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-con-statsmodels">4. Verificación con <code>statsmodels</code></h2>
 <p>Comparamos con la implementación de referencia. Los resultados deben ser idénticos.</p>
 <div id="14" class="cell" data-execution_count="8">
 <details class="code-fold">
@@ -606,8 +598,8 @@ dtype: float64</code></pre>
 </div>
 </div>
 </section>
-<section id="diagnóstico-de-sobredispersión" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="diagnóstico-de-sobredispersión"><span class="header-section-number">5.5</span> 5. Diagnóstico de sobredispersión</h2>
+<section id="diagnóstico-de-sobredispersión" class="level2">
+<h2 class="anchored" data-anchor-id="diagnóstico-de-sobredispersión">5. Diagnóstico de sobredispersión</h2>
 <p>Para datos simulados de forma verdaderamente Poisson, el índice φ debe ser ≈ 1. Si φ &gt;&gt; 1, habría sobredispersión y el modelo Poisson sería inadecuado.</p>
 <p><span class="math display">\[\hat{\phi} = \frac{\chi^2_{\text{Pearson}}}{n - p}\]</span></p>
 <div id="17" class="cell" data-execution_count="10">
@@ -642,8 +634,8 @@ dtype: float64</code></pre>
 </div>
 </div>
 </section>
-<section id="conclusiones" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="conclusiones"><span class="header-section-number">5.6</span> 6. Conclusiones</h2>
+<section id="conclusiones" class="level2">
+<h2 class="anchored" data-anchor-id="conclusiones">6. Conclusiones</h2>
 <p>Cuando los datos provienen de un proceso verdaderamente Poisson:</p>
 <ul>
 <li>El estimador MLE recupera los parámetros verdaderos con precisión</li>
@@ -1110,12 +1102,12 @@ dtype: float64</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../notebooks/01b_eda_general.html" class="pagination-link" aria-label="01b — EDA General y Modelos Frecuentistas con Todos los Features">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notebooks/03_inferencia_bayesiana.html" class="pagination-link" aria-label="Functions">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functions</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notebooks/03_inferencia_bayesiana.html" class="pagination-link" aria-label="03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan">
+        <span class="nav-page-text"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

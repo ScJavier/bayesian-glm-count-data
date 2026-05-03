@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; 05 — Posterior Predictive Checks: Evaluación de Sobredispersión – Modelos para Datos de Conteo</title>
+<title>04 — Posterior Predictive Checks: Evaluación de Sobredispersión – Modelos para Datos de Conteo</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -123,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,8 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -168,20 +167,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></span></a>
+  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Descripción del dataset:</span></span></a>
+  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></span></a>
+  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></a>
   </div>
 </li>
       </ul>
@@ -197,8 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></span></a>
+  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a>
   </div>
 </li>
       </ul>
@@ -214,8 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
   </div>
 </li>
       </ul>
@@ -231,14 +225,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></span></a>
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span></a>
+  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></a>
   </div>
 </li>
       </ul>
@@ -253,15 +245,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisito" id="toc-prerequisito" class="nav-link active" data-scroll-target="#prerequisito"><span class="header-section-number">7.1</span> Prerequisito</a></li>
-  <li><a href="#verificación-de-sobredispersión-en-los-datos-observados" id="toc-verificación-de-sobredispersión-en-los-datos-observados" class="nav-link" data-scroll-target="#verificación-de-sobredispersión-en-los-datos-observados"><span class="header-section-number">7.2</span> 1. Verificación de sobredispersión en los datos observados</a></li>
-  <li><a href="#ppc-visual-distribución-marginal" id="toc-ppc-visual-distribución-marginal" class="nav-link" data-scroll-target="#ppc-visual-distribución-marginal"><span class="header-section-number">7.3</span> 2. PPC visual — Distribución marginal</a></li>
-  <li><a href="#ppcs-con-estadísticos-de-prueba-test-statistics" id="toc-ppcs-con-estadísticos-de-prueba-test-statistics" class="nav-link" data-scroll-target="#ppcs-con-estadísticos-de-prueba-test-statistics"><span class="header-section-number">7.4</span> 3. PPCs con estadísticos de prueba (test statistics)</a></li>
-  <li><a href="#loo-pit-calibración-predictiva" id="toc-loo-pit-calibración-predictiva" class="nav-link" data-scroll-target="#loo-pit-calibración-predictiva"><span class="header-section-number">7.5</span> 4. LOO-PIT — Calibración predictiva</a></li>
-  <li><a href="#comparación-de-modelos-loo-cv" id="toc-comparación-de-modelos-loo-cv" class="nav-link" data-scroll-target="#comparación-de-modelos-loo-cv"><span class="header-section-number">7.6</span> 5. Comparación de modelos (LOO-CV)</a></li>
-  <li><a href="#resumen-de-evidencia-y-conclusiones" id="toc-resumen-de-evidencia-y-conclusiones" class="nav-link" data-scroll-target="#resumen-de-evidencia-y-conclusiones"><span class="header-section-number">7.7</span> 6. Resumen de evidencia y conclusiones</a>
+  <li><a href="#prerequisito" id="toc-prerequisito" class="nav-link active" data-scroll-target="#prerequisito">Prerequisito</a></li>
+  <li><a href="#verificación-de-sobredispersión-en-los-datos-observados" id="toc-verificación-de-sobredispersión-en-los-datos-observados" class="nav-link" data-scroll-target="#verificación-de-sobredispersión-en-los-datos-observados">1. Verificación de sobredispersión en los datos observados</a></li>
+  <li><a href="#ppc-visual-distribución-marginal" id="toc-ppc-visual-distribución-marginal" class="nav-link" data-scroll-target="#ppc-visual-distribución-marginal">2. PPC visual — Distribución marginal</a></li>
+  <li><a href="#ppcs-con-estadísticos-de-prueba-test-statistics" id="toc-ppcs-con-estadísticos-de-prueba-test-statistics" class="nav-link" data-scroll-target="#ppcs-con-estadísticos-de-prueba-test-statistics">3. PPCs con estadísticos de prueba (test statistics)</a></li>
+  <li><a href="#loo-pit-calibración-predictiva" id="toc-loo-pit-calibración-predictiva" class="nav-link" data-scroll-target="#loo-pit-calibración-predictiva">4. LOO-PIT — Calibración predictiva</a></li>
+  <li><a href="#comparación-de-modelos-loo-cv" id="toc-comparación-de-modelos-loo-cv" class="nav-link" data-scroll-target="#comparación-de-modelos-loo-cv">5. Comparación de modelos (LOO-CV)</a></li>
+  <li><a href="#resumen-de-evidencia-y-conclusiones" id="toc-resumen-de-evidencia-y-conclusiones" class="nav-link" data-scroll-target="#resumen-de-evidencia-y-conclusiones">6. Resumen de evidencia y conclusiones</a>
   <ul class="collapse">
-  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">7.7.1</span> Conclusiones</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">Conclusiones</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -269,9 +261,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">05 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -291,8 +283,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Bayesian Workflow — Etapa: Model Checking (Gelman et al.&nbsp;2020)</strong></p>
 <p>Los PPCs evalúan si el modelo es capaz de generar datos similares a los observados. Para datos de conteo, el foco es en <strong>sobredispersión</strong>: el fenómeno donde la varianza supera a la media (Var[Y] &gt; E[Y]), que Poisson no puede capturar pero la Binomial Negativa sí.</p>
 <p><strong>Pregunta central:</strong> ¿El modelo Poisson subestima la varianza de los datos de cangrejos? ¿La Binomial Negativa resuelve este problema?</p>
-<section id="prerequisito" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="prerequisito"><span class="header-section-number">7.1</span> Prerequisito</h2>
+<section id="prerequisito" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisito">Prerequisito</h2>
 <p>Ejecutar primero <code>03_inferencia_bayesiana.ipynb</code> para generar <code>outputs/pois_idata.nc</code> y <code>outputs/neg_idata.nc</code> con los grupos <code>posterior_predictive</code> y <code>log_likelihood</code>.</p>
 <div id="1" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -331,8 +323,8 @@ Grupos disponibles NegBin:   ['posterior', 'posterior_predictive', 'log_likeliho
 </div>
 </div>
 </section>
-<section id="verificación-de-sobredispersión-en-los-datos-observados" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="verificación-de-sobredispersión-en-los-datos-observados"><span class="header-section-number">7.2</span> 1. Verificación de sobredispersión en los datos observados</h2>
+<section id="verificación-de-sobredispersión-en-los-datos-observados" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-de-sobredispersión-en-los-datos-observados">1. Verificación de sobredispersión en los datos observados</h2>
 <p>Bajo Poisson: E[Y] = Var[Y] → Índice de dispersión D = Var/Mean ≈ 1<br>
 Si D &gt; 1 → sobredispersión (la Binomial Negativa es más apropiada)</p>
 <div id="4" class="cell" data-execution_count="3">
@@ -357,8 +349,8 @@ Valor máximo:                 15</code></pre>
 </div>
 </div>
 </section>
-<section id="ppc-visual-distribución-marginal" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="ppc-visual-distribución-marginal"><span class="header-section-number">7.3</span> 2. PPC visual — Distribución marginal</h2>
+<section id="ppc-visual-distribución-marginal" class="level2">
+<h2 class="anchored" data-anchor-id="ppc-visual-distribución-marginal">2. PPC visual — Distribución marginal</h2>
 <p><code>az.plot_ppc</code> superpone la distribución de los datos replicados y_rep sobre y_obs. Si el modelo es adecuado, la nube de y_rep debe envolver a y_obs.</p>
 <div id="6" class="cell" data-execution_count="4">
 <details class="code-fold">
@@ -387,8 +379,8 @@ Valor máximo:                 15</code></pre>
 </div>
 </div>
 </section>
-<section id="ppcs-con-estadísticos-de-prueba-test-statistics" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba-test-statistics"><span class="header-section-number">7.4</span> 3. PPCs con estadísticos de prueba (test statistics)</h2>
+<section id="ppcs-con-estadísticos-de-prueba-test-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba-test-statistics">3. PPCs con estadísticos de prueba (test statistics)</h2>
 <p>Para cada estadístico T, comparamos T(y_obs) con la distribución de T(y_rep). Si T(y_obs) cae en la cola de T(y_rep) → el modelo no captura esa propiedad.</p>
 <p><strong>Estadísticos para sobredispersión:</strong> - <code>std</code>: ¿captura la dispersión total? - <code>var/mean</code>: índice de dispersión (D=1 bajo Poisson) - <code>max</code>: ¿captura las colas pesadas? - <code>mean(y==0)</code>: ¿captura la inflación de ceros?</p>
 <div id="8" class="cell" data-execution_count="5">
@@ -457,14 +449,14 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_predictive_checks_base_models_files/figure-html/cell-8-output-1.png" width="1142" height="1556" class="figure-img"></p>
+<p><img src="04_predictive_checks_base_models_files/figure-html/cell-8-output-1.png" width="1141" height="1556" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="loo-pit-calibración-predictiva" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="loo-pit-calibración-predictiva"><span class="header-section-number">7.5</span> 4. LOO-PIT — Calibración predictiva</h2>
+<section id="loo-pit-calibración-predictiva" class="level2">
+<h2 class="anchored" data-anchor-id="loo-pit-calibración-predictiva">4. LOO-PIT — Calibración predictiva</h2>
 <p>El LOO-PIT evalúa calibración: si el modelo está bien calibrado, los quantiles de y_obs dentro de la distribución predictiva leave-one-out deben ser uniformes.</p>
 <div id="12" class="cell" data-execution_count="8">
 <details class="code-fold">
@@ -489,8 +481,8 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-modelos-loo-cv" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="comparación-de-modelos-loo-cv"><span class="header-section-number">7.6</span> 5. Comparación de modelos (LOO-CV)</h2>
+<section id="comparación-de-modelos-loo-cv" class="level2">
+<h2 class="anchored" data-anchor-id="comparación-de-modelos-loo-cv">5. Comparación de modelos (LOO-CV)</h2>
 <p><code>az.compare</code> usa Leave-One-Out Cross-Validation para comparar la capacidad predictiva de los modelos. Un ELPD más alto = mejor predicción out-of-sample.</p>
 <div id="14" class="cell" data-execution_count="9">
 <details class="code-fold">
@@ -525,11 +517,11 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">NegBin</th>
 <td>0</td>
-<td>-378.435266</td>
-<td>2.593778</td>
+<td>-378.508098</td>
+<td>2.638793</td>
 <td>0.000000</td>
-<td>1.0</td>
-<td>13.521200</td>
+<td>1.000000e+00</td>
+<td>13.532134</td>
 <td>0.000000</td>
 <td>False</td>
 <td>log</td>
@@ -537,12 +529,12 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Poisson</th>
 <td>1</td>
-<td>-465.237914</td>
-<td>5.263937</td>
-<td>86.802648</td>
-<td>0.0</td>
-<td>23.064273</td>
-<td>17.322102</td>
+<td>-465.336615</td>
+<td>5.403561</td>
+<td>86.828517</td>
+<td>7.120415e-12</td>
+<td>23.062991</td>
+<td>17.337162</td>
 <td>False</td>
 <td>log</td>
 </tr>
@@ -560,8 +552,8 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 </div>
 </div>
 </section>
-<section id="resumen-de-evidencia-y-conclusiones" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="resumen-de-evidencia-y-conclusiones"><span class="header-section-number">7.7</span> 6. Resumen de evidencia y conclusiones</h2>
+<section id="resumen-de-evidencia-y-conclusiones" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-de-evidencia-y-conclusiones">6. Resumen de evidencia y conclusiones</h2>
 <div id="16" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
@@ -606,16 +598,16 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <td>NegBin</td>
 <td>max</td>
 <td>15.000</td>
-<td>27.266</td>
-<td>0.963</td>
+<td>27.530</td>
+<td>0.968</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">4</th>
 <td>Poisson</td>
 <td>max</td>
 <td>15.000</td>
-<td>11.078</td>
-<td>0.075</td>
+<td>11.038</td>
+<td>0.068</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">7</th>
@@ -623,7 +615,7 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <td>prop. ceros</td>
 <td>0.358</td>
 <td>0.291</td>
-<td>0.092</td>
+<td>0.093</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">6</th>
@@ -638,15 +630,15 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <td>NegBin</td>
 <td>std</td>
 <td>3.139</td>
-<td>4.089</td>
-<td>0.889</td>
+<td>4.115</td>
+<td>0.894</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0</th>
 <td>Poisson</td>
 <td>std</td>
 <td>3.139</td>
-<td>2.031</td>
+<td>2.034</td>
 <td>0.000</td>
 </tr>
 <tr class="odd">
@@ -654,15 +646,15 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <td>NegBin</td>
 <td>Índice dispersión</td>
 <td>3.376</td>
-<td>5.709</td>
-<td>0.950</td>
+<td>5.772</td>
+<td>0.954</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
 <td>Poisson</td>
 <td>Índice dispersión</td>
 <td>3.376</td>
-<td>1.423</td>
+<td>1.427</td>
 <td>0.000</td>
 </tr>
 </tbody>
@@ -671,10 +663,10 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 </div>
 </div>
 </div>
-<section id="conclusiones" class="level3" data-number="7.7.1">
-<h3 data-number="7.7.1" class="anchored" data-anchor-id="conclusiones"><span class="header-section-number">7.7.1</span> Conclusiones</h3>
-<section id="modelo-poisson-falla-sistemática" class="level4" data-number="7.7.1.1">
-<h4 data-number="7.7.1.1" class="anchored" data-anchor-id="modelo-poisson-falla-sistemática"><span class="header-section-number">7.7.1.1</span> Modelo Poisson — falla sistemática</h4>
+<section id="conclusiones" class="level3">
+<h3 class="anchored" data-anchor-id="conclusiones">Conclusiones</h3>
+<section id="modelo-poisson-falla-sistemática" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-poisson-falla-sistemática">Modelo Poisson — falla sistemática</h4>
 <p>El modelo Poisson falla en todas las dimensiones evaluadas:</p>
 <ul>
 <li><strong>Sobredispersión</strong> (p ≈ 0.000 para std e índice de dispersión): el modelo predice una dispersión de ~2.0 satélites cuando los datos muestran ~3.1. El índice de dispersión observado es D=3.38, pero Poisson lo fija estructuralmente en D≈1.</li>
@@ -683,8 +675,8 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <li><strong>LOO-CV</strong>: ELPD=-465.4, muy por debajo de la Binomial Negativa.</li>
 </ul>
 </section>
-<section id="modelo-binomial-negativa-mejora-en-dispersión-falla-en-ceros" class="level4" data-number="7.7.1.2">
-<h4 data-number="7.7.1.2" class="anchored" data-anchor-id="modelo-binomial-negativa-mejora-en-dispersión-falla-en-ceros"><span class="header-section-number">7.7.1.2</span> Modelo Binomial Negativa — mejora en dispersión, falla en ceros</h4>
+<section id="modelo-binomial-negativa-mejora-en-dispersión-falla-en-ceros" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-binomial-negativa-mejora-en-dispersión-falla-en-ceros">Modelo Binomial Negativa — mejora en dispersión, falla en ceros</h4>
 <p>La Binomial Negativa (con α_sm ≈ 1.11, dispersión moderada) resuelve parcialmente el problema:</p>
 <ul>
 <li><strong>Sobredispersión capturada</strong>: p=0.884 para std y p=0.950 para índice de dispersión — el modelo envuelve correctamente la variabilidad de los datos.</li>
@@ -693,8 +685,8 @@ y_rep_nb shape:   (8000, 173)</code></pre>
 <li><strong>LOO-CV</strong>: ELPD=-378.5 vs -465.4 de Poisson. La diferencia es de 86.8 puntos (±17.3 SE), sustancial y significativa. El peso del modelo asigna prácticamente toda la masa a NegBin.</li>
 </ul>
 </section>
-<section id="diagnóstico-final-y-extensión-natural" class="level4" data-number="7.7.1.3">
-<h4 data-number="7.7.1.3" class="anchored" data-anchor-id="diagnóstico-final-y-extensión-natural"><span class="header-section-number">7.7.1.3</span> Diagnóstico final y extensión natural</h4>
+<section id="diagnóstico-final-y-extensión-natural" class="level4">
+<h4 class="anchored" data-anchor-id="diagnóstico-final-y-extensión-natural">Diagnóstico final y extensión natural</h4>
 <p>Ambos modelos comparten el mismo predictor lineal (intercept + ancho de caparazón), y ninguno tiene un mecanismo explícito para el exceso de ceros. Hay hembras que estructuralmente no atraen satélites —posiblemente por condición física o tamaño muy reducido— y ese proceso generador de ceros es distinto del proceso de conteo.</p>
 <p>La extensión natural es un <strong>modelo de mezcla con inflación de ceros</strong>:</p>
 <ul>
@@ -1162,13 +1154,13 @@ y_rep_nb shape:   (8000, 173)</code></pre>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notebooks/03_inferencia_bayesiana.html" class="pagination-link" aria-label="Functions">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functions</span></span>
+      <a href="../notebooks/03_inferencia_bayesiana.html" class="pagination-link" aria-label="03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../notebooks/05_extended_models.html" class="pagination-link" aria-label="05 — Modelos Extendidos: ZIP y ZINB">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
