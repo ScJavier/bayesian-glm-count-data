@@ -1,5 +1,7 @@
 ---
 title: "Prefacio"
+code-fold: false
+code-tools: false
 ---
 
 Este recorrido nació de un problema aplicado: predecir ventas en un entorno de
