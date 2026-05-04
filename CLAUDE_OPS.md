@@ -57,18 +57,20 @@ El CI (`quarto render`) produce HTML sin outputs porque:
 
 ```bash
 cd /home/javolet/documents/bayesian-glm-count-data
-# 1. Primero graduar al repo público
-git push public master
-# 2. Luego publicar Pages
+
+# 1. Graduar código al repo público (rama main)
+git push public master:main
+
+# 2. Publicar sitio — quarto publica a origin/gh-pages (privado) primero
 QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
+
+# 3. Copiar gh-pages al repo público
+git push public gh-pages --force
 ```
 
-Esto hace render (con outputs) y publica directamente a gh-pages. No requiere
-commit previo — el sitio queda actualizado en minutos.
-
-**Nota:** `quarto publish` empuja a la rama `gh-pages` del remote `public` directamente,
-sin pasar por git normal. El paso `git push public master` es para mantener el código
-en sync antes de publicar.
+**Por qué 3 pasos:** quarto usa `origin` (repo privado) para el check de gh-pages.
+Publica allí correctamente, y luego se copia a `public/gh-pages` donde vive el sitio real.
+El sitio en `https://ScJavier.github.io/bayesian-glm-count-data/` se actualiza desde `public/gh-pages`.
 
 ### Re-ejecutar notebooks cuando cambie código Python/Stan o texto
 
