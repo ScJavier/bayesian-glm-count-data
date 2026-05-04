@@ -3,7 +3,7 @@ _Archivo de gestión interna. Actualizado por Claude Code._
 
 ---
 
-## Estado actual (2026-05-02)
+## Estado actual (2026-05-03)
 
 - **Git:** ✅ rama master
 - **GitHub:** ✅ github.com/ScJavier/bayesian-glm-count-data (**PÚBLICO desde 2026-04-26**)
@@ -100,6 +100,21 @@ Si los `.nc` no existen, notebook 05 tiene fallback para ajustar con Stan.
 
 ---
 
+## Backlog
+
+Ver [BACKLOG.md](BACKLOG.md) — tareas organizadas en 5 fases (bugs, narrativa, cosmético, V2).
+
+---
+
+## Arquitectura de repos (decisión 2026-05-03)
+
+- **Repo privado** — trabajo en sucio: paths locales, warnings visibles, exploración a medias
+- **Repo público** (`github.com/ScJavier/bayesian-glm-count-data`) — solo recibe contenido "graduado"
+- **Implementación pendiente**: configurar `origin` (privado) y `public` (público) como dos remotes, con flujo de graduación manual
+- Mientras tanto, el repo actual ya es público — el backlog de Fase 1 sirve como checklist mínimo antes de cada push público
+
+---
+
 ## Historial resumido de sesiones
 
 ### 2026-04-04
@@ -115,6 +130,12 @@ Si los `.nc` no existen, notebook 05 tiene fallback para ajustar con Stan.
 ### 2026-04-26 (publicación)
 - Reorganización como recorrido de 5 partes
 - Quarto book configurado, GitHub Pages publicado, CI configurado
+
+### 2026-05-03 (revisión de calidad)
+- Feedback a fondo recibido: 7 bugs/typos críticos identificados en NB01, NB03, NB04
+- Decisión de arquitectura: repo privado (sucio) → repo público (graduado)
+- BACKLOG.md creado con 5 fases de trabajo
+- CLAUDE_OPS.md actualizado con arquitectura de repos
 
 ### 2026-05-02 (fix outputs)
 - Diagnóstico: CI produce HTML sin outputs por interacción nbstripout + Quarto freeze
