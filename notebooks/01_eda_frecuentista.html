@@ -111,6 +111,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -245,7 +274,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#modelo-binomial-negativo-para-sobredispersión" id="toc-modelo-binomial-negativo-para-sobredispersión" class="nav-link active" data-scroll-target="#modelo-binomial-negativo-para-sobredispersión">Modelo Binomial-Negativo para sobredispersión</a></li>
+  <li><a href="#diagnóstico-de-sobredispersiónel-primer-paso-antes-de-modelar-es-verificar-si-los-datos-se-portan-como-poisson.-bajo-ese-supuesto-la-media-y-la-varianza-de-sa-deberían-ser-iguales-textvary-ey-lambda.lo-que-vemos-arriba-media-2.92-varianza-9.91.-el-índice-de-dispersión-d-textvartextmedia-approx-3.38-los-datos-son-casi-3.4-veces-más-dispersos-de-lo-que-poisson-predice.-esto-es-sobredispersión-y-va-a-ser-el-hilo-conductor-del-recorrido.la-siguiente-pregunta-es-si-w-ancho-del-caparazón-puede-explicar-parte-de-esa-dispersión-y-si-la-relación-es-suficientemente-limpia-para-ser-el-único-predictor-del-modelo." id="toc-diagnóstico-de-sobredispersiónel-primer-paso-antes-de-modelar-es-verificar-si-los-datos-se-portan-como-poisson.-bajo-ese-supuesto-la-media-y-la-varianza-de-sa-deberían-ser-iguales-textvary-ey-lambda.lo-que-vemos-arriba-media-2.92-varianza-9.91.-el-índice-de-dispersión-d-textvartextmedia-approx-3.38-los-datos-son-casi-3.4-veces-más-dispersos-de-lo-que-poisson-predice.-esto-es-sobredispersión-y-va-a-ser-el-hilo-conductor-del-recorrido.la-siguiente-pregunta-es-si-w-ancho-del-caparazón-puede-explicar-parte-de-esa-dispersión-y-si-la-relación-es-suficientemente-limpia-para-ser-el-único-predictor-del-modelo." class="nav-link active" data-scroll-target="#diagnóstico-de-sobredispersiónel-primer-paso-antes-de-modelar-es-verificar-si-los-datos-se-portan-como-poisson.-bajo-ese-supuesto-la-media-y-la-varianza-de-sa-deberían-ser-iguales-textvary-ey-lambda.lo-que-vemos-arriba-media-2.92-varianza-9.91.-el-índice-de-dispersión-d-textvartextmedia-approx-3.38-los-datos-son-casi-3.4-veces-más-dispersos-de-lo-que-poisson-predice.-esto-es-sobredispersión-y-va-a-ser-el-hilo-conductor-del-recorrido.la-siguiente-pregunta-es-si-w-ancho-del-caparazón-puede-explicar-parte-de-esa-dispersión-y-si-la-relación-es-suficientemente-limpia-para-ser-el-único-predictor-del-modelo.">Diagnóstico de sobredispersiónEl primer paso antes de modelar es verificar si los datos se portan como Poisson. Bajo ese supuesto, la media y la varianza de <code>Sa</code> deberían ser iguales: <span class="math inline">\(\text{Var}(Y) = E[Y] = \lambda\)</span>.Lo que vemos arriba: media ≈ 2.92, varianza ≈ 9.91. El <strong>índice de dispersión</strong> <span class="math inline">\(D = \text{Var}/\text{Media} \approx 3.38\)</span> — los datos son casi 3.4 veces más dispersos de lo que Poisson predice. Esto es sobredispersión, y va a ser el hilo conductor del recorrido.La siguiente pregunta es si <code>W</code> (ancho del caparazón) puede explicar parte de esa dispersión, y si la relación es suficientemente limpia para ser el único predictor del modelo.</a></li>
+  <li><a href="#modelo-poisson-como-línea-basela-tabla-de-bins-confirma-lo-esperado-la-varianza-supera-a-la-media-en-casi-todos-los-grupos-la-sobredispersión-no-desaparece-al-condicionar-en-w.-la-relación-sa-w-es-real-y-aproximadamente-lineal-en-escala-logarítmica-lo-que-se-ve-en-el-lowess.ajustamos-primero-el-modelo-poisson.-sabemos-de-antemano-que-va-a-fallar-en-dispersión-el-punto-es-establecer-la-línea-base-y-cuantificar-exactamente-dónde-falla." id="toc-modelo-poisson-como-línea-basela-tabla-de-bins-confirma-lo-esperado-la-varianza-supera-a-la-media-en-casi-todos-los-grupos-la-sobredispersión-no-desaparece-al-condicionar-en-w.-la-relación-sa-w-es-real-y-aproximadamente-lineal-en-escala-logarítmica-lo-que-se-ve-en-el-lowess.ajustamos-primero-el-modelo-poisson.-sabemos-de-antemano-que-va-a-fallar-en-dispersión-el-punto-es-establecer-la-línea-base-y-cuantificar-exactamente-dónde-falla." class="nav-link" data-scroll-target="#modelo-poisson-como-línea-basela-tabla-de-bins-confirma-lo-esperado-la-varianza-supera-a-la-media-en-casi-todos-los-grupos-la-sobredispersión-no-desaparece-al-condicionar-en-w.-la-relación-sa-w-es-real-y-aproximadamente-lineal-en-escala-logarítmica-lo-que-se-ve-en-el-lowess.ajustamos-primero-el-modelo-poisson.-sabemos-de-antemano-que-va-a-fallar-en-dispersión-el-punto-es-establecer-la-línea-base-y-cuantificar-exactamente-dónde-falla.">Modelo Poisson como línea baseLa tabla de bins confirma lo esperado: la varianza supera a la media en casi todos los grupos — la sobredispersión no desaparece al condicionar en <code>W</code>. La relación Sa ~ W es real y aproximadamente lineal en escala logarítmica (lo que se ve en el LOWESS).Ajustamos primero el modelo Poisson. Sabemos de antemano que va a fallar en dispersión — el punto es establecer la línea base y cuantificar exactamente dónde falla.</a></li>
+  <li><a href="#modelo-binomial-negativa-para-sobredispersiónla-binomial-negativa-agrega-un-parámetro-φ-que-permite-que-textvary-mu-mu2phi-mu.-con-φ-estimado-desde-los-datos-el-modelo-puede-ajustarse-a-la-dispersión-que-poisson-fuerza-a-ser-igual-a-la-media.el-estadístico-de-razón-de-verosimilitud-entre-ambos-modelos-testea-formalmente-h₀-φ-poisson-vs-h₁-φ-finito-negbin.-con-1-grado-de-libertad-un-estadístico-de-172-rechaza-cómodamente-h₀." id="toc-modelo-binomial-negativa-para-sobredispersiónla-binomial-negativa-agrega-un-parámetro-φ-que-permite-que-textvary-mu-mu2phi-mu.-con-φ-estimado-desde-los-datos-el-modelo-puede-ajustarse-a-la-dispersión-que-poisson-fuerza-a-ser-igual-a-la-media.el-estadístico-de-razón-de-verosimilitud-entre-ambos-modelos-testea-formalmente-h₀-φ-poisson-vs-h₁-φ-finito-negbin.-con-1-grado-de-libertad-un-estadístico-de-172-rechaza-cómodamente-h₀." class="nav-link" data-scroll-target="#modelo-binomial-negativa-para-sobredispersiónla-binomial-negativa-agrega-un-parámetro-φ-que-permite-que-textvary-mu-mu2phi-mu.-con-φ-estimado-desde-los-datos-el-modelo-puede-ajustarse-a-la-dispersión-que-poisson-fuerza-a-ser-igual-a-la-media.el-estadístico-de-razón-de-verosimilitud-entre-ambos-modelos-testea-formalmente-h₀-φ-poisson-vs-h₁-φ-finito-negbin.-con-1-grado-de-libertad-un-estadístico-de-172-rechaza-cómodamente-h₀.">Modelo Binomial Negativa para sobredispersiónLa Binomial Negativa agrega un parámetro φ que permite que <span class="math inline">\(\text{Var}(Y) = \mu + \mu^2/\phi &gt; \mu\)</span>. Con φ estimado desde los datos, el modelo puede ajustarse a la dispersión que Poisson fuerza a ser igual a la media.El estadístico de razón de verosimilitud entre ambos modelos testea formalmente H₀: φ → ∞ (Poisson) vs H₁: φ finito (NegBin). Con 1 grado de libertad, un estadístico de ~172 rechaza cómodamente H₀.</a></li>
   <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos">Comparación de modelos</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -279,18 +310,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>Wt</code>: weight, kg.</li>
 <li><code>Sa</code>: number of satellites.</li>
 </ul>
-<div id="1" class="cell" data-execution_count="1">
+<div id="1" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.nonparametric.smoothers_lowess <span class="im">import</span> lowess</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warningswarnings.filterwarnings(<span class="st">'ignore'</span>)<span class="im">import</span> pandas <span class="im">as</span> pdimport numpy <span class="im">as</span> npimport statsmodels.formula.api <span class="im">as</span> smffrom statsmodels.nonparametric.smoothers_lowess <span class="im">import</span> lowessimport matplotlib.pyplot <span class="im">as</span> pltimport seaborn <span class="im">as</span> snssns.set_style(<span class="st">'whitegrid'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="2" class="cell" data-execution_count="2">
@@ -456,140 +479,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="4" class="cell" data-execution_count="4">
+<section id="diagnóstico-de-sobredispersiónel-primer-paso-antes-de-modelar-es-verificar-si-los-datos-se-portan-como-poisson.-bajo-ese-supuesto-la-media-y-la-varianza-de-sa-deberían-ser-iguales-textvary-ey-lambda.lo-que-vemos-arriba-media-2.92-varianza-9.91.-el-índice-de-dispersión-d-textvartextmedia-approx-3.38-los-datos-son-casi-3.4-veces-más-dispersos-de-lo-que-poisson-predice.-esto-es-sobredispersión-y-va-a-ser-el-hilo-conductor-del-recorrido.la-siguiente-pregunta-es-si-w-ancho-del-caparazón-puede-explicar-parte-de-esa-dispersión-y-si-la-relación-es-suficientemente-limpia-para-ser-el-único-predictor-del-modelo." class="level3">
+<h3 class="anchored" data-anchor-id="diagnóstico-de-sobredispersiónel-primer-paso-antes-de-modelar-es-verificar-si-los-datos-se-portan-como-poisson.-bajo-ese-supuesto-la-media-y-la-varianza-de-sa-deberían-ser-iguales-textvary-ey-lambda.lo-que-vemos-arriba-media-2.92-varianza-9.91.-el-índice-de-dispersión-d-textvartextmedia-approx-3.38-los-datos-son-casi-3.4-veces-más-dispersos-de-lo-que-poisson-predice.-esto-es-sobredispersión-y-va-a-ser-el-hilo-conductor-del-recorrido.la-siguiente-pregunta-es-si-w-ancho-del-caparazón-puede-explicar-parte-de-esa-dispersión-y-si-la-relación-es-suficientemente-limpia-para-ser-el-único-predictor-del-modelo.">Diagnóstico de sobredispersiónEl primer paso antes de modelar es verificar si los datos se portan como Poisson. Bajo ese supuesto, la media y la varianza de <code>Sa</code> deberían ser iguales: <span class="math inline">\(\text{Var}(Y) = E[Y] = \lambda\)</span>.Lo que vemos arriba: media ≈ 2.92, varianza ≈ 9.91. El <strong>índice de dispersión</strong> <span class="math inline">\(D = \text{Var}/\text{Media} \approx 3.38\)</span> — los datos son casi 3.4 veces más dispersos de lo que Poisson predice. Esto es sobredispersión, y va a ser el hilo conductor del recorrido.La siguiente pregunta es si <code>W</code> (ancho del caparazón) puede explicar parte de esa dispersión, y si la relación es suficientemente limpia para ser el único predictor del modelo.</h3>
+<div id="4" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hb <span class="op">=</span> plt.hexbin(df[<span class="st">'W'</span>], df[<span class="st">'Sa'</span>], gridsize<span class="op">=</span><span class="dv">15</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(hb, label<span class="op">=</span><span class="st">'Cantidad de puntos'</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Number of satellites by width of female crab'</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Width (cm)'</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of satellites'</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))hb <span class="op">=</span> plt.hexbin(df[<span class="st">'W'</span>], df[<span class="st">'Sa'</span>], gridsize<span class="op">=</span><span class="dv">15</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)plt.colorbar(hb, label<span class="op">=</span><span class="st">'Cantidad de puntos'</span>)plt.title(<span class="st">'Número de satélites por ancho del caparazón'</span>)plt.xlabel(<span class="st">'Ancho (cm)'</span>)plt.ylabel(<span class="st">'Número de satélites'</span>)plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_eda_frecuentista_files/figure-html/cell-5-output-1.png" width="570" height="449" class="figure-img"></p>
-</figure>
 </div>
-</div>
-</div>
-<div id="5" class="cell" data-execution_count="5">
+<div id="5" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_cat'</span>] <span class="op">=</span> pd.cut(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'W'</span>],</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    bins <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="fl">23.25</span>, <span class="fl">24.25</span>, <span class="fl">25.25</span>, <span class="fl">26.25</span>, <span class="fl">27.25</span>, <span class="fl">28.25</span>, <span class="fl">29.25</span>, np.inf],</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> [<span class="st">'23.25&gt;'</span>,<span class="st">'23.25-24.25'</span>,<span class="st">'24.25-25.25'</span>,<span class="st">'25.25-26.25'</span>,<span class="st">'26.25-27.25'</span>,<span class="st">'27.25-28.25'</span>,<span class="st">'28.25-29.25'</span>,<span class="st">'29.25&lt;'</span>]</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>cat_summary <span class="op">=</span> df.groupby(<span class="st">'W_cat'</span>).agg(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    n_obs <span class="op">=</span> (<span class="st">'W_cat'</span>,<span class="st">'count'</span>),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    sum_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'sum'</span>),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    mean_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'mean'</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    var_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'var'</span>),</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    mean_w <span class="op">=</span> (<span class="st">'W'</span>,<span class="st">'mean'</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>cat_summary <span class="op">=</span> cat_summary.reset_index()</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>display(cat_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_cat'</span>] <span class="op">=</span> pd.cut(    df[<span class="st">'W'</span>],    bins <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="fl">23.25</span>, <span class="fl">24.25</span>, <span class="fl">25.25</span>, <span class="fl">26.25</span>, <span class="fl">27.25</span>, <span class="fl">28.25</span>, <span class="fl">29.25</span>, np.inf],    labels <span class="op">=</span> [<span class="st">'&lt;23.25'</span>,<span class="st">'23.25-24.25'</span>,<span class="st">'24.25-25.25'</span>,<span class="st">'25.25-26.25'</span>,<span class="st">'26.25-27.25'</span>,<span class="st">'27.25-28.25'</span>,<span class="st">'28.25-29.25'</span>,<span class="st">'&gt;29.25'</span>])cat_summary <span class="op">=</span> df.groupby(<span class="st">'W_cat'</span>).agg(    n_obs <span class="op">=</span> (<span class="st">'W_cat'</span>,<span class="st">'count'</span>),    sum_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'sum'</span>),    mean_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'mean'</span>),    var_satellites <span class="op">=</span> (<span class="st">'Sa'</span>,<span class="st">'var'</span>),    mean_w <span class="op">=</span> (<span class="st">'W'</span>,<span class="st">'mean'</span>)).<span class="bu">round</span>(<span class="dv">2</span>)cat_summary <span class="op">=</span> cat_summary.reset_index()display(cat_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">W_cat</th>
-<th data-quarto-table-cell-role="th">n_obs</th>
-<th data-quarto-table-cell-role="th">sum_satellites</th>
-<th data-quarto-table-cell-role="th">mean_satellites</th>
-<th data-quarto-table-cell-role="th">var_satellites</th>
-<th data-quarto-table-cell-role="th">mean_w</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>23.25&gt;</td>
-<td>14</td>
-<td>14</td>
-<td>1.00</td>
-<td>2.77</td>
-<td>22.69</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>23.25-24.25</td>
-<td>14</td>
-<td>20</td>
-<td>1.43</td>
-<td>8.88</td>
-<td>23.84</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>24.25-25.25</td>
-<td>28</td>
-<td>67</td>
-<td>2.39</td>
-<td>6.54</td>
-<td>24.78</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>25.25-26.25</td>
-<td>39</td>
-<td>105</td>
-<td>2.69</td>
-<td>11.38</td>
-<td>25.84</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>26.25-27.25</td>
-<td>22</td>
-<td>63</td>
-<td>2.86</td>
-<td>6.89</td>
-<td>26.79</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">5</th>
-<td>27.25-28.25</td>
-<td>24</td>
-<td>93</td>
-<td>3.88</td>
-<td>8.81</td>
-<td>27.74</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">6</th>
-<td>28.25-29.25</td>
-<td>18</td>
-<td>71</td>
-<td>3.94</td>
-<td>16.88</td>
-<td>28.67</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">7</th>
-<td>29.25&lt;</td>
-<td>14</td>
-<td>72</td>
-<td>5.14</td>
-<td>8.29</td>
-<td>30.41</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
 </div>
 <div id="6" class="cell" data-execution_count="6">
 <details class="code-fold">
@@ -672,25 +574,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="8" class="cell" data-execution_count="8">
+<div id="8" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'mean_w'</span>, y<span class="op">=</span><span class="st">'mean_satellites'</span>, data<span class="op">=</span>cat_summary, color<span class="op">=</span><span class="st">'darkcyan'</span>,  label<span class="op">=</span><span class="st">'Binned means'</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">'W'</span>, y<span class="op">=</span><span class="st">'Sa'</span>, data<span class="op">=</span>smooth_series, label<span class="op">=</span><span class="st">'LOWESS smoothing'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Smoothings of horseshoe crab counts'</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Width (cm)'</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of satellites'</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="fl">5.5</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))sns.scatterplot(x<span class="op">=</span><span class="st">'mean_w'</span>, y<span class="op">=</span><span class="st">'mean_satellites'</span>, data<span class="op">=</span>cat_summary, color<span class="op">=</span><span class="st">'darkcyan'</span>, label<span class="op">=</span><span class="st">'Medias por bin'</span>)sns.lineplot(x<span class="op">=</span><span class="st">'W'</span>, y<span class="op">=</span><span class="st">'Sa'</span>, data<span class="op">=</span>smooth_series, label<span class="op">=</span><span class="st">'Suavizado LOWESS'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'black'</span>)plt.title(<span class="st">'Tendencia de satélites por ancho del caparazón'</span>)plt.xlabel(<span class="st">'Ancho (cm)'</span>)plt.ylabel(<span class="st">'Número de satélites'</span>)plt.ylim(<span class="dv">0</span>, <span class="fl">5.5</span>)plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_eda_frecuentista_files/figure-html/cell-9-output-1.png" width="580" height="449" class="figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 <div id="9" class="cell" data-execution_count="9">
 <details class="code-fold">
@@ -701,6 +589,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_scaled'</span>] <span class="op">=</span> (df[<span class="st">'W'</span>]<span class="op">-</span>mean_W)<span class="op">/</span>std_W</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+</section>
+<section id="modelo-poisson-como-línea-basela-tabla-de-bins-confirma-lo-esperado-la-varianza-supera-a-la-media-en-casi-todos-los-grupos-la-sobredispersión-no-desaparece-al-condicionar-en-w.-la-relación-sa-w-es-real-y-aproximadamente-lineal-en-escala-logarítmica-lo-que-se-ve-en-el-lowess.ajustamos-primero-el-modelo-poisson.-sabemos-de-antemano-que-va-a-fallar-en-dispersión-el-punto-es-establecer-la-línea-base-y-cuantificar-exactamente-dónde-falla." class="level3">
+<h3 class="anchored" data-anchor-id="modelo-poisson-como-línea-basela-tabla-de-bins-confirma-lo-esperado-la-varianza-supera-a-la-media-en-casi-todos-los-grupos-la-sobredispersión-no-desaparece-al-condicionar-en-w.-la-relación-sa-w-es-real-y-aproximadamente-lineal-en-escala-logarítmica-lo-que-se-ve-en-el-lowess.ajustamos-primero-el-modelo-poisson.-sabemos-de-antemano-que-va-a-fallar-en-dispersión-el-punto-es-establecer-la-línea-base-y-cuantificar-exactamente-dónde-falla.">Modelo Poisson como línea baseLa tabla de bins confirma lo esperado: la varianza supera a la media en casi todos los grupos — la sobredispersión no desaparece al condicionar en <code>W</code>. La relación Sa ~ W es real y aproximadamente lineal en escala logarítmica (lo que se ve en el LOWESS).Ajustamos primero el modelo Poisson. Sabemos de antemano que va a fallar en dispersión — el punto es establecer la línea base y cuantificar exactamente dónde falla.</h3>
 <div id="10" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
@@ -749,8 +640,9 @@ W_scaled       0.3460      0.042      8.216      0.000       0.263       0.429
 dtype: float64</code></pre>
 </div>
 </div>
-<section id="modelo-binomial-negativo-para-sobredispersión" class="level3">
-<h3 class="anchored" data-anchor-id="modelo-binomial-negativo-para-sobredispersión">Modelo Binomial-Negativo para sobredispersión</h3>
+</section>
+<section id="modelo-binomial-negativa-para-sobredispersiónla-binomial-negativa-agrega-un-parámetro-φ-que-permite-que-textvary-mu-mu2phi-mu.-con-φ-estimado-desde-los-datos-el-modelo-puede-ajustarse-a-la-dispersión-que-poisson-fuerza-a-ser-igual-a-la-media.el-estadístico-de-razón-de-verosimilitud-entre-ambos-modelos-testea-formalmente-h₀-φ-poisson-vs-h₁-φ-finito-negbin.-con-1-grado-de-libertad-un-estadístico-de-172-rechaza-cómodamente-h₀." class="level3">
+<h3 class="anchored" data-anchor-id="modelo-binomial-negativa-para-sobredispersiónla-binomial-negativa-agrega-un-parámetro-φ-que-permite-que-textvary-mu-mu2phi-mu.-con-φ-estimado-desde-los-datos-el-modelo-puede-ajustarse-a-la-dispersión-que-poisson-fuerza-a-ser-igual-a-la-media.el-estadístico-de-razón-de-verosimilitud-entre-ambos-modelos-testea-formalmente-h₀-φ-poisson-vs-h₁-φ-finito-negbin.-con-1-grado-de-libertad-un-estadístico-de-172-rechaza-cómodamente-h₀.">Modelo Binomial Negativa para sobredispersiónLa Binomial Negativa agrega un parámetro φ que permite que <span class="math inline">\(\text{Var}(Y) = \mu + \mu^2/\phi &gt; \mu\)</span>. Con φ estimado desde los datos, el modelo puede ajustarse a la dispersión que Poisson fuerza a ser igual a la media.El estadístico de razón de verosimilitud entre ambos modelos testea formalmente H₀: φ → ∞ (Poisson) vs H₁: φ finito (NegBin). Con 1 grado de libertad, un estadístico de ~172 rechaza cómodamente H₀.</h3>
 <div id="14" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
