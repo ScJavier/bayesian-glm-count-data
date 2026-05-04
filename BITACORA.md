@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-05-03 — Revisión de calidad completa (Fases 1–4) y arquitectura de dos repos
+
+**Qué se hizo:**
+- **Fase 1 (bugs/typos):** NB03 título `# Functions` → `## Funciones auxiliares`, bug `MLE alpha` → `MLE beta`, bug `mean_beta_nb = np.std(...)` → `std_beta_nb`, typo `Dianósticos`; NB01 bins `'23.25>'`/`'29.25<'` → `'<23.25'`/`'>29.25'`; NB04 p-values actualizados con valores reales del output almacenado
+- **Fase 2 (narrativa NB03):** intro bayesiana completa (posterior, prior, forma cerrada), motivación Grid → MH (escalabilidad O(nᵏ)), motivación MH → Stan (afinación manual + exploración ineficiente), nota prior plano en ambas secciones
+- **Fase 3 (narrativa NB01):** 3 conectores — diagnóstico sobredispersión, transición a Poisson, motivación NegBin con test LR
+- **Fase 4 (cosmético):** `warnings.filterwarnings('ignore')` en NB01, NB01b, NB02; títulos de plots de NB01 traducidos al español
+- **Arquitectura de repos:** configurado `origin` (privado, trabajo en sucio) + `public` (público, contenido graduado); rama `main` orphan sin historial; archivos Claude excluidos del repo público vía `.gitignore`; sitio re-publicado con todos los fixes
+
+**Resultados p-values corregidos (NB04):**
+| Métrica | Poisson | NegBin |
+|---|---|---|
+| std | p=0 ❌ | p=0.894 ✅ |
+| Dispersión | p=0 ❌ | p=0.954 ✅ |
+| max | p=0.068 ⚠️ | p=0.968 ✅ |
+| prop. ceros | p=0 ❌ | p=0.093 ⚠️ |
+
+**Pendiente / próximos pasos:**
+- [ ] Revisión manual total del sitio antes de publicar (rama `review/revision-manual`)
+- [ ] Fase 5 (V2, sin deadline): prior plano explícito, dispersión marginal vs condicional, renombrar NB1/NB2, Score Test
+
+---
+
 ## 2026-04-26 — Publicación del recorrido en GitHub Pages
 
 **Qué se hizo:**

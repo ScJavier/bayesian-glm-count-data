@@ -3,7 +3,7 @@ _Archivo de gestión interna. Actualizado por Claude Code._
 
 ---
 
-## Estado actual (2026-05-03)
+## Estado actual (2026-05-04)
 
 - **Git:** ✅ rama master
 - **Remotes:**
@@ -185,6 +185,10 @@ Ver [BACKLOG.md](BACKLOG.md) — tareas organizadas en 5 fases (bugs, narrativa,
 ### 2026-04-26 (publicación)
 - Reorganización como recorrido de 5 partes
 - Quarto book configurado, GitHub Pages publicado, CI configurado
+
+### 2026-05-04 (project-check)
+- Revisión de estado: git limpio, entorno uv OK, sitio publicado
+- CLAUDE_OPS.md actualizado
 
 ### 2026-05-03 (revisión de calidad)
 - Feedback a fondo recibido: 7 bugs/typos críticos identificados en NB01, NB03, NB04
