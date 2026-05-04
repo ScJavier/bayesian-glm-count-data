@@ -6,7 +6,9 @@ _Archivo de gestión interna. Actualizado por Claude Code._
 ## Estado actual (2026-05-03)
 
 - **Git:** ✅ rama master
-- **GitHub:** ✅ github.com/ScJavier/bayesian-glm-count-data (**PÚBLICO desde 2026-04-26**)
+- **Remotes:**
+  - `origin` → github.com/ScJavier/bayesian-glm-count-data-dev (**PRIVADO** — trabajo diario)
+  - `public` → github.com/ScJavier/bayesian-glm-count-data (**PÚBLICO** — contenido graduado)
 - **GitHub Pages:** ✅ https://ScJavier.github.io/bayesian-glm-count-data/
 - **Entorno:** uv ✅ (`pyproject.toml` + `uv.lock`), Python 3.11.15
 - **Kernel Jupyter:** `bayesian-glm-count-data` registrado en `~/.local/share/jupyter/kernels/`
@@ -55,11 +57,18 @@ El CI (`quarto render`) produce HTML sin outputs porque:
 
 ```bash
 cd /home/javolet/documents/bayesian-glm-count-data
+# 1. Primero graduar al repo público
+git push public master
+# 2. Luego publicar Pages
 QUARTO_PYTHON=.venv/bin/python quarto publish gh-pages --no-browser
 ```
 
 Esto hace render (con outputs) y publica directamente a gh-pages. No requiere
 commit previo — el sitio queda actualizado en minutos.
+
+**Nota:** `quarto publish` empuja a la rama `gh-pages` del remote `public` directamente,
+sin pasar por git normal. El paso `git push public master` es para mantener el código
+en sync antes de publicar.
 
 ### Re-ejecutar notebooks cuando cambie código Python/Stan o texto
 
