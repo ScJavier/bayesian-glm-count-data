@@ -102,6 +102,44 @@ Los archivos `.nc` (InferenceData) están en `outputs/` (gitignored).
 El notebook `03_inferencia_bayesiana.ipynb` los regenera. Notebooks 04 y 05 los cargan.
 Si los `.nc` no existen, notebook 05 tiene fallback para ajustar con Stan.
 
+### Flujo de desarrollo (el usuario edita, Claude ejecuta el resto)
+
+El usuario trabaja en Jupyter. Claude Code se encarga de git, freeze y publicación.
+
+**Cambio pequeño (fix, typo, narrativa sin código nuevo):**
+```bash
+# No requiere re-ejecutar — solo commit y push a privado
+git add notebooks/<archivo>.ipynb
+git commit -m "fix: descripción"
+git push
+# Si se quiere publicar: ver sección "Publicar a GitHub Pages"
+```
+
+**Cambio con código nuevo o modificado (nueva celda, gráfica, modelo):**
+```bash
+# 1. Crear rama (para cambios grandes o exploratorios)
+git checkout -b feature/descripcion-corta
+
+# 2. El usuario ejecuta las celdas en Jupyter
+
+# 3. Actualizar _freeze/ con los outputs nuevos
+sed -i 's/freeze: true/freeze: auto/' _quarto.yml
+QUARTO_PYTHON=.venv/bin/python quarto render --execute
+sed -i 's/freeze: auto/freeze: true/' _quarto.yml
+
+# 4. Commit y merge
+git add notebooks/<archivo>.ipynb _freeze/ _quarto.yml
+git commit -m "feat: descripción"
+git checkout master && git merge feature/descripcion-corta
+git push
+
+# 5. Publicar cuando esté listo (ver sección de publicación)
+```
+
+**Cuándo usar feature branch vs. commit directo en master:**
+- Feature branch: cambio grande, exploración que puede no llegar a nada, tarda varios días
+- Directo en master: fix puntual, typo, cambio de narrativa sin tocar código
+
 ### Reglas de desarrollo
 
 - Cada variación de modelo Stan = nuevo archivo `.stan` (nunca modificar el original)
@@ -117,12 +155,18 @@ Ver [BACKLOG.md](BACKLOG.md) — tareas organizadas en 5 fases (bugs, narrativa,
 
 ---
 
-## Arquitectura de repos (decisión 2026-05-03)
+## Arquitectura de repos (configurado 2026-05-03)
 
-- **Repo privado** — trabajo en sucio: paths locales, warnings visibles, exploración a medias
-- **Repo público** (`github.com/ScJavier/bayesian-glm-count-data`) — solo recibe contenido "graduado"
-- **Implementación pendiente**: configurar `origin` (privado) y `public` (público) como dos remotes, con flujo de graduación manual
-- Mientras tanto, el repo actual ya es público — el backlog de Fase 1 sirve como checklist mínimo antes de cada push público
+| Remote | Repo | Visibilidad | Rama | Uso |
+|---|---|---|---|---|
+| `origin` | bayesian-glm-count-data-dev | Privado | `master` | Trabajo diario — `git push` normal |
+| `public` | bayesian-glm-count-data | Público | `main` | Solo contenido graduado |
+| — | — | Público | `gh-pages` | Sitio renderizado (HTML) |
+
+**Archivos excluidos del repo público** (en `.gitignore` de la rama `main`):
+`CLAUDE_OPS.md`, `BACKLOG.md`, `briefing_*.md`
+
+**Repo público tiene historial limpio:** 1 solo commit (rama `main` es orphan, sin historia previa).
 
 ---
 
