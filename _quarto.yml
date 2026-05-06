@@ -13,19 +13,18 @@ book:
     - index.qmd
     - part: "Exploración de datos"
       chapters:
-        - notebooks/00_introduccion.ipynb
-        - notebooks/01_eda_frecuentista.ipynb
-        - notebooks/01b_eda_general.ipynb
+        - notebooks/01_basic_eda.ipynb
+        - notebooks/01b_extended.ipynb
     - part: "Teoría: MLE desde cero"
       chapters:
-        - notebooks/02_mle_datos_simulados.ipynb
+        - notebooks/02_mle_theory.ipynb
     - part: "Inferencia Bayesiana"
       chapters:
-        - notebooks/03_inferencia_bayesiana.ipynb
+        - notebooks/03_bayesian_inference.ipynb
     - part: "Diagnóstico y expansión de modelos"
       chapters:
         - notebooks/04_predictive_checks_base_models.ipynb
-        - notebooks/05_extended_models.ipynb
+        - notebooks/05_predictive_checks_extended_models.ipynb
 
 format:
   html:
