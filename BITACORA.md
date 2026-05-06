@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-05-05 — Revisión manual completa y publicación final
+
+**Qué se hizo:**
+- **Renombrado de notebooks a inglés:** `01_eda_frecuentista` → `01_basic_eda`, `01b_eda_general` → `01b_extended`, `02_mle_datos_simulados` → `02_mle_theory`, `03_inferencia_bayesiana` → `03_bayesian_inference`, `05_extended_models` → `05_predictive_checks_extended_models`; `_freeze/` sincronizado
+- **index.qmd:** absorbe contenido de `00_introduccion.ipynb` (presentación, objetivos, estructura, dataset, referencias); notebook `00` eliminado del proyecto
+- **Revisión completa de los 6 notebooks** (rama `review/revision-manual`):
+  - Narrativa uniforme y profesional entre celdas
+  - Paleta `steelblue`/`tomato` consistente en todas las gráficas
+  - `tight_layout()` en todos los plots que lo faltaban
+  - Comentarios en español en el código
+  - Correcciones tipográficas y referencias entre notebooks actualizadas
+  - `02_mle_theory`: corrección LL `\propto` → `=`; sección dispersión marginal vs condicional
+  - `03_bayesian_inference`: celda de intro con los 3 enfoques; narrativa en todas las secciones vacías
+  - `04` y `05`: LaTeX en tablas de conclusiones; `color='red'` → `color='tomato'`
+- **Publicación:** squash merge a `master`, force push a `public/main` (sin historial de commits intermedios), `quarto publish gh-pages`, push `gh-pages` a public
+
+**URL del sitio:** https://ScJavier.github.io/bayesian-glm-count-data/
+
+**Pendiente / próximos pasos:**
+- (Ninguno — proyecto considerado completo y publicado)
+
+---
+
 ## 2026-05-03 — Revisión de calidad completa (Fases 1–4) y arquitectura de dos repos
 
 **Qué se hizo:**
