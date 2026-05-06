@@ -5,7 +5,7 @@ project:
 book:
   title: "Modelos para Datos de Conteo"
   subtitle: "Un recorrido bayesiano"
-  author: "Javier Santibanez"
+  author: "Javier Santibáñez"
   date: "2026-04-26"
   repo-url: https://github.com/ScJavier/bayesian-glm-count-data
   repo-actions: [issue]
