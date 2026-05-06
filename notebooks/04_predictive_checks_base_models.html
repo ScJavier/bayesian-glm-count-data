@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>04 — Posterior Predictive Checks: Evaluación de Sobredispersión – Modelos para Datos de Conteo</title>
+<title>Posterior Predictive Checks: modelos base – Modelos para Datos de Conteo</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -61,15 +61,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../notebooks/05_extended_models.html" rel="next">
-<link href="../notebooks/03_inferencia_bayesiana.html" rel="prev">
+<link href="../notebooks/05_predictive_checks_extended_models.html" rel="next">
+<link href="../notebooks/03_bayesian_inference.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -107,10 +107,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -123,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Prefacio</span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introducción</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -167,17 +193,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/00_introduccion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Modelos para Datos de Conteo: Un Recorrido Bayesiano</span></a>
+  <a href="../notebooks/01_basic_eda.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EDA inicial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/01_eda_frecuentista.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01 — EDA Frecuentista: Sobredispersión y relación con W</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notebooks/01b_eda_general.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">01b — EDA General y Modelos Frecuentistas con Todos los Features</span></a>
+  <a href="../notebooks/01b_extended.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EDA extendido</span></a>
   </div>
 </li>
       </ul>
@@ -193,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/02_mle_datos_simulados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte I: GLM Poisson — Estimación por Máxima Verosimilitud</span></a>
+  <a href="../notebooks/02_mle_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">GLM Poisson: MLE desde cero</span></a>
   </div>
 </li>
       </ul>
@@ -209,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/03_inferencia_bayesiana.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
+  <a href="../notebooks/03_bayesian_inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
   </div>
 </li>
       </ul>
@@ -225,12 +246,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a>
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/05_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></a>
+  <a href="../notebooks/05_predictive_checks_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></a>
   </div>
 </li>
       </ul>
@@ -245,25 +266,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisito" id="toc-prerequisito" class="nav-link active" data-scroll-target="#prerequisito">Prerequisito</a></li>
-  <li><a href="#verificación-de-sobredispersión-en-los-datos-observados" id="toc-verificación-de-sobredispersión-en-los-datos-observados" class="nav-link" data-scroll-target="#verificación-de-sobredispersión-en-los-datos-observados">1. Verificación de sobredispersión en los datos observados</a></li>
-  <li><a href="#ppc-visual-distribución-marginal" id="toc-ppc-visual-distribución-marginal" class="nav-link" data-scroll-target="#ppc-visual-distribución-marginal">2. PPC visual — Distribución marginal</a></li>
-  <li><a href="#ppcs-con-estadísticos-de-prueba-test-statistics" id="toc-ppcs-con-estadísticos-de-prueba-test-statistics" class="nav-link" data-scroll-target="#ppcs-con-estadísticos-de-prueba-test-statistics">3. PPCs con estadísticos de prueba (test statistics)</a></li>
-  <li><a href="#loo-pit-calibración-predictiva" id="toc-loo-pit-calibración-predictiva" class="nav-link" data-scroll-target="#loo-pit-calibración-predictiva">4. LOO-PIT — Calibración predictiva</a></li>
-  <li><a href="#comparación-de-modelos-loo-cv" id="toc-comparación-de-modelos-loo-cv" class="nav-link" data-scroll-target="#comparación-de-modelos-loo-cv">5. Comparación de modelos (LOO-CV)</a></li>
-  <li><a href="#resumen-de-evidencia-y-conclusiones" id="toc-resumen-de-evidencia-y-conclusiones" class="nav-link" data-scroll-target="#resumen-de-evidencia-y-conclusiones">6. Resumen de evidencia y conclusiones</a>
+  <li><a href="#verificación-de-sobredispersión" id="toc-verificación-de-sobredispersión" class="nav-link active" data-scroll-target="#verificación-de-sobredispersión">1. Verificación de sobredispersión</a></li>
+  <li><a href="#ppc-visual-distribución-marginal" id="toc-ppc-visual-distribución-marginal" class="nav-link" data-scroll-target="#ppc-visual-distribución-marginal">2. PPC visual — distribución marginal</a></li>
+  <li><a href="#ppcs-con-estadísticos-de-prueba" id="toc-ppcs-con-estadísticos-de-prueba" class="nav-link" data-scroll-target="#ppcs-con-estadísticos-de-prueba">3. PPCs con estadísticos de prueba</a></li>
+  <li><a href="#loo-pit-calibración-predictiva" id="toc-loo-pit-calibración-predictiva" class="nav-link" data-scroll-target="#loo-pit-calibración-predictiva">4. LOO-PIT — calibración predictiva</a></li>
+  <li><a href="#comparación-de-modelos-loo-cv" id="toc-comparación-de-modelos-loo-cv" class="nav-link" data-scroll-target="#comparación-de-modelos-loo-cv">5. Comparación de modelos — LOO-CV</a></li>
+  <li><a href="#resumen-de-evidencia" id="toc-resumen-de-evidencia" class="nav-link" data-scroll-target="#resumen-de-evidencia">6. Resumen de evidencia</a>
   <ul class="collapse">
-  <li><a href="#conclusiones-modelo-poisson-falla-sistemáticael-modelo-poisson-falla-en-todas-las-dimensiones-evaluadas--sobredispersión-p-0.000-para-std-e-índice-de-dispersión-el-modelo-predice-una-dispersión-de-2.0-satélites-cuando-los-datos-muestran-3.1.-el-índice-de-dispersión-observado-es-d3.38-pero-poisson-lo-fija-estructuralmente-en-d1.--inflación-de-ceros-p-0.000-el-35.8-de-las-hembras-no-tiene-satélites-pero-poisson-predice-apenas-8.2.-el-modelo-subestima-masivamente-los-ceros.--colas-pesadas-p-0.068-marginalmente-también-le-cuesta-llegar-al-valor-máximo-observado-15-satélites.--loo-cv-elpd-465.4-muy-por-debajo-de-la-binomial-negativa.-modelo-binomial-negativa-mejora-en-dispersión-falla-en-cerosla-binomial-negativa-con-α_sm-1.11-dispersión-moderada-resuelve-parcialmente-el-problema--sobredispersión-capturada-p0.894-para-std-y-p0.954-para-índice-de-dispersión-el-modelo-envuelve-correctamente-la-variabilidad-de-los-datos.--colas-pesadas-p0.968-aunque-emaxy_rep27-sobreestima-el-máximo-observado-15-lo-que-sugiere-que-captura-las-colas-pero-con-exceso.--inflación-de-ceros-falla-persistente-p-0.093-aunque-mejora-respecto-a-poisson-eprop_zeros29.1-vs-8.2-todavía-subestima-la-proporción-observada-de-35.8.-el-p-value-de-0.093-está-en-zona-gris-el-modelo-no-colapsa-pero-la-predicción-es-sistemáticamente-baja.--loo-cv-elpd-378.5-vs--465.4-de-poisson.-la-diferencia-es-de-86.8-puntos-17.3-se-sustancial-y-significativa.-el-peso-del-modelo-asigna-prácticamente-toda-la-masa-a-negbin.-diagnóstico-final-y-extensión-naturalambos-modelos-comparten-el-mismo-predictor-lineal-intercept-ancho-de-caparazón-y-ninguno-tiene-un-mecanismo-explícito-para-el-exceso-de-ceros.-hay-hembras-que-estructuralmente-no-atraen-satélites-posiblemente-por-condición-física-o-tamaño-muy-reducido-y-ese-proceso-generador-de-ceros-es-distinto-del-proceso-de-conteo.la-extensión-natural-es-un-modelo-de-mezcla-con-inflación-de-ceros--zero-inflated-poisson-zip-mezcla-de-masa-en-cero-prob.-π-y-poissonλ.-asume-que-las-observaciones-positivas-vienen-de-un-proceso-poisson-no-resuelve-la-sobredispersión-residual.--zero-inflated-negative-binomial-zinb-mezcla-de-masa-en-cero-y-negbinμ-α.-aborda-simultáneamente-la-inflación-de-ceros-y-la-sobredispersión-es-el-candidato-más-natural-dado-el-diagnóstico.en-ambos-casos-el-modelo-tiene-dos-componentes-uno-que-decide-si-la-hembra-puede-tener-satélites-logístico-sobre-w-y-otro-que-modela-cuántos-dado-que-puede-poisson-o-negbin-sobre-w." id="toc-conclusiones-modelo-poisson-falla-sistemáticael-modelo-poisson-falla-en-todas-las-dimensiones-evaluadas--sobredispersión-p-0.000-para-std-e-índice-de-dispersión-el-modelo-predice-una-dispersión-de-2.0-satélites-cuando-los-datos-muestran-3.1.-el-índice-de-dispersión-observado-es-d3.38-pero-poisson-lo-fija-estructuralmente-en-d1.--inflación-de-ceros-p-0.000-el-35.8-de-las-hembras-no-tiene-satélites-pero-poisson-predice-apenas-8.2.-el-modelo-subestima-masivamente-los-ceros.--colas-pesadas-p-0.068-marginalmente-también-le-cuesta-llegar-al-valor-máximo-observado-15-satélites.--loo-cv-elpd-465.4-muy-por-debajo-de-la-binomial-negativa.-modelo-binomial-negativa-mejora-en-dispersión-falla-en-cerosla-binomial-negativa-con-α_sm-1.11-dispersión-moderada-resuelve-parcialmente-el-problema--sobredispersión-capturada-p0.894-para-std-y-p0.954-para-índice-de-dispersión-el-modelo-envuelve-correctamente-la-variabilidad-de-los-datos.--colas-pesadas-p0.968-aunque-emaxy_rep27-sobreestima-el-máximo-observado-15-lo-que-sugiere-que-captura-las-colas-pero-con-exceso.--inflación-de-ceros-falla-persistente-p-0.093-aunque-mejora-respecto-a-poisson-eprop_zeros29.1-vs-8.2-todavía-subestima-la-proporción-observada-de-35.8.-el-p-value-de-0.093-está-en-zona-gris-el-modelo-no-colapsa-pero-la-predicción-es-sistemáticamente-baja.--loo-cv-elpd-378.5-vs--465.4-de-poisson.-la-diferencia-es-de-86.8-puntos-17.3-se-sustancial-y-significativa.-el-peso-del-modelo-asigna-prácticamente-toda-la-masa-a-negbin.-diagnóstico-final-y-extensión-naturalambos-modelos-comparten-el-mismo-predictor-lineal-intercept-ancho-de-caparazón-y-ninguno-tiene-un-mecanismo-explícito-para-el-exceso-de-ceros.-hay-hembras-que-estructuralmente-no-atraen-satélites-posiblemente-por-condición-física-o-tamaño-muy-reducido-y-ese-proceso-generador-de-ceros-es-distinto-del-proceso-de-conteo.la-extensión-natural-es-un-modelo-de-mezcla-con-inflación-de-ceros--zero-inflated-poisson-zip-mezcla-de-masa-en-cero-prob.-π-y-poissonλ.-asume-que-las-observaciones-positivas-vienen-de-un-proceso-poisson-no-resuelve-la-sobredispersión-residual.--zero-inflated-negative-binomial-zinb-mezcla-de-masa-en-cero-y-negbinμ-α.-aborda-simultáneamente-la-inflación-de-ceros-y-la-sobredispersión-es-el-candidato-más-natural-dado-el-diagnóstico.en-ambos-casos-el-modelo-tiene-dos-componentes-uno-que-decide-si-la-hembra-puede-tener-satélites-logístico-sobre-w-y-otro-que-modela-cuántos-dado-que-puede-poisson-o-negbin-sobre-w." class="nav-link" data-scroll-target="#conclusiones-modelo-poisson-falla-sistemáticael-modelo-poisson-falla-en-todas-las-dimensiones-evaluadas--sobredispersión-p-0.000-para-std-e-índice-de-dispersión-el-modelo-predice-una-dispersión-de-2.0-satélites-cuando-los-datos-muestran-3.1.-el-índice-de-dispersión-observado-es-d3.38-pero-poisson-lo-fija-estructuralmente-en-d1.--inflación-de-ceros-p-0.000-el-35.8-de-las-hembras-no-tiene-satélites-pero-poisson-predice-apenas-8.2.-el-modelo-subestima-masivamente-los-ceros.--colas-pesadas-p-0.068-marginalmente-también-le-cuesta-llegar-al-valor-máximo-observado-15-satélites.--loo-cv-elpd-465.4-muy-por-debajo-de-la-binomial-negativa.-modelo-binomial-negativa-mejora-en-dispersión-falla-en-cerosla-binomial-negativa-con-α_sm-1.11-dispersión-moderada-resuelve-parcialmente-el-problema--sobredispersión-capturada-p0.894-para-std-y-p0.954-para-índice-de-dispersión-el-modelo-envuelve-correctamente-la-variabilidad-de-los-datos.--colas-pesadas-p0.968-aunque-emaxy_rep27-sobreestima-el-máximo-observado-15-lo-que-sugiere-que-captura-las-colas-pero-con-exceso.--inflación-de-ceros-falla-persistente-p-0.093-aunque-mejora-respecto-a-poisson-eprop_zeros29.1-vs-8.2-todavía-subestima-la-proporción-observada-de-35.8.-el-p-value-de-0.093-está-en-zona-gris-el-modelo-no-colapsa-pero-la-predicción-es-sistemáticamente-baja.--loo-cv-elpd-378.5-vs--465.4-de-poisson.-la-diferencia-es-de-86.8-puntos-17.3-se-sustancial-y-significativa.-el-peso-del-modelo-asigna-prácticamente-toda-la-masa-a-negbin.-diagnóstico-final-y-extensión-naturalambos-modelos-comparten-el-mismo-predictor-lineal-intercept-ancho-de-caparazón-y-ninguno-tiene-un-mecanismo-explícito-para-el-exceso-de-ceros.-hay-hembras-que-estructuralmente-no-atraen-satélites-posiblemente-por-condición-física-o-tamaño-muy-reducido-y-ese-proceso-generador-de-ceros-es-distinto-del-proceso-de-conteo.la-extensión-natural-es-un-modelo-de-mezcla-con-inflación-de-ceros--zero-inflated-poisson-zip-mezcla-de-masa-en-cero-prob.-π-y-poissonλ.-asume-que-las-observaciones-positivas-vienen-de-un-proceso-poisson-no-resuelve-la-sobredispersión-residual.--zero-inflated-negative-binomial-zinb-mezcla-de-masa-en-cero-y-negbinμ-α.-aborda-simultáneamente-la-inflación-de-ceros-y-la-sobredispersión-es-el-candidato-más-natural-dado-el-diagnóstico.en-ambos-casos-el-modelo-tiene-dos-componentes-uno-que-decide-si-la-hembra-puede-tener-satélites-logístico-sobre-w-y-otro-que-modela-cuántos-dado-que-puede-poisson-o-negbin-sobre-w.">Conclusiones#### Modelo Poisson — falla sistemáticaEl modelo Poisson falla en todas las dimensiones evaluadas:- <strong>Sobredispersión</strong> (p ≈ 0.000 para std e índice de dispersión): el modelo predice una dispersión de ~2.0 satélites cuando los datos muestran ~3.1. El índice de dispersión observado es D=3.38, pero Poisson lo fija estructuralmente en D≈1.- <strong>Inflación de ceros</strong> (p ≈ 0.000): el 35.8% de las hembras no tiene satélites, pero Poisson predice apenas ~8.2%. El modelo subestima masivamente los ceros.- <strong>Colas pesadas</strong> (p = 0.068): marginalmente, también le cuesta llegar al valor máximo observado (15 satélites).- <strong>LOO-CV</strong>: ELPD=-465.4, muy por debajo de la Binomial Negativa.#### Modelo Binomial Negativa — mejora en dispersión, falla en cerosLa Binomial Negativa (con α_sm ≈ 1.11, dispersión moderada) resuelve parcialmente el problema:- <strong>Sobredispersión capturada</strong>: p=0.894 para std y p=0.954 para índice de dispersión — el modelo envuelve correctamente la variabilidad de los datos.- <strong>Colas pesadas</strong>: p=0.968, aunque E[max(y_rep)]≈27 sobreestima el máximo observado (15), lo que sugiere que captura las colas pero con exceso.- <strong>Inflación de ceros — falla persistente</strong> (p = 0.093): aunque mejora respecto a Poisson (E[prop_zeros]≈29.1% vs 8.2%), todavía subestima la proporción observada de 35.8%. El p-value de 0.093 está en zona gris — el modelo no colapsa, pero la predicción es sistemáticamente baja.- <strong>LOO-CV</strong>: ELPD=-378.5 vs -465.4 de Poisson. La diferencia es de 86.8 puntos (±17.3 SE), sustancial y significativa. El peso del modelo asigna prácticamente toda la masa a NegBin.#### Diagnóstico final y extensión naturalAmbos modelos comparten el mismo predictor lineal (intercept + ancho de caparazón), y ninguno tiene un mecanismo explícito para el exceso de ceros. Hay hembras que estructuralmente no atraen satélites —posiblemente por condición física o tamaño muy reducido— y ese proceso generador de ceros es distinto del proceso de conteo.La extensión natural es un <strong>modelo de mezcla con inflación de ceros</strong>:- <strong>Zero-Inflated Poisson (ZIP)</strong>: mezcla de masa en cero (prob. π) y Poisson(λ). Asume que las observaciones positivas vienen de un proceso Poisson —no resuelve la sobredispersión residual.- <strong>Zero-Inflated Negative Binomial (ZINB)</strong>: mezcla de masa en cero y NegBin(μ, α). Aborda simultáneamente la inflación de ceros y la sobredispersión — es el candidato más natural dado el diagnóstico.En ambos casos el modelo tiene dos componentes: uno que decide si la hembra “puede” tener satélites (logístico sobre W), y otro que modela cuántos dado que puede (Poisson o NegBin sobre W).</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">Conclusiones</a></li>
   </ul></li>
+  <li><a href="#qué-sigue" id="toc-qué-sigue" class="nav-link" data-scroll-target="#qué-sigue">¿Qué sigue?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">04 — Posterior Predictive Checks: Evaluación de Sobredispersión</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -280,13 +301,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><strong>Bayesian Workflow — Etapa: Model Checking (Gelman et al.&nbsp;2020)</strong></p>
-<p>Los PPCs evalúan si el modelo es capaz de generar datos similares a los observados. Para datos de conteo, el foco es en <strong>sobredispersión</strong>: el fenómeno donde la varianza supera a la media (Var[Y] &gt; E[Y]), que Poisson no puede capturar pero la Binomial Negativa sí.</p>
-<p><strong>Pregunta central:</strong> ¿El modelo Poisson subestima la varianza de los datos de cangrejos? ¿La Binomial Negativa resuelve este problema?</p>
-<section id="prerequisito" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisito">Prerequisito</h2>
-<p>Ejecutar primero <code>03_inferencia_bayesiana.ipynb</code> para generar <code>outputs/pois_idata.nc</code> y <code>outputs/neg_idata.nc</code> con los grupos <code>posterior_predictive</code> y <code>log_likelihood</code>.</p>
-<div id="1" class="cell" data-execution_count="1">
+<p><strong>Etapa del workflow bayesiano: Model Checking (Gelman et al.&nbsp;2020)</strong></p>
+<p>La inferencia bayesiana produce una distribución sobre los parámetros, pero no garantiza que el modelo sea adecuado. Los <strong>Posterior Predictive Checks (PPCs)</strong> responden la pregunta de validación: ¿puede el modelo generar datos que se parezcan a los observados?</p>
+<p>La idea es concreta: para cada muestra posterior <span class="math inline">\((\alpha^{(s)}, \beta^{(s)})\)</span>, simulamos un dataset replicado <span class="math inline">\(y^{\text{rep}(s)}\)</span> desde la distribución del modelo. Si el modelo es una buena descripción de los datos, la distribución de <span class="math inline">\(y^{\text{rep}}\)</span> debe envolver a <span class="math inline">\(y^{\text{obs}}\)</span> en las dimensiones que nos importan.</p>
+<p>Para datos de conteo, las dimensiones críticas son: - <strong>Dispersión:</strong> ¿replica el modelo la variabilidad observada? Poisson está estructuralmente limitado a <span class="math inline">\(\text{Var}[Y] = \mathbb{E}[Y]\)</span>. - <strong>Colas:</strong> ¿genera el modelo valores extremos similares a los observados? - <strong>Proporción de ceros:</strong> ¿predice el modelo la abundancia de hembras sin satélites?</p>
+<blockquote class="blockquote">
+<p><strong>Prerequisito:</strong> ejecutar <code>03_bayesian_inference</code> para generar <code>outputs/pois_idata.nc</code> y <code>outputs/neg_idata.nc</code>.</p>
+</blockquote>
+<div id="1" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -299,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2" class="cell" data-execution_count="2">
+<div id="2" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar InferenceData con posterior predictive</span></span>
@@ -317,357 +339,218 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grupos disponibles Poisson:  </span><span class="sc">{</span><span class="bu">list</span>(idata_pois.groups())<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Grupos disponibles NegBin:   </span><span class="sc">{</span><span class="bu">list</span>(idata_nb.groups())<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Grupos disponibles Poisson:  ['posterior', 'posterior_predictive', 'log_likelihood', 'sample_stats', 'observed_data']
-Grupos disponibles NegBin:   ['posterior', 'posterior_predictive', 'log_likelihood', 'sample_stats', 'observed_data']</code></pre>
 </div>
-</div>
-</section>
-<section id="verificación-de-sobredispersión-en-los-datos-observados" class="level2">
-<h2 class="anchored" data-anchor-id="verificación-de-sobredispersión-en-los-datos-observados">1. Verificación de sobredispersión en los datos observados</h2>
-<p>Bajo Poisson: E[Y] = Var[Y] → Índice de dispersión D = Var/Mean ≈ 1<br>
-Si D &gt; 1 → sobredispersión (la Binomial Negativa es más apropiada)</p>
-<div id="4" class="cell" data-execution_count="3">
+<section id="verificación-de-sobredispersión" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-de-sobredispersión">1. Verificación de sobredispersión</h2>
+<p>Antes de los PPCs, confirmamos cuantitativamente la sobredispersión en los datos. Bajo Poisson, la varianza condicional es igual a la media: <span class="math inline">\(\text{Var}[Y \mid X] = \mathbb{E}[Y \mid X]\)</span>, lo que implica un índice de dispersión <span class="math inline">\(D = \text{Var}/\text{Mean} \approx 1\)</span>.</p>
+<p>Si <span class="math inline">\(D \gg 1\)</span>, el modelo Poisson subestimará la variabilidad y producirá predicciones demasiado concentradas — diagnóstico que ya observamos en <code>01_basic_eda</code>.</p>
+<div id="4" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_obs <span class="op">=</span> np.mean(y_obs)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>var_obs  <span class="op">=</span> np.var(y_obs)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>D_obs    <span class="op">=</span> var_obs <span class="op">/</span> mean_obs  <span class="co"># Índice de dispersión (VMR)</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Media observada:              </span><span class="sc">{</span>mean_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Varianza observada:           </span><span class="sc">{</span>var_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Índice de dispersión (D=V/M): </span><span class="sc">{</span>D_obs<span class="sc">:.3f}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'← sobredispersión'</span> <span class="cf">if</span> D_obs <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">'← equidispersión'</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proporción de ceros:          </span><span class="sc">{</span>np<span class="sc">.</span>mean(y_obs <span class="op">==</span> <span class="dv">0</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor máximo:                 </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">max</span>(y_obs)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_obs <span class="op">=</span> np.mean(y_obs)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>var_obs  <span class="op">=</span> np.var(y_obs)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>D_obs    <span class="op">=</span> var_obs <span class="op">/</span> mean_obs  <span class="co"># Índice de dispersión (VMR)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Media observada:              </span><span class="sc">{</span>mean_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Varianza observada:           </span><span class="sc">{</span>var_obs<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Índice de dispersión (D=V/M): </span><span class="sc">{</span>D_obs<span class="sc">:.3f}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'← sobredispersión'</span> <span class="cf">if</span> D_obs <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">'← equidispersión'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Proporción de ceros:          </span><span class="sc">{</span>np<span class="sc">.</span>mean(y_obs <span class="op">==</span> <span class="dv">0</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor máximo:                 </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">max</span>(y_obs)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Media observada:              2.919
-Varianza observada:           9.855
-Índice de dispersión (D=V/M): 3.376  ← sobredispersión
-Proporción de ceros:          0.358
-Valor máximo:                 15</code></pre>
-</div>
 </div>
 </section>
 <section id="ppc-visual-distribución-marginal" class="level2">
-<h2 class="anchored" data-anchor-id="ppc-visual-distribución-marginal">2. PPC visual — Distribución marginal</h2>
-<p><code>az.plot_ppc</code> superpone la distribución de los datos replicados y_rep sobre y_obs. Si el modelo es adecuado, la nube de y_rep debe envolver a y_obs.</p>
-<div id="6" class="cell" data-execution_count="4">
+<h2 class="anchored" data-anchor-id="ppc-visual-distribución-marginal">2. PPC visual — distribución marginal</h2>
+<p>La función <code>az.plot_ppc</code> superpone la distribución del dato observado <span class="math inline">\(y^{\text{obs}}\)</span> (línea gruesa) sobre la nube de distribuciones replicadas <span class="math inline">\(y^{\text{rep}}\)</span> (líneas delgadas, una por muestra). Si el modelo es adecuado, <span class="math inline">\(y^{\text{obs}}\)</span> debe quedar envuelta por la nube — no en la cola ni fuera de ella.</p>
+<p>Con datos de conteo, el gráfico de densidad continua de ArviZ puede ocultar detalles en los valores enteros bajos (especialmente en los ceros). Complementamos con los estadísticos de prueba de la sección siguiente.</p>
+<div id="6" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_pois, ax<span class="op">=</span>axes[<span class="dv">0</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson'</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_nb, ax<span class="op">=</span>axes[<span class="dv">1</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa'</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlim(<span class="dv">0</span>, <span class="fl">17.5</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal de y_rep vs y_obs'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_pois, ax<span class="op">=</span>axes[<span class="dv">0</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson'</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(idata_nb, ax<span class="op">=</span>axes[<span class="dv">1</span>], num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Número de satélites'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlim(<span class="dv">0</span>, <span class="fl">17.5</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal de y_rep vs y_obs'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_predictive_checks_base_models_files/figure-html/cell-5-output-1.png" width="1122" height="382" class="figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 </section>
-<section id="ppcs-con-estadísticos-de-prueba-test-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba-test-statistics">3. PPCs con estadísticos de prueba (test statistics)</h2>
-<p>Para cada estadístico T, comparamos T(y_obs) con la distribución de T(y_rep). Si T(y_obs) cae en la cola de T(y_rep) → el modelo no captura esa propiedad.</p>
-<p><strong>Estadísticos para sobredispersión:</strong> - <code>std</code>: ¿captura la dispersión total? - <code>var/mean</code>: índice de dispersión (D=1 bajo Poisson) - <code>max</code>: ¿captura las colas pesadas? - <code>mean(y==0)</code>: ¿captura la inflación de ceros?</p>
-<div id="8" class="cell" data-execution_count="5">
+<section id="ppcs-con-estadísticos-de-prueba" class="level2">
+<h2 class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba">3. PPCs con estadísticos de prueba</h2>
+<p>Para cada estadístico de prueba <span class="math inline">\(T\)</span>, comparamos <span class="math inline">\(T(y^{\text{obs}})\)</span> con la distribución de <span class="math inline">\(T(y^{\text{rep}})\)</span> sobre las 8000 muestras posteriores. El <strong>Bayesian p-value</strong> <span class="math inline">\(p_B = P(T(y^{\text{rep}}) \geq T(y^{\text{obs}}))\)</span> cuantifica si la observación es atípica bajo el modelo: valores cerca de 0 o 1 indican que el modelo no captura esa propiedad en esa dirección.</p>
+<p>Usamos cuatro estadísticos orientados a los problemas conocidos de estos modelos: - <code>std</code>: dispersión total — el fallo más directo de Poisson. - <code>Índice de dispersión</code> (<span class="math inline">\(D = \text{Var}/\text{Mean}\)</span>): directamente el supuesto que Poisson viola. - <code>max</code>: sensible a colas pesadas — ¿genera el modelo valores extremos? - <code>prop. ceros</code>: detecta inflación de ceros por encima de lo que predice la distribución base.</p>
+<div id="8" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y):</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Índice de dispersión: Var/Mean. Bajo Poisson debe ser ~1."""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y):</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Proporción de ceros."""</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Índice de dispersión: Var/Mean. Bajo Poisson debe ser ~1."""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Proporción de ceros."""</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="9" class="cell" data-execution_count="6">
+<div id="9" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer muestras y_rep</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>y_rep_pois <span class="op">=</span> idata_pois.posterior_predictive[<span class="st">'y'</span>].values  <span class="co"># shape: (chains, draws, N)</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>y_rep_nb   <span class="op">=</span> idata_nb.posterior_predictive[<span class="st">'y'</span>].values</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplanar chains y draws</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>y_rep_pois_flat <span class="op">=</span> y_rep_pois.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_pois.shape[<span class="op">-</span><span class="dv">1</span>])  <span class="co"># (S, N)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>y_rep_nb_flat   <span class="op">=</span> y_rep_nb.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_nb.shape[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_pois shape: </span><span class="sc">{</span>y_rep_pois_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_nb shape:   </span><span class="sc">{</span>y_rep_nb_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer muestras y_rep</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y_rep_pois <span class="op">=</span> idata_pois.posterior_predictive[<span class="st">'y'</span>].values  <span class="co"># shape: (chains, draws, N)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y_rep_nb   <span class="op">=</span> idata_nb.posterior_predictive[<span class="st">'y'</span>].values</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplanar chains y draws</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>y_rep_pois_flat <span class="op">=</span> y_rep_pois.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_pois.shape[<span class="op">-</span><span class="dv">1</span>])  <span class="co"># (S, N)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>y_rep_nb_flat   <span class="op">=</span> y_rep_nb.reshape(<span class="op">-</span><span class="dv">1</span>, y_rep_nb.shape[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_pois shape: </span><span class="sc">{</span>y_rep_pois_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_rep_nb shape:   </span><span class="sc">{</span>y_rep_nb_flat<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>y_rep_pois shape: (8000, 173)
-y_rep_nb shape:   (8000, 173)</code></pre>
 </div>
-</div>
-<div id="10" class="cell" data-execution_count="7">
+<div id="10" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (y_rep_flat, model_name) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'Binomial Negativa'</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    ]):</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs) = </span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">Bayesian p-value = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (y_rep_flat, model_name) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'Binomial Negativa'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    ]):</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'tomato'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs) = </span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">Bayesian p-value = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_predictive_checks_base_models_files/figure-html/cell-8-output-1.png" width="1141" height="1556" class="figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 </section>
 <section id="loo-pit-calibración-predictiva" class="level2">
-<h2 class="anchored" data-anchor-id="loo-pit-calibración-predictiva">4. LOO-PIT — Calibración predictiva</h2>
-<p>El LOO-PIT evalúa calibración: si el modelo está bien calibrado, los quantiles de y_obs dentro de la distribución predictiva leave-one-out deben ser uniformes.</p>
-<div id="12" class="cell" data-execution_count="8">
+<h2 class="anchored" data-anchor-id="loo-pit-calibración-predictiva">4. LOO-PIT — calibración predictiva</h2>
+<p>El LOO-PIT (<em>Leave-One-Out Probability Integral Transform</em>) evalúa calibración: para cada observación <span class="math inline">\(y_i\)</span>, calcula el cuantil de <span class="math inline">\(y_i\)</span> dentro de su distribución predictiva leave-one-out. Si el modelo está bien calibrado, esos cuantiles deben ser aproximadamente uniformes — el histograma debe ser plano y la curva de diferencia debe mantenerse cerca de cero.</p>
+<p>Una desviación sistemática hacia la izquierda indica que el modelo sobreestima los valores (predice demasiados ceros relativos); hacia la derecha, subestima la masa en valores bajos.</p>
+<div id="12" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_pois, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson — LOO-PIT'</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_nb, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa — LOO-PIT'</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_pois, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Poisson — LOO-PIT'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>az.plot_loo_pit(idata_nb, y<span class="op">=</span><span class="st">'y'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Binomial Negativa — LOO-PIT'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_predictive_checks_base_models_files/figure-html/cell-9-output-1.png" width="1143" height="374" class="figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 </section>
 <section id="comparación-de-modelos-loo-cv" class="level2">
-<h2 class="anchored" data-anchor-id="comparación-de-modelos-loo-cv">5. Comparación de modelos (LOO-CV)</h2>
-<p><code>az.compare</code> usa Leave-One-Out Cross-Validation para comparar la capacidad predictiva de los modelos. Un ELPD más alto = mejor predicción out-of-sample.</p>
-<div id="14" class="cell" data-execution_count="9">
+<h2 class="anchored" data-anchor-id="comparación-de-modelos-loo-cv">5. Comparación de modelos — LOO-CV</h2>
+<p>La validación cruzada leave-one-out estima la capacidad predictiva out-of-sample de cada modelo. ArviZ calcula el <strong>ELPD</strong> (<em>Expected Log Predictive Density</em>): valores más altos (menos negativos) indican mejor predicción. La diferencia ELPD ± SE permite saber si la diferencia es estadísticamente sustancial o solo ruido de estimación.</p>
+<div id="14" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({<span class="st">'Poisson'</span>: idata_pois, <span class="st">'NegBin'</span>: idata_nb})</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparación LOO-CV: Poisson vs Binomial Negativa'</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({<span class="st">'Poisson'</span>: idata_pois, <span class="st">'NegBin'</span>: idata_nb})</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparación LOO-CV: Poisson vs Binomial Negativa'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">rank</th>
-<th data-quarto-table-cell-role="th">elpd_loo</th>
-<th data-quarto-table-cell-role="th">p_loo</th>
-<th data-quarto-table-cell-role="th">elpd_diff</th>
-<th data-quarto-table-cell-role="th">weight</th>
-<th data-quarto-table-cell-role="th">se</th>
-<th data-quarto-table-cell-role="th">dse</th>
-<th data-quarto-table-cell-role="th">warning</th>
-<th data-quarto-table-cell-role="th">scale</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">NegBin</th>
-<td>0</td>
-<td>-378.508098</td>
-<td>2.638793</td>
-<td>0.000000</td>
-<td>1.000000e+00</td>
-<td>13.532134</td>
-<td>0.000000</td>
-<td>False</td>
-<td>log</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Poisson</th>
-<td>1</td>
-<td>-465.336615</td>
-<td>5.403561</td>
-<td>86.828517</td>
-<td>7.120415e-12</td>
-<td>23.062991</td>
-<td>17.337162</td>
-<td>False</td>
-<td>log</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_predictive_checks_base_models_files/figure-html/cell-10-output-2.png" width="719" height="308" class="figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 </section>
-<section id="resumen-de-evidencia-y-conclusiones" class="level2">
-<h2 class="anchored" data-anchor-id="resumen-de-evidencia-y-conclusiones">6. Resumen de evidencia y conclusiones</h2>
-<div id="16" class="cell" data-execution_count="10">
+<section id="resumen-de-evidencia" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-de-evidencia">6. Resumen de evidencia</h2>
+<p>Consolidamos los Bayesian p-values de los cuatro estadísticos de prueba para ambos modelos. Heurística de interpretación: <span class="math inline">\(p_B &lt; 0.05\)</span> o <span class="math inline">\(p_B &gt; 0.95\)</span> indican fallo claro del modelo en esa dimensión.</p>
+<div id="16" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla resumen</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y_rep_flat, model_name <span class="kw">in</span> [</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'NegBin'</span>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    ]:</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: model_name,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(np.mean(t_rep), <span class="dv">3</span>),</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs), <span class="dv">3</span>),</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla resumen</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y_rep_flat, model_name <span class="kw">in</span> [</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        (y_rep_pois_flat, <span class="st">'Poisson'</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        (y_rep_nb_flat,   <span class="st">'NegBin'</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ]:</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: model_name,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(np.mean(t_rep), <span class="dv">3</span>),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs), <span class="dv">3</span>),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Modelo</th>
-<th data-quarto-table-cell-role="th">Estadístico</th>
-<th data-quarto-table-cell-role="th">T(y_obs)</th>
-<th data-quarto-table-cell-role="th">E[T(y_rep)]</th>
-<th data-quarto-table-cell-role="th">Bayesian p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>NegBin</td>
-<td>max</td>
-<td>15.000</td>
-<td>27.530</td>
-<td>0.968</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">4</th>
-<td>Poisson</td>
-<td>max</td>
-<td>15.000</td>
-<td>11.038</td>
-<td>0.068</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">7</th>
-<td>NegBin</td>
-<td>prop. ceros</td>
-<td>0.358</td>
-<td>0.291</td>
-<td>0.093</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">6</th>
-<td>Poisson</td>
-<td>prop. ceros</td>
-<td>0.358</td>
-<td>0.082</td>
-<td>0.000</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">1</th>
-<td>NegBin</td>
-<td>std</td>
-<td>3.139</td>
-<td>4.115</td>
-<td>0.894</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">0</th>
-<td>Poisson</td>
-<td>std</td>
-<td>3.139</td>
-<td>2.034</td>
-<td>0.000</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">3</th>
-<td>NegBin</td>
-<td>Índice dispersión</td>
-<td>3.376</td>
-<td>5.772</td>
-<td>0.954</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">2</th>
-<td>Poisson</td>
-<td>Índice dispersión</td>
-<td>3.376</td>
-<td>1.427</td>
-<td>0.000</td>
-</tr>
-</tbody>
-</table>
-
 </div>
-</div>
-</div>
-<section id="conclusiones-modelo-poisson-falla-sistemáticael-modelo-poisson-falla-en-todas-las-dimensiones-evaluadas--sobredispersión-p-0.000-para-std-e-índice-de-dispersión-el-modelo-predice-una-dispersión-de-2.0-satélites-cuando-los-datos-muestran-3.1.-el-índice-de-dispersión-observado-es-d3.38-pero-poisson-lo-fija-estructuralmente-en-d1.--inflación-de-ceros-p-0.000-el-35.8-de-las-hembras-no-tiene-satélites-pero-poisson-predice-apenas-8.2.-el-modelo-subestima-masivamente-los-ceros.--colas-pesadas-p-0.068-marginalmente-también-le-cuesta-llegar-al-valor-máximo-observado-15-satélites.--loo-cv-elpd-465.4-muy-por-debajo-de-la-binomial-negativa.-modelo-binomial-negativa-mejora-en-dispersión-falla-en-cerosla-binomial-negativa-con-α_sm-1.11-dispersión-moderada-resuelve-parcialmente-el-problema--sobredispersión-capturada-p0.894-para-std-y-p0.954-para-índice-de-dispersión-el-modelo-envuelve-correctamente-la-variabilidad-de-los-datos.--colas-pesadas-p0.968-aunque-emaxy_rep27-sobreestima-el-máximo-observado-15-lo-que-sugiere-que-captura-las-colas-pero-con-exceso.--inflación-de-ceros-falla-persistente-p-0.093-aunque-mejora-respecto-a-poisson-eprop_zeros29.1-vs-8.2-todavía-subestima-la-proporción-observada-de-35.8.-el-p-value-de-0.093-está-en-zona-gris-el-modelo-no-colapsa-pero-la-predicción-es-sistemáticamente-baja.--loo-cv-elpd-378.5-vs--465.4-de-poisson.-la-diferencia-es-de-86.8-puntos-17.3-se-sustancial-y-significativa.-el-peso-del-modelo-asigna-prácticamente-toda-la-masa-a-negbin.-diagnóstico-final-y-extensión-naturalambos-modelos-comparten-el-mismo-predictor-lineal-intercept-ancho-de-caparazón-y-ninguno-tiene-un-mecanismo-explícito-para-el-exceso-de-ceros.-hay-hembras-que-estructuralmente-no-atraen-satélites-posiblemente-por-condición-física-o-tamaño-muy-reducido-y-ese-proceso-generador-de-ceros-es-distinto-del-proceso-de-conteo.la-extensión-natural-es-un-modelo-de-mezcla-con-inflación-de-ceros--zero-inflated-poisson-zip-mezcla-de-masa-en-cero-prob.-π-y-poissonλ.-asume-que-las-observaciones-positivas-vienen-de-un-proceso-poisson-no-resuelve-la-sobredispersión-residual.--zero-inflated-negative-binomial-zinb-mezcla-de-masa-en-cero-y-negbinμ-α.-aborda-simultáneamente-la-inflación-de-ceros-y-la-sobredispersión-es-el-candidato-más-natural-dado-el-diagnóstico.en-ambos-casos-el-modelo-tiene-dos-componentes-uno-que-decide-si-la-hembra-puede-tener-satélites-logístico-sobre-w-y-otro-que-modela-cuántos-dado-que-puede-poisson-o-negbin-sobre-w." class="level3">
-<h3 class="anchored" data-anchor-id="conclusiones-modelo-poisson-falla-sistemáticael-modelo-poisson-falla-en-todas-las-dimensiones-evaluadas--sobredispersión-p-0.000-para-std-e-índice-de-dispersión-el-modelo-predice-una-dispersión-de-2.0-satélites-cuando-los-datos-muestran-3.1.-el-índice-de-dispersión-observado-es-d3.38-pero-poisson-lo-fija-estructuralmente-en-d1.--inflación-de-ceros-p-0.000-el-35.8-de-las-hembras-no-tiene-satélites-pero-poisson-predice-apenas-8.2.-el-modelo-subestima-masivamente-los-ceros.--colas-pesadas-p-0.068-marginalmente-también-le-cuesta-llegar-al-valor-máximo-observado-15-satélites.--loo-cv-elpd-465.4-muy-por-debajo-de-la-binomial-negativa.-modelo-binomial-negativa-mejora-en-dispersión-falla-en-cerosla-binomial-negativa-con-α_sm-1.11-dispersión-moderada-resuelve-parcialmente-el-problema--sobredispersión-capturada-p0.894-para-std-y-p0.954-para-índice-de-dispersión-el-modelo-envuelve-correctamente-la-variabilidad-de-los-datos.--colas-pesadas-p0.968-aunque-emaxy_rep27-sobreestima-el-máximo-observado-15-lo-que-sugiere-que-captura-las-colas-pero-con-exceso.--inflación-de-ceros-falla-persistente-p-0.093-aunque-mejora-respecto-a-poisson-eprop_zeros29.1-vs-8.2-todavía-subestima-la-proporción-observada-de-35.8.-el-p-value-de-0.093-está-en-zona-gris-el-modelo-no-colapsa-pero-la-predicción-es-sistemáticamente-baja.--loo-cv-elpd-378.5-vs--465.4-de-poisson.-la-diferencia-es-de-86.8-puntos-17.3-se-sustancial-y-significativa.-el-peso-del-modelo-asigna-prácticamente-toda-la-masa-a-negbin.-diagnóstico-final-y-extensión-naturalambos-modelos-comparten-el-mismo-predictor-lineal-intercept-ancho-de-caparazón-y-ninguno-tiene-un-mecanismo-explícito-para-el-exceso-de-ceros.-hay-hembras-que-estructuralmente-no-atraen-satélites-posiblemente-por-condición-física-o-tamaño-muy-reducido-y-ese-proceso-generador-de-ceros-es-distinto-del-proceso-de-conteo.la-extensión-natural-es-un-modelo-de-mezcla-con-inflación-de-ceros--zero-inflated-poisson-zip-mezcla-de-masa-en-cero-prob.-π-y-poissonλ.-asume-que-las-observaciones-positivas-vienen-de-un-proceso-poisson-no-resuelve-la-sobredispersión-residual.--zero-inflated-negative-binomial-zinb-mezcla-de-masa-en-cero-y-negbinμ-α.-aborda-simultáneamente-la-inflación-de-ceros-y-la-sobredispersión-es-el-candidato-más-natural-dado-el-diagnóstico.en-ambos-casos-el-modelo-tiene-dos-componentes-uno-que-decide-si-la-hembra-puede-tener-satélites-logístico-sobre-w-y-otro-que-modela-cuántos-dado-que-puede-poisson-o-negbin-sobre-w.">Conclusiones#### Modelo Poisson — falla sistemáticaEl modelo Poisson falla en todas las dimensiones evaluadas:- <strong>Sobredispersión</strong> (p ≈ 0.000 para std e índice de dispersión): el modelo predice una dispersión de ~2.0 satélites cuando los datos muestran ~3.1. El índice de dispersión observado es D=3.38, pero Poisson lo fija estructuralmente en D≈1.- <strong>Inflación de ceros</strong> (p ≈ 0.000): el 35.8% de las hembras no tiene satélites, pero Poisson predice apenas ~8.2%. El modelo subestima masivamente los ceros.- <strong>Colas pesadas</strong> (p = 0.068): marginalmente, también le cuesta llegar al valor máximo observado (15 satélites).- <strong>LOO-CV</strong>: ELPD=-465.4, muy por debajo de la Binomial Negativa.#### Modelo Binomial Negativa — mejora en dispersión, falla en cerosLa Binomial Negativa (con α_sm ≈ 1.11, dispersión moderada) resuelve parcialmente el problema:- <strong>Sobredispersión capturada</strong>: p=0.894 para std y p=0.954 para índice de dispersión — el modelo envuelve correctamente la variabilidad de los datos.- <strong>Colas pesadas</strong>: p=0.968, aunque E[max(y_rep)]≈27 sobreestima el máximo observado (15), lo que sugiere que captura las colas pero con exceso.- <strong>Inflación de ceros — falla persistente</strong> (p = 0.093): aunque mejora respecto a Poisson (E[prop_zeros]≈29.1% vs 8.2%), todavía subestima la proporción observada de 35.8%. El p-value de 0.093 está en zona gris — el modelo no colapsa, pero la predicción es sistemáticamente baja.- <strong>LOO-CV</strong>: ELPD=-378.5 vs -465.4 de Poisson. La diferencia es de 86.8 puntos (±17.3 SE), sustancial y significativa. El peso del modelo asigna prácticamente toda la masa a NegBin.#### Diagnóstico final y extensión naturalAmbos modelos comparten el mismo predictor lineal (intercept + ancho de caparazón), y ninguno tiene un mecanismo explícito para el exceso de ceros. Hay hembras que estructuralmente no atraen satélites —posiblemente por condición física o tamaño muy reducido— y ese proceso generador de ceros es distinto del proceso de conteo.La extensión natural es un <strong>modelo de mezcla con inflación de ceros</strong>:- <strong>Zero-Inflated Poisson (ZIP)</strong>: mezcla de masa en cero (prob. π) y Poisson(λ). Asume que las observaciones positivas vienen de un proceso Poisson —no resuelve la sobredispersión residual.- <strong>Zero-Inflated Negative Binomial (ZINB)</strong>: mezcla de masa en cero y NegBin(μ, α). Aborda simultáneamente la inflación de ceros y la sobredispersión — es el candidato más natural dado el diagnóstico.En ambos casos el modelo tiene dos componentes: uno que decide si la hembra “puede” tener satélites (logístico sobre W), y otro que modela cuántos dado que puede (Poisson o NegBin sobre W).</h3>
-
-
+<section id="conclusiones" class="level3">
+<h3 class="anchored" data-anchor-id="conclusiones">Conclusiones</h3>
+<section id="modelo-poisson-falla-sistemática" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-poisson-falla-sistemática">Modelo Poisson — falla sistemática</h4>
+<p>El modelo Poisson falla en todas las dimensiones evaluadas:</p>
+<ul>
+<li><strong>Sobredispersión</strong> (<span class="math inline">\(p_B \approx 0.000\)</span> para std e índice de dispersión): el modelo predice una dispersión de ~2.0 satélites cuando los datos muestran ~3.1. El índice de dispersión observado es <span class="math inline">\(D = 3.38\)</span>, pero Poisson lo fija estructuralmente en <span class="math inline">\(D \approx 1\)</span>.</li>
+<li><strong>Inflación de ceros</strong> (<span class="math inline">\(p_B \approx 0.000\)</span>): el 35.8% de las hembras no tiene satélites, pero Poisson predice apenas ~8.2%. El modelo subestima masivamente los ceros.</li>
+<li><strong>Colas pesadas</strong> (<span class="math inline">\(p_B = 0.068\)</span>): marginalmente, también le cuesta llegar al valor máximo observado (15 satélites).</li>
+<li><strong>LOO-CV</strong>: ELPD = −465.4, muy por debajo de la Binomial Negativa.</li>
+</ul>
 </section>
+<section id="modelo-binomial-negativa-mejora-en-dispersión-falla-residual-en-ceros" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-binomial-negativa-mejora-en-dispersión-falla-residual-en-ceros">Modelo Binomial Negativa — mejora en dispersión, falla residual en ceros</h4>
+<p>La Binomial Negativa resuelve parcialmente el problema:</p>
+<ul>
+<li><strong>Sobredispersión capturada</strong>: <span class="math inline">\(p_B = 0.894\)</span> para std y <span class="math inline">\(p_B = 0.954\)</span> para índice de dispersión — el modelo envuelve correctamente la variabilidad de los datos.</li>
+<li><strong>Colas pesadas</strong>: <span class="math inline">\(p_B = 0.968\)</span>, aunque <span class="math inline">\(\mathbb{E}[\max(y^{\text{rep}})] \approx 27\)</span> sobreestima el máximo observado (15), lo que sugiere captura de colas con exceso.</li>
+<li><strong>Inflación de ceros — falla persistente</strong> (<span class="math inline">\(p_B = 0.093\)</span>): aunque mejora respecto a Poisson (<span class="math inline">\(\mathbb{E}[\text{prop\_zeros}] \approx 29.1\%\)</span> vs <span class="math inline">\(8.2\%\)</span>), todavía subestima la proporción observada de 35.8%.</li>
+<li><strong>LOO-CV</strong>: ELPD = −378.5 vs −465.4 de Poisson. La diferencia de 86.8 puntos (±17.3 SE) es sustancial y estadísticamente clara.</li>
+</ul>
+</section>
+<section id="diagnóstico-final-y-extensión-natural" class="level4">
+<h4 class="anchored" data-anchor-id="diagnóstico-final-y-extensión-natural">Diagnóstico final y extensión natural</h4>
+<p>Ambos modelos comparten el mismo predictor lineal y ninguno tiene un mecanismo explícito para el exceso de ceros. Hay hembras que estructuralmente no atraen satélites — posiblemente por condición física o tamaño muy reducido — y ese proceso generador de ceros es distinto del proceso de conteo.</p>
+<p>La extensión natural es un <strong>modelo de mezcla con inflación de ceros</strong>:</p>
+<ul>
+<li><strong>Zero-Inflated Poisson (ZIP)</strong>: mezcla de masa puntual en cero (probabilidad <span class="math inline">\(\pi\)</span>) y Poisson(<span class="math inline">\(\lambda\)</span>). Aborda la inflación de ceros pero no la sobredispersión residual.</li>
+<li><strong>Zero-Inflated Negative Binomial (ZINB)</strong>: mezcla de masa en cero y NegBin(<span class="math inline">\(\mu\)</span>, <span class="math inline">\(\phi\)</span>). Aborda simultáneamente la inflación de ceros y la sobredispersión — es el candidato más natural dado el diagnóstico.</li>
+</ul>
+<p>En ambos casos el modelo tiene dos componentes: uno que decide si la hembra “puede” tener satélites (componente logístico sobre <span class="math inline">\(W\)</span>), y otro que modela cuántos dado que puede (Poisson o NegBin sobre <span class="math inline">\(W\)</span>).</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="qué-sigue" class="level2">
+<h2 class="anchored" data-anchor-id="qué-sigue">¿Qué sigue?</h2>
+<p>El notebook <code>05_predictive_checks_extended_models</code> implementa ZIP y ZINB con Stan, aplica los mismos PPCs para verificar si resuelven el problema de inflación de ceros, y compara los cuatro modelos con LOO-CV.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1124,13 +1007,13 @@ y_rep_nb shape:   (8000, 173)</code></pre>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notebooks/03_inferencia_bayesiana.html" class="pagination-link" aria-label="03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">03 — Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></span>
+      <a href="../notebooks/03_bayesian_inference.html" class="pagination-link" aria-label="Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notebooks/05_extended_models.html" class="pagination-link" aria-label="05 — Modelos Extendidos: ZIP y ZINB">
-        <span class="nav-page-text"><span class="chapter-title">05 — Modelos Extendidos: ZIP y ZINB</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notebooks/05_predictive_checks_extended_models.html" class="pagination-link" aria-label="Posterior Predictive Checks: modelos extendidos">
+        <span class="nav-page-text"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

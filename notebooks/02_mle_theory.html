@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GLM Poisson: MLE desde cero – Modelos para Datos de Conteo</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notebooks/03_bayesian_inference.html" rel="next">
+<link href="../notebooks/01b_extended.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/02_mle_theory.html">Teoría: MLE desde cero</a></li><li class="breadcrumb-item"><a href="../notebooks/02_mle_theory.html"><span class="chapter-title">GLM Poisson: MLE desde cero</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Modelos para Datos de Conteo</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ScJavier/bayesian-glm-count-data" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploración de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/01_basic_eda.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EDA inicial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/01b_extended.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EDA extendido</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Teoría: MLE desde cero</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/02_mle_theory.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">GLM Poisson: MLE desde cero</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Inferencia Bayesiana</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/03_bayesian_inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Diagnóstico y expansión de modelos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/05_predictive_checks_extended_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#el-modelo-glm-poisson" id="toc-el-modelo-glm-poisson" class="nav-link active" data-scroll-target="#el-modelo-glm-poisson">1. El modelo GLM Poisson</a>
+  <ul class="collapse">
+  <li><a href="#formulación" id="toc-formulación" class="nav-link" data-scroll-target="#formulación">Formulación</a></li>
+  <li><a href="#log-verosimilitud" id="toc-log-verosimilitud" class="nav-link" data-scroll-target="#log-verosimilitud">Log-verosimilitud</a></li>
+  <li><a href="#gradiente-y-hessiana" id="toc-gradiente-y-hessiana" class="nav-link" data-scroll-target="#gradiente-y-hessiana">Gradiente y Hessiana</a></li>
+  <li><a href="#algoritmo-de-newton-raphson" id="toc-algoritmo-de-newton-raphson" class="nav-link" data-scroll-target="#algoritmo-de-newton-raphson">Algoritmo de Newton-Raphson</a></li>
+  </ul></li>
+  <li><a href="#simulación-de-datos" id="toc-simulación-de-datos" class="nav-link" data-scroll-target="#simulación-de-datos">2. Simulación de datos</a>
+  <ul class="collapse">
+  <li><a href="#verificación-del-supuesto-vary-ey" id="toc-verificación-del-supuesto-vary-ey" class="nav-link" data-scroll-target="#verificación-del-supuesto-vary-ey">Verificación del supuesto Var[Y] ≈ E[Y]</a></li>
+  </ul></li>
+  <li><a href="#mle-manual-con-scipy.optimize" id="toc-mle-manual-con-scipy.optimize" class="nav-link" data-scroll-target="#mle-manual-con-scipy.optimize">3. MLE manual con <code>scipy.optimize</code></a></li>
+  <li><a href="#verificación-con-statsmodels" id="toc-verificación-con-statsmodels" class="nav-link" data-scroll-target="#verificación-con-statsmodels">4. Verificación con <code>statsmodels</code></a></li>
+  <li><a href="#diagnóstico-de-sobredispersión" id="toc-diagnóstico-de-sobredispersión" class="nav-link" data-scroll-target="#diagnóstico-de-sobredispersión">5. Diagnóstico de sobredispersión</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">6. Conclusiones</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/02_mle_theory.html">Teoría: MLE desde cero</a></li><li class="breadcrumb-item"><a href="../notebooks/02_mle_theory.html"><span class="chapter-title">GLM Poisson: MLE desde cero</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">GLM Poisson: MLE desde cero</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Este notebook implementa el GLM Poisson desde cero sobre datos simulados, donde el verdadero valor de los parámetros es conocido. El objetivo es verificar que la teoría funciona cuando los datos se portan bien — antes de enfrentar datos reales con sobredispersión.</p>
+<p>Contenido: 1. Formulación del GLM Poisson 2. Simulación de datos 3. MLE manual con <code>scipy.optimize</code> 4. Verificación con <code>statsmodels</code> 5. Diagnóstico de sobredispersión</p>
+<section id="el-modelo-glm-poisson" class="level2">
+<h2 class="anchored" data-anchor-id="el-modelo-glm-poisson">1. El modelo GLM Poisson</h2>
+<section id="formulación" class="level3">
+<h3 class="anchored" data-anchor-id="formulación">Formulación</h3>
+<p><span class="math display">\[Y_i \sim \text{Poisson}(\lambda_i), \quad i = 1, \ldots, n\]</span></p>
+<p><span class="math display">\[\log(\lambda_i) = \eta_i = \mathbf{x}_i^\top \boldsymbol{\beta}\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{x}_i = (1, x_{i1}, \ldots, x_{ip})^\top\)</span> y <span class="math inline">\(\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_p)^\top\)</span>.</p>
+<p>La función de enlace logarítmica garantiza <span class="math inline">\(\lambda_i &gt; 0\)</span> para cualquier valor de <span class="math inline">\(\eta_i\)</span>.</p>
+</section>
+<section id="log-verosimilitud" class="level3">
+<h3 class="anchored" data-anchor-id="log-verosimilitud">Log-verosimilitud</h3>
+<p>La función de masa de probabilidad de Poisson es:</p>
+<p><span class="math display">\[P(Y_i = y_i \mid \lambda_i) = \frac{e^{-\lambda_i} \lambda_i^{y_i}}{y_i!}\]</span></p>
+<p>La log-verosimilitud del vector de observaciones <span class="math inline">\((y_1, \ldots, y_n)\)</span> es:</p>
+<p><span class="math display">\[\ell(\boldsymbol{\beta}) = \sum_{i=1}^n \left[
+  y_i \cdot \mathbf{x}_i^\top \boldsymbol{\beta}
+  - e^{\mathbf{x}_i^\top \boldsymbol{\beta}}
+  - \log(y_i!)
+\right]\]</span></p>
+<p>Como <span class="math inline">\(\log(y_i!)\)</span> no depende de <span class="math inline">\(\boldsymbol{\beta}\)</span>, maximizamos la forma reducida:</p>
+<p><span class="math display">\[\ell(\boldsymbol{\beta}) = \sum_{i=1}^n \left[
+  y_i \cdot \mathbf{x}_i^\top \boldsymbol{\beta}
+  - e^{\mathbf{x}_i^\top \boldsymbol{\beta}}
+\right]\]</span></p>
+</section>
+<section id="gradiente-y-hessiana" class="level3">
+<h3 class="anchored" data-anchor-id="gradiente-y-hessiana">Gradiente y Hessiana</h3>
+<p>Definiendo <span class="math inline">\(\mu_i = e^{\mathbf{x}_i^\top \boldsymbol{\beta}}\)</span> (media condicional):</p>
+<p><strong>Gradiente</strong> (score):</p>
+<p><span class="math display">\[\nabla_{\boldsymbol{\beta}} \ell = \mathbf{X}^\top (\mathbf{y} - \boldsymbol{\mu})\]</span></p>
+<p>donde <span class="math inline">\(\boldsymbol{\mu} = (\mu_1, \ldots, \mu_n)^\top\)</span>.</p>
+<p><strong>Hessiana</strong> (negativa definida en el máximo):</p>
+<p><span class="math display">\[\mathbf{H} = -\mathbf{X}^\top \mathbf{W} \mathbf{X}, \quad \mathbf{W} = \text{diag}(\mu_1, \ldots, \mu_n)\]</span></p>
+<p><strong>Covarianza asintótica</strong> del estimador MLE:</p>
+<p><span class="math display">\[\text{Cov}(\hat{\boldsymbol{\beta}}) \approx (-\mathbf{H})^{-1} = (\mathbf{X}^\top \mathbf{W} \mathbf{X})^{-1}\]</span></p>
+<p>Esta es la <strong>Información de Fisher Observada</strong> evaluada en <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>.</p>
+</section>
+<section id="algoritmo-de-newton-raphson" class="level3">
+<h3 class="anchored" data-anchor-id="algoritmo-de-newton-raphson">Algoritmo de Newton-Raphson</h3>
+<p>Para maximizar <span class="math inline">\(\ell(\boldsymbol{\beta})\)</span> se aplica la actualización de Newton-Raphson:</p>
+<p><span class="math display">\[\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} - \left[\mathbf{H}(\boldsymbol{\beta}^{(t)})\right]^{-1} \nabla \ell(\boldsymbol{\beta}^{(t)})\]</span></p>
+<p>Sustituyendo gradiente y Hessiana:</p>
+<p><span class="math display">\[\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} + \left(\mathbf{X}^\top \mathbf{W}^{(t)} \mathbf{X}\right)^{-1} \mathbf{X}^\top \left(\mathbf{y} - \boldsymbol{\mu}^{(t)}\right)\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{W}^{(t)} = \text{diag}(\mu_1^{(t)}, \ldots, \mu_n^{(t)})\)</span> se actualiza en cada iteración.</p>
+<section id="conexión-con-irls" class="level4">
+<h4 class="anchored" data-anchor-id="conexión-con-irls">Conexión con IRLS</h4>
+<p>La actualización anterior es algebraicamente equivalente a resolver en cada paso un problema de <strong>mínimos cuadrados ponderados</strong> (<em>Iteratively Reweighted Least Squares</em>, IRLS):</p>
+<p><span class="math display">\[\boldsymbol{\beta}^{(t+1)} = \arg\min_{\boldsymbol{\beta}} \sum_{i=1}^n w_i^{(t)} \left(z_i^{(t)} - \mathbf{x}_i^\top \boldsymbol{\beta}\right)^2\]</span></p>
+<p>con pesos <span class="math inline">\(w_i^{(t)} = \mu_i^{(t)}\)</span> y <strong>respuesta ajustada</strong>:</p>
+<p><span class="math display">\[z_i^{(t)} = \eta_i^{(t)} + \frac{y_i - \mu_i^{(t)}}{\mu_i^{(t)}}\]</span></p>
+<p>donde <span class="math inline">\(\eta_i^{(t)} = \mathbf{x}_i^\top \boldsymbol{\beta}^{(t)}\)</span> es el predictor lineal actual. IRLS es el algoritmo estándar de ajuste de GLMs implementado en <code>statsmodels</code> y R.</p>
+</section>
+<section id="convergencia" class="level4">
+<h4 class="anchored" data-anchor-id="convergencia">Convergencia</h4>
+<p>Para GLMs Poisson con <span class="math inline">\(\mathbf{X}\)</span> de rango completo, la log-verosimilitud es <strong>estrictamente cóncava</strong>: la Hessiana <span class="math inline">\(\mathbf{H}\)</span> es negativa definida para cualquier <span class="math inline">\(\boldsymbol{\beta}\)</span>, lo que garantiza:</p>
+<ul>
+<li>Máximo global único <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></li>
+<li>Convergencia cuadrática de Newton-Raphson en la vecindad del máximo</li>
+</ul>
+<div id="3" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">44</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+</section>
+<section id="simulación-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="simulación-de-datos">2. Simulación de datos</h2>
+<p>Generamos datos donde el verdadero modelo es Poisson con parámetros conocidos. Usamos <span class="math inline">\(\log(x)\)</span> como predictor para capturar relaciones multiplicativas.</p>
+<p>Modelo verdadero:</p>
+<p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 \log(x_i), \quad \beta_0 = 1.0, \quad \beta_1 = 0.8\]</span></p>
+<div id="5" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1500</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(loc<span class="op">=</span><span class="dv">35</span>, scale<span class="op">=</span><span class="dv">6</span>, size<span class="op">=</span>n)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>log_x <span class="op">=</span> np.log(x)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros verdaderos del modelo simulado</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>beta_0_real, beta_1_real <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.8</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>lam <span class="op">=</span> np.exp(beta_0_real <span class="op">+</span> beta_1_real <span class="op">*</span> log_x)  <span class="co"># tasa Poisson condicional en x</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y   <span class="op">=</span> np.random.poisson(lam<span class="op">=</span>lam, size<span class="op">=</span>n)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>df_sim <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>: x, <span class="st">'log_x'</span>: log_x, <span class="st">'y'</span>: y})</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'n = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Parámetros reales: β₀ = </span><span class="sc">{</span>beta_0_real<span class="sc">}</span><span class="ss">, β₁ = </span><span class="sc">{</span>beta_1_real<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Media de y: </span><span class="sc">{</span>y<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">  |  Varianza de y: </span><span class="sc">{</span>y<span class="sc">.</span>var()<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Índice de dispersión D = </span><span class="sc">{</span>y<span class="sc">.</span>var()<span class="op">/</span>y<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">  (esperado ≈ 1.0 para Poisson puro)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="verificación-del-supuesto-vary-ey" class="level3">
+<h3 class="anchored" data-anchor-id="verificación-del-supuesto-vary-ey">Verificación del supuesto Var[Y] ≈ E[Y]</h3>
+<p>La dispersión global impresa arriba (D ≈ 1.8) parece contradecir el supuesto Poisson — pero es la dispersión <em>marginal</em>, que mezcla variabilidad entre grupos con medias distintas. Lo relevante para el modelo es la dispersión <em>condicional</em> dado <span class="math inline">\(x\)</span>: si <span class="math inline">\(\mu_i\)</span> varía con <span class="math inline">\(x\)</span>, la varianza marginal de <span class="math inline">\(Y\)</span> naturalmente excede <span class="math inline">\(\mathbb{E}[\mu_i]\)</span>.</p>
+<p>La siguiente tabla desagrega por deciles de <span class="math inline">\(x\)</span>: el índice <span class="math inline">\(D = \text{Var}(Y \mid x) / \mathbb{E}(Y \mid x)\)</span> es cercano a 1 en todos los grupos, confirmando que el supuesto Poisson se cumple <strong>condicionalmente</strong>.</p>
+<div id="7" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_sim[<span class="st">'x_cat'</span>] <span class="op">=</span> pd.qcut(df_sim[<span class="st">'x'</span>], q<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grupo <span class="op">=</span> df_sim.groupby(<span class="st">'x_cat'</span>, observed<span class="op">=</span><span class="va">False</span>)[<span class="st">'y'</span>].agg(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span><span class="st">'count'</span>, media<span class="op">=</span><span class="st">'mean'</span>, varianza<span class="op">=</span><span class="st">'var'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>grupo[<span class="st">'D'</span>] <span class="op">=</span> (grupo[<span class="st">'varianza'</span>] <span class="op">/</span> grupo[<span class="st">'media'</span>]).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grupo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Las gráficas complementan la tabla: el hexbin muestra la densidad conjunta de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> y confirma la tendencia creciente, mientras que el boxplot por deciles evidencia que la dispersión de <span class="math inline">\(Y\)</span> es proporcional a su media en cada grupo — comportamiento característico de un proceso Poisson bien especificado.</p>
+<div id="9" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">6</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Hexbin: relación X vs Y</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>hb <span class="op">=</span> axes[<span class="dv">0</span>].hexbin(df_sim[<span class="st">'x'</span>], df_sim[<span class="st">'y'</span>], gridsize<span class="op">=</span><span class="dv">25</span>, cmap<span class="op">=</span><span class="st">'viridis'</span>, mincnt<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.colorbar(hb, ax<span class="op">=</span>axes[<span class="dv">0</span>], label<span class="op">=</span><span class="st">'n observaciones'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Relación X vs Y (densidad hexagonal)'</span>, xlabel<span class="op">=</span><span class="st">'X'</span>, ylabel<span class="op">=</span><span class="st">'Conteo Y'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot por deciles</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df_sim, x<span class="op">=</span><span class="st">'x_cat'</span>, y<span class="op">=</span><span class="st">'y'</span>, palette<span class="op">=</span><span class="st">'viridis'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Distribución de Y por deciles de X'</span>, xlabel<span class="op">=</span><span class="st">'Deciles de X'</span>, ylabel<span class="op">=</span><span class="st">'Y'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+<section id="mle-manual-con-scipy.optimize" class="level2">
+<h2 class="anchored" data-anchor-id="mle-manual-con-scipy.optimize">3. MLE manual con <code>scipy.optimize</code></h2>
+<p>Implementamos las tres funciones derivadas de la log-verosimilitud: NLL (función objetivo), gradiente y Hessiana. Pasarlas analíticamente a <code>scipy.optimize.minimize</code> con <code>method='Newton-CG'</code> evita diferenciación numérica y produce convergencia más rápida y estable que métodos de primer orden.</p>
+<div id="11" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X_mat <span class="op">=</span> np.column_stack([np.ones(n), log_x])  <span class="co"># matriz de diseño [1 | log(x)]</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_nll(beta, X, y):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Negativo de la log-verosimilitud Poisson (función objetivo a minimizar)."""</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>np.<span class="bu">sum</span>(y <span class="op">*</span> (X <span class="op">@</span> beta) <span class="op">-</span> mu)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_gradient(beta, X, y):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gradiente de la NLL: -X^T (y - mu)."""</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>(X.T <span class="op">@</span> (y <span class="op">-</span> mu))</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_hessian(beta, X, y):</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Hessiana de la NLL: X^T W X con W = diag(mu)."""</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> np.exp(X <span class="op">@</span> beta)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X.T <span class="op">*</span> mu <span class="op">@</span> X</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="12" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>beta_init <span class="op">=</span> np.zeros(<span class="dv">2</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Newton-CG usa el gradiente y la Hessiana analíticos — convergencia cuadrática</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> minimize(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    fun<span class="op">=</span>poisson_nll, x0<span class="op">=</span>beta_init, args<span class="op">=</span>(X_mat, y),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">'Newton-CG'</span>, jac<span class="op">=</span>poisson_gradient, hess<span class="op">=</span>poisson_hessian</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="op">=</span> res.x</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimización exitosa:'</span>, res.success)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'β̂₀ = </span><span class="sc">{</span>beta_hat[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">  (real: </span><span class="sc">{</span>beta_0_real<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'β̂₁ = </span><span class="sc">{</span>beta_hat[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">  (real: </span><span class="sc">{</span>beta_1_real<span class="sc">}</span><span class="ss">)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="13" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inferencia: SE e IC vía Hessiana observada evaluada en beta_hat</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>H    <span class="op">=</span> poisson_hessian(beta_hat, X_mat, y)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cov  <span class="op">=</span> np.linalg.inv(H)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>se   <span class="op">=</span> np.sqrt(np.diag(cov))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>z    <span class="op">=</span> beta_hat <span class="op">/</span> se</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>p_vals <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(np.<span class="bu">abs</span>(z)))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>z_crit <span class="op">=</span> stats.norm.ppf(<span class="fl">0.975</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="sc">{</span><span class="st">"Variable"</span><span class="sc">:&lt;15}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"Coef"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"SE"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"z"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"P&gt;|z|"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"[0.025"</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">"0.975]"</span><span class="sc">:&gt;8}</span><span class="ss">'</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span> <span class="op">*</span> <span class="dv">65</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="st">'Intercepto'</span>, <span class="st">'log(x)'</span>]):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">:&lt;15}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>se[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>z[i]<span class="sc">:8.4f}</span><span class="ss"> '</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'</span><span class="sc">{</span>p_vals[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="op">-</span>z_crit<span class="op">*</span>se[i]<span class="sc">:8.4f}</span><span class="ss"> </span><span class="sc">{</span>beta_hat[i]<span class="op">+</span>z_crit<span class="op">*</span>se[i]<span class="sc">:8.4f}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="verificación-con-statsmodels" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-con-statsmodels">4. Verificación con <code>statsmodels</code></h2>
+<p>Comparamos con la implementación de referencia. Los coeficientes, errores estándar y estadísticos <span class="math inline">\(z\)</span> deben ser idénticos — <code>statsmodels</code> usa internamente IRLS, que es algebraicamente equivalente a Newton-Raphson con la Hessiana del GLM Poisson.</p>
+<div id="15" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.poisson(formula<span class="op">=</span><span class="st">'y ~ log_x'</span>, data<span class="op">=</span>df_sim)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="16" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incident Rate Ratios (IRR): exp(coeficiente)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Interpretación: por cada unidad que aumenta log(x), y se multiplica por IRR</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>irr <span class="op">=</span> np.exp(results.params)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'IRR (exp(coef)):'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(irr.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="diagnóstico-de-sobredispersión" class="level2">
+<h2 class="anchored" data-anchor-id="diagnóstico-de-sobredispersión">5. Diagnóstico de sobredispersión</h2>
+<p>Para datos simulados de forma verdaderamente Poisson, el índice φ debe ser ≈ 1. Si φ &gt;&gt; 1, habría sobredispersión y el modelo Poisson sería inadecuado.</p>
+<p><span class="math display">\[\hat{\phi} = \frac{\chi^2_{\text{Pearson}}}{n - p}\]</span></p>
+<div id="18" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>phi <span class="op">=</span> np.<span class="bu">sum</span>(results.resid_pearson<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> results.df_resid</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Dispersión estimada φ = </span><span class="sc">{</span>phi<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> phi <span class="op">&gt;</span> <span class="fl">1.5</span>:</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'⚠ Sobredispersión detectada (φ &gt;&gt; 1). Considerar Binomial Negativa.'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'✓ Dispersión aceptable para Poisson (φ ≈ 1). El supuesto se cumple.'</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuos vs Ajustados: sin estructura indica buen ajuste</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.scatter(results.fittedvalues, results.resid_pearson, alpha<span class="op">=</span><span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'tomato'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Valores ajustados $</span><span class="er">\</span><span class="st">hat{</span><span class="er">\</span><span class="st">mu}$'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Residuos de Pearson'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Residuos vs Ajustados  (φ = </span><span class="sc">{</span>phi<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="conclusiones" class="level2">
+<h2 class="anchored" data-anchor-id="conclusiones">6. Conclusiones</h2>
+<p>Cuando los datos provienen de un proceso verdaderamente Poisson:</p>
+<ul>
+<li>El estimador MLE recupera los parámetros verdaderos con precisión</li>
+<li>Los errores estándar vía Hessiana son correctos y coinciden con <code>statsmodels</code></li>
+<li>El índice de dispersión φ ≈ 1 confirma que el supuesto se cumple <strong>condicionalmente</strong></li>
+</ul>
+<p>Este es el caso ideal. En <code>01_basic_eda</code> y <code>01b_extended</code> el dataset real (Horseshoe Crab Satellites) tiene φ ≈ 3.38 — el modelo Poisson no es adecuado. El análisis frecuentista motiva los modelos bayesianos que exploramos en <code>03_bayesian_inference</code> hasta <code>05_predictive_checks_extended_models</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notebooks/01b_extended.html" class="pagination-link" aria-label="EDA extendido">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">EDA extendido</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notebooks/03_bayesian_inference.html" class="pagination-link" aria-label="Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan">
+        <span class="nav-page-text"><span class="chapter-title">Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

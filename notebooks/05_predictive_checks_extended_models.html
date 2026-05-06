@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Posterior Predictive Checks: modelos extendidos – Modelos para Datos de Conteo</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notebooks/04_predictive_checks_base_models.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a672264d6ced0d2e61b1449019ffc00b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/05_predictive_checks_extended_models.html"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Modelos para Datos de Conteo</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ScJavier/bayesian-glm-count-data" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploración de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/01_basic_eda.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EDA inicial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/01b_extended.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EDA extendido</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Teoría: MLE desde cero</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/02_mle_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">GLM Poisson: MLE desde cero</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Inferencia Bayesiana</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/03_bayesian_inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Inferencia Bayesiana: Grid → Metropolis-Hastings → Stan</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Diagnóstico y expansión de modelos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/04_predictive_checks_base_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/05_predictive_checks_extended_models.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#datos-y-modelos-base" id="toc-datos-y-modelos-base" class="nav-link active" data-scroll-target="#datos-y-modelos-base">1. Datos y modelos base</a></li>
+  <li><a href="#ajuste-de-zip-y-zinb" id="toc-ajuste-de-zip-y-zinb" class="nav-link" data-scroll-target="#ajuste-de-zip-y-zinb">2. Ajuste de ZIP y ZINB</a></li>
+  <li><a href="#diagnósticos-mcmc" id="toc-diagnósticos-mcmc" class="nav-link" data-scroll-target="#diagnósticos-mcmc">3. Diagnósticos MCMC</a></li>
+  <li><a href="#ppcs-visuales-distribución-marginal" id="toc-ppcs-visuales-distribución-marginal" class="nav-link" data-scroll-target="#ppcs-visuales-distribución-marginal">4. PPCs visuales — distribución marginal</a></li>
+  <li><a href="#ppcs-con-estadísticos-de-prueba" id="toc-ppcs-con-estadísticos-de-prueba" class="nav-link" data-scroll-target="#ppcs-con-estadísticos-de-prueba">5. PPCs con estadísticos de prueba</a></li>
+  <li><a href="#comparación-global-loo-cv" id="toc-comparación-global-loo-cv" class="nav-link" data-scroll-target="#comparación-global-loo-cv">6. Comparación global — LOO-CV</a></li>
+  <li><a href="#posterior-del-componente-de-ceros" id="toc-posterior-del-componente-de-ceros" class="nav-link" data-scroll-target="#posterior-del-componente-de-ceros">7. Posterior del componente de ceros</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">8. Conclusiones</a>
+  <ul class="collapse">
+  <li><a href="#resultados-de-ppcs" id="toc-resultados-de-ppcs" class="nav-link" data-scroll-target="#resultados-de-ppcs">Resultados de PPCs</a></li>
+  <li><a href="#hallazgos-principales" id="toc-hallazgos-principales" class="nav-link" data-scroll-target="#hallazgos-principales">Hallazgos principales</a></li>
+  <li><a href="#limitación-persistente" id="toc-limitación-persistente" class="nav-link" data-scroll-target="#limitación-persistente">Limitación persistente</a></li>
+  </ul></li>
+  <li><a href="#extensiones-y-conexiones" id="toc-extensiones-y-conexiones" class="nav-link" data-scroll-target="#extensiones-y-conexiones">Extensiones y conexiones</a>
+  <ul class="collapse">
+  <li><a href="#quasi-poisson-la-alternativa-frecuentista" id="toc-quasi-poisson-la-alternativa-frecuentista" class="nav-link" data-scroll-target="#quasi-poisson-la-alternativa-frecuentista">Quasi-Poisson: la alternativa frecuentista</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/04_predictive_checks_base_models.html">Diagnóstico y expansión de modelos</a></li><li class="breadcrumb-item"><a href="../notebooks/05_predictive_checks_extended_models.html"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Posterior Predictive Checks: modelos extendidos</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Etapa del workflow bayesiano: Model Expansion (Gelman et al.&nbsp;2020)</strong></p>
+<p>El análisis en <code>04_predictive_checks_base_models</code> mostró que: - Poisson falla en dispersión <strong>y</strong> en proporción de ceros (<span class="math inline">\(p_B \approx 0\)</span>). - Binomial Negativa captura la dispersión pero subestima los ceros (<span class="math inline">\(p_B = 0.093\)</span>).</p>
+<p>El diagnóstico apunta a <strong>inflación de ceros</strong>: hay hembras que estructuralmente no atraen satélites, y ese proceso generador es distinto del proceso de conteo. La expansión natural son los modelos de mezcla:</p>
+<ul>
+<li><strong>ZIP</strong> (<em>Zero-Inflated Poisson</em>): <span class="math inline">\(\pi \cdot \delta_0 + (1-\pi) \cdot \text{Poisson}(\lambda)\)</span>. Aborda los ceros pero hereda la estructura de varianza de Poisson.</li>
+<li><strong>ZINB</strong> (<em>Zero-Inflated Negative Binomial</em>): <span class="math inline">\(\pi \cdot \delta_0 + (1-\pi) \cdot \text{NegBin}(\mu, \phi)\)</span>. Aborda simultáneamente ceros y sobredispersión.</li>
+</ul>
+<p>Ambos modelos tienen dos componentes con predictor lineal sobre <code>W_scaled</code>: uno logístico que modela <span class="math inline">\(P(\text{cero estructural} \mid W)\)</span>, y uno de conteo (Poisson o NegBin) que modela cuántos satélites dado que no es cero estructural.</p>
+<blockquote class="blockquote">
+<p><strong>Prerequisito:</strong> ejecutar <code>03_bayesian_inference</code> y tener <code>outputs/pois_idata.nc</code> y <code>outputs/neg_idata.nc</code> disponibles.</p>
+</blockquote>
+<div id="1" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cmdstanpy</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="datos-y-modelos-base" class="level2">
+<h2 class="anchored" data-anchor-id="datos-y-modelos-base">1. Datos y modelos base</h2>
+<p>Cargamos los datos y los <code>InferenceData</code> de Poisson y Binomial Negativa generados en <code>03_bayesian_inference</code>. Los modelos base son necesarios para la comparación LOO-CV final con los cuatro modelos.</p>
+<div id="3" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../data/agresti_crab_satellites_dataset.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mean_W <span class="op">=</span> df[<span class="st">'W'</span>].mean()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>std_W  <span class="op">=</span> df[<span class="st">'W'</span>].std()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'W_scaled'</span>] <span class="op">=</span> (df[<span class="st">'W'</span>] <span class="op">-</span> mean_W) <span class="op">/</span> std_W</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y_obs <span class="op">=</span> df[<span class="st">'Sa'</span>].values</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>stan_data <span class="op">=</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'N'</span>: <span class="bu">len</span>(df),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>: df[<span class="st">'W_scaled'</span>].values.tolist(),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: y_obs.tolist(),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar modelos base para comparación LOO final</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>idata_pois <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/pois_idata.nc'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>idata_nb   <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/neg_idata.nc'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_ppc requiere nombre consistente entre observed_data y posterior_predictive</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>idata_pois.posterior_predictive <span class="op">=</span> idata_pois.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>idata_nb.posterior_predictive   <span class="op">=</span> idata_nb.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"N observaciones: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"prop. ceros: </span><span class="sc">{</span>np<span class="sc">.</span>mean(y_obs <span class="op">==</span> <span class="dv">0</span>)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"índice de dispersión: </span><span class="sc">{</span>np<span class="sc">.</span>var(y_obs)<span class="op">/</span>np<span class="sc">.</span>mean(y_obs)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="ajuste-de-zip-y-zinb" class="level2">
+<h2 class="anchored" data-anchor-id="ajuste-de-zip-y-zinb">2. Ajuste de ZIP y ZINB</h2>
+<p>Los modelos ZI tienen cuatro parámetros: <code>alpha_count</code> y <code>beta_count</code> (intercepto y pendiente del componente de conteo, liga log), y <code>alpha_zero</code> y <code>beta_zero</code> (intercepto y pendiente del componente de ceros, liga logit). ZINB agrega <code>phi</code> (sobredispersión).</p>
+<p>El prior <code>exponential(1)</code> sobre <code>phi</code> es apropiado: es positivo, tiene media 1, y concentra masa en valores moderados de sobredispersión. Si los <code>.nc</code> ya existen en <code>outputs/</code>, el bloque los carga directamente sin re-ajustar Stan.</p>
+<div id="5" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.path.exists(<span class="st">'../outputs/zip_idata.nc'</span>) <span class="kw">and</span> os.path.exists(<span class="st">'../outputs/zinb_idata.nc'</span>):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Cargando .nc existentes..."</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    idata_zip  <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/zip_idata.nc'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    idata_zinb <span class="op">=</span> az.from_netcdf(<span class="st">'../outputs/zinb_idata.nc'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Ajustando modelos..."</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    zip_model  <span class="op">=</span> cmdstanpy.CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/zip_model.stan'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    zinb_model <span class="op">=</span> cmdstanpy.CmdStanModel(stan_file<span class="op">=</span><span class="st">'../models/zinb_model.stan'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    zip_fit <span class="op">=</span> zip_model.sample(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_warmup<span class="op">=</span><span class="dv">1000</span>, iter_sampling<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        show_progress<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    zinb_fit <span class="op">=</span> zinb_model.sample(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>stan_data, chains<span class="op">=</span><span class="dv">4</span>, iter_warmup<span class="op">=</span><span class="dv">1000</span>, iter_sampling<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        show_progress<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    idata_zip <span class="op">=</span> az.from_cmdstanpy(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        posterior<span class="op">=</span>zip_fit,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        log_likelihood<span class="op">=</span><span class="st">'log_lik'</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        observed_data<span class="op">=</span>{<span class="st">'y'</span>: y_obs},</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    idata_zinb <span class="op">=</span> az.from_cmdstanpy(</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        posterior<span class="op">=</span>zinb_fit,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        posterior_predictive<span class="op">=</span><span class="st">'y_rep'</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        log_likelihood<span class="op">=</span><span class="st">'log_lik'</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        observed_data<span class="op">=</span>{<span class="st">'y'</span>: y_obs},</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    idata_zip.to_netcdf(<span class="st">'../outputs/zip_idata.nc'</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    idata_zinb.to_netcdf(<span class="st">'../outputs/zinb_idata.nc'</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Renombrar para plot_ppc</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>idata_zip.posterior_predictive  <span class="op">=</span> idata_zip.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>idata_zinb.posterior_predictive <span class="op">=</span> idata_zinb.posterior_predictive.rename({<span class="st">'y_rep'</span>: <span class="st">'y'</span>})</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ZIP  grupos:"</span>, <span class="bu">list</span>(idata_zip.groups()))</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ZINB grupos:"</span>, <span class="bu">list</span>(idata_zinb.groups()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="diagnósticos-mcmc" class="level2">
+<h2 class="anchored" data-anchor-id="diagnósticos-mcmc">3. Diagnósticos MCMC</h2>
+<p>Verificamos convergencia con el resumen de ArviZ: <span class="math inline">\(\hat{R} \approx 1.00\)</span> indica que las cuatro cadenas muestrearon la misma distribución, y ESS &gt; 400 garantiza estimaciones estables. Los modelos ZI tienen más parámetros que Poisson o NegBin — si la señal en los datos es débil para el componente de ceros, la convergencia puede ser más lenta. Complementamos con trace plots.</p>
+<div id="7" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== ZIP ==="</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>display(az.summary(idata_zip,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                   var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   round_to<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== ZINB ==="</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>display(az.summary(idata_zinb,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                   var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'phi'</span>,<span class="st">'alpha_sm'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                   round_to<span class="op">=</span><span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="8" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>az.plot_trace(idata_zip,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              axes<span class="op">=</span>axes, compact<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Trace plots — ZIP'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="9" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>az.plot_trace(idata_zinb,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              var_names<span class="op">=</span>[<span class="st">'alpha_count'</span>,<span class="st">'beta_count'</span>,<span class="st">'phi'</span>,<span class="st">'alpha_zero'</span>,<span class="st">'beta_zero'</span>],</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              axes<span class="op">=</span>axes, compact<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Trace plots — ZINB'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="ppcs-visuales-distribución-marginal" class="level2">
+<h2 class="anchored" data-anchor-id="ppcs-visuales-distribución-marginal">4. PPCs visuales — distribución marginal</h2>
+<p>Comparamos los cuatro modelos lado a lado. Si ZIP y ZINB modelan correctamente la inflación de ceros, su nube de <span class="math inline">\(y^{\text{rep}}\)</span> debe ajustarse mejor al pico en cero y a la cola derecha observados en los datos.</p>
+<div id="11" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (idata, title) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, [</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    (idata_pois, <span class="st">'Poisson'</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    (idata_nb,   <span class="st">'Binomial Negativa'</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    (idata_zip,  <span class="st">'ZIP'</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    (idata_zinb, <span class="st">'ZINB'</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    az.plot_ppc(idata, ax<span class="op">=</span>ax, num_pp_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Número de satélites'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">17</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPC: Distribución marginal — cuatro modelos'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="ppcs-con-estadísticos-de-prueba" class="level2">
+<h2 class="anchored" data-anchor-id="ppcs-con-estadísticos-de-prueba">5. PPCs con estadísticos de prueba</h2>
+<p>Aplicamos los mismos cuatro estadísticos del notebook <code>04_predictive_checks_base_models</code> a los cuatro modelos. La tabla y los histogramas permiten ver de forma sistemática qué dimensiones resuelve cada extensión — y cuáles siguen siendo problemáticas.</p>
+<div id="13" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dispersion_index(y): <span class="cf">return</span> np.var(y) <span class="op">/</span> np.mean(y)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prop_zeros(y): <span class="cf">return</span> np.mean(y <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>test_stats <span class="op">=</span> {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'std'</span>:               np.std,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Índice dispersión'</span>: dispersion_index,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>:               np.<span class="bu">max</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prop. ceros'</span>:       prop_zeros,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> [</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Poisson'</span>, idata_pois),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'NegBin'</span>,  idata_nb),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ZIP'</span>,     idata_zip),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'ZINB'</span>,    idata_zinb),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>y_rep_dict <span class="op">=</span> {}</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, idata <span class="kw">in</span> models:</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> idata.posterior_predictive[<span class="st">'y'</span>].values</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    y_rep_dict[name] <span class="op">=</span> arr.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="bu">len</span>(y_obs))</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla comparativa</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat_name, stat_fn <span class="kw">in</span> test_stats.items():</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, y_rep_flat <span class="kw">in</span> y_rep_dict.items():</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Modelo'</span>: name,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Estadístico'</span>: stat_name,</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">'T(y_obs)'</span>: <span class="bu">round</span>(t_obs, <span class="dv">3</span>),</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">'E[T(y_rep)]'</span>: <span class="bu">round</span>(<span class="bu">float</span>(np.mean(t_rep)), <span class="dv">3</span>),</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Bayesian p-value'</span>: <span class="bu">round</span>(<span class="bu">float</span>(np.mean(t_rep <span class="op">&gt;=</span> t_obs)), <span class="dv">3</span>),</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame(rows).sort_values([<span class="st">'Estadístico'</span>, <span class="st">'Modelo'</span>])</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>display(summary_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="14" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(test_stats), <span class="bu">len</span>(models), figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(test_stats)))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row, (stat_name, stat_fn) <span class="kw">in</span> <span class="bu">enumerate</span>(test_stats.items()):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    t_obs <span class="op">=</span> stat_fn(y_obs)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (model_name, y_rep_flat) <span class="kw">in</span> <span class="bu">enumerate</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        (n, y_rep_dict[n]) <span class="cf">for</span> n, _ <span class="kw">in</span> models</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        t_rep <span class="op">=</span> np.array([stat_fn(y_rep_flat[s]) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(y_rep_flat.shape[<span class="dv">0</span>])])</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        p_val <span class="op">=</span> np.mean(t_rep <span class="op">&gt;=</span> t_obs)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row, col]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        ax.hist(t_rep, bins<span class="op">=</span><span class="dv">40</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'T(y_rep)'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        ax.axvline(t_obs, color<span class="op">=</span><span class="st">'tomato'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'T(y_obs)=</span><span class="sc">{</span>t_obs<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>stat_name<span class="sc">}</span><span class="ch">\n</span><span class="ss">p = </span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        ax.legend(fontsize<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'PPCs con estadísticos de prueba — cuatro modelos'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="comparación-global-loo-cv" class="level2">
+<h2 class="anchored" data-anchor-id="comparación-global-loo-cv">6. Comparación global — LOO-CV</h2>
+<p>La comparación final incluye los cuatro modelos. El ELPD ordena los modelos por capacidad predictiva out-of-sample; la diferencia ± SE indica si el ranking es estadísticamente claro o si los modelos son indistinguibles desde el punto de vista predictivo.</p>
+<div id="16" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> az.compare({</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Poisson'</span>: idata_pois,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NegBin'</span>:  idata_nb,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ZIP'</span>:     idata_zip,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ZINB'</span>:    idata_zinb,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>display(comparison)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> az.plot_compare(comparison, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">3</span>))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Comparación LOO-CV — cuatro modelos'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="posterior-del-componente-de-ceros" class="level2">
+<h2 class="anchored" data-anchor-id="posterior-del-componente-de-ceros">7. Posterior del componente de ceros</h2>
+<p>El componente logístico modela <span class="math inline">\(P(\text{cero estructural} \mid W)\)</span>: la probabilidad de que una hembra no atraiga satélites por razones estructurales. La hipótesis es que esta probabilidad disminuye con el tamaño — hembras más grandes atraen más, y es menos probable que no atraigan ninguno.</p>
+<p>Las curvas semitransparentes son 200 muestras de la posterior — su amplitud refleja la incertidumbre sobre la pendiente logística. La curva de la media posterior muestra la tendencia central.</p>
+<div id="18" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>W_range <span class="op">=</span> np.linspace(df[<span class="st">'W'</span>].<span class="bu">min</span>(), df[<span class="st">'W'</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>W_scaled_range <span class="op">=</span> (W_range <span class="op">-</span> mean_W) <span class="op">/</span> std_W</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (name, idata) <span class="kw">in</span> <span class="bu">zip</span>(axes, [(<span class="st">'ZIP'</span>, idata_zip), (<span class="st">'ZINB'</span>, idata_zinb)]):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    a0 <span class="op">=</span> idata.posterior[<span class="st">'alpha_zero'</span>].values.flatten()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    b0 <span class="op">=</span> idata.posterior[<span class="st">'beta_zero'</span>].values.flatten()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curvas de theta para 200 muestras del posterior</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.random.choice(<span class="bu">len</span>(a0), <span class="dv">200</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> idx:</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(a0[i] <span class="op">+</span> b0[i] <span class="op">*</span> W_scaled_range)))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        ax.plot(W_range, theta, color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curva de la media posterior</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    theta_mean <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(a0.mean() <span class="op">+</span> b0.mean() <span class="op">*</span> W_scaled_range)))</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    ax.plot(W_range, theta_mean, color<span class="op">=</span><span class="st">'tomato'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Media posterior'</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Ancho de caparazón W (cm)'</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="vs">r'</span><span class="dv">$</span><span class="vs">P</span><span class="kw">(</span><span class="ch">\t</span><span class="vs">ext{cero estructural} </span><span class="dv">\m</span><span class="vs">id W</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> — Componente de ceros'</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Probabilidad de cero estructural vs ancho de caparazón'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="conclusiones" class="level2">
+<h2 class="anchored" data-anchor-id="conclusiones">8. Conclusiones</h2>
+<section id="resultados-de-ppcs" class="level3">
+<h3 class="anchored" data-anchor-id="resultados-de-ppcs">Resultados de PPCs</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estadístico</th>
+<th><span class="math inline">\(y^{\text{obs}}\)</span></th>
+<th>Poisson</th>
+<th>NegBin</th>
+<th>ZIP</th>
+<th>ZINB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>std</td>
+<td>3.14</td>
+<td><span class="math inline">\(p_B = 0.000\)</span> ❌</td>
+<td><span class="math inline">\(p_B = 0.892\)</span> ✅</td>
+<td><span class="math inline">\(p_B = 0.011\)</span> ⚠️</td>
+<td><span class="math inline">\(p_B = 0.635\)</span> ✅</td>
+</tr>
+<tr class="even">
+<td>Índice dispersión</td>
+<td>3.38</td>
+<td><span class="math inline">\(p_B = 0.000\)</span> ❌</td>
+<td><span class="math inline">\(p_B = 0.951\)</span> ✅</td>
+<td><span class="math inline">\(p_B = 0.008\)</span> ❌</td>
+<td><span class="math inline">\(p_B = 0.691\)</span> ✅</td>
+</tr>
+<tr class="odd">
+<td>max</td>
+<td>15</td>
+<td><span class="math inline">\(p_B = 0.072\)</span> ⚠️</td>
+<td><span class="math inline">\(p_B = 0.963\)</span> ✅</td>
+<td><span class="math inline">\(p_B = 0.014\)</span> ⚠️</td>
+<td><span class="math inline">\(p_B = 0.624\)</span> ✅</td>
+</tr>
+<tr class="even">
+<td><strong>prop. ceros</strong></td>
+<td><strong>0.358</strong></td>
+<td><strong><span class="math inline">\(p_B = 0.000\)</span> ❌</strong></td>
+<td><strong><span class="math inline">\(p_B = 0.092\)</span> ⚠️</strong></td>
+<td><strong><span class="math inline">\(p_B = 0.514\)</span> ✅</strong></td>
+<td><strong><span class="math inline">\(p_B = 0.532\)</span> ✅</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hallazgos-principales" class="level3">
+<h3 class="anchored" data-anchor-id="hallazgos-principales">Hallazgos principales</h3>
+<p><strong>ZIP</strong>: Resuelve la inflación de ceros (<span class="math inline">\(p_B = 0.514\)</span>) pero hereda la estructura de varianza de Poisson — falla en std (<span class="math inline">\(p_B = 0.011\)</span>) y en el índice de dispersión (<span class="math inline">\(p_B = 0.008\)</span>). En datos con ambos problemas simultáneos, ZIP es una mejora parcial insuficiente.</p>
+<p><strong>ZINB</strong>: Captura simultáneamente inflación de ceros (<span class="math inline">\(p_B = 0.532\)</span>) y sobredispersión (<span class="math inline">\(p_B = 0.691\)</span>). Ningún estadístico de prueba lo rechaza — es el modelo más completo de los cuatro evaluados.</p>
+<p><strong>Componente de ceros</strong>: En ambos modelos ZI, <code>beta_zero &lt; 0</code> — hembras con mayor ancho de caparazón tienen menor probabilidad de ser “cero estructural”. Esto es interpretable y coherente con la biología: hembras más grandes atraen más satélites.</p>
+<p><strong>LOO-CV</strong>: El ranking esperado es ZINB &gt; ZIP &gt; NegBin &gt; Poisson. La diferencia ZINB–NegBin cuantifica el valor de modelar explícitamente el proceso generador de ceros sobre y por encima de capturar la sobredispersión.</p>
+</section>
+<section id="limitación-persistente" class="level3">
+<h3 class="anchored" data-anchor-id="limitación-persistente">Limitación persistente</h3>
+<p>El predictor es únicamente el ancho de caparazón (<code>W</code>). Variables como condición de la espina (<code>S</code>) y color (<code>C</code>) no fueron incluidas. Una extensión natural es un ZINB con múltiples predictores en ambos componentes — o un modelo jerárquico si hubiera agrupación natural en los datos.</p>
+<hr>
+</section>
+</section>
+<section id="extensiones-y-conexiones" class="level2">
+<h2 class="anchored" data-anchor-id="extensiones-y-conexiones">Extensiones y conexiones</h2>
+<section id="quasi-poisson-la-alternativa-frecuentista" class="level3">
+<h3 class="anchored" data-anchor-id="quasi-poisson-la-alternativa-frecuentista">Quasi-Poisson: la alternativa frecuentista</h3>
+<p>El enfoque bayesiano que recorrimos no es el único camino para manejar la sobredispersión en datos de conteo. Desde el paradigma frecuentista, el modelo <strong>quasi-Poisson</strong> (Wedderburn 1974) extiende la regresión Poisson relajando el supuesto Var[Y] = E[Y] para permitir:</p>
+<p><span class="math display">\[\text{Var}[Y_i] = \phi \cdot E[Y_i], \quad \phi &gt; 1\]</span></p>
+<p>donde <span class="math inline">\(\phi\)</span> es un parámetro de dispersión estimado de los datos. El modelo trabaja con una <strong>función de cuasi-verosimilitud</strong> (no requiere especificar una distribución completa para Y).</p>
+<p>En R: <code>glm(y ~ x, family = quasipoisson)</code>. En Python, no existe una implementación nativa directa en <code>statsmodels</code>, lo que es en sí un argumento a favor de los modelos con distribución explícita (NegBin, ZINB).</p>
+<p>El análogo para datos de proporciones o tasas de conversión es el modelo <strong>quasi-binomial</strong> — misma idea, función de varianza <span class="math inline">\(\phi \cdot p(1-p)\)</span>.</p>
+<p>La limitación de los modelos quasi: no producen una distribución predictiva completa, lo que dificulta calcular intervalos de predicción calibrados o comparar modelos vía LOO-CV. El marco bayesiano con NegBin o ZINB provee todo esto de forma natural.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notebooks/04_predictive_checks_base_models.html" class="pagination-link" aria-label="Posterior Predictive Checks: modelos base">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Posterior Predictive Checks: modelos base</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ScJavier/bayesian-glm-count-data/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
